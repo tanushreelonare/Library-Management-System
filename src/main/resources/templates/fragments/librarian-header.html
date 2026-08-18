@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<header
+        th:fragment="header"
+        class="librarian-header">
+
+    <div class="librarian-header-container">
+
+        <!-- LOGO -->
+
+        <div class="librarian-logo">
+
+            <a th:href="@{/librarian-dashboard}">
+
+                Library Management System
+
+            </a>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="librarian-navigation">
+
+            <a th:href="@{/librarian-dashboard}">
+
+                Home
+
+            </a>
+
+            <a th:href="@{/book-report}">
+
+                Book Report
+
+            </a>
+
+            <a th:href="@{/add-book}">
+
+                Add Book
+
+            </a>
+
+            <a th:href="@{/donations}">
+
+                Donations
+
+            </a>
+
+            <a th:href="@{/manage-books}">
+
+                Manage Books
+
+            </a>
+
+            <a th:href="@{/requests}">
+
+                Requests
+
+            </a>
+
+            <a th:href="@{/librarian-profile}">
+
+                View Profile
+
+            </a>
+
+        </nav>
+
+        <!-- LOGOUT -->
+
+        <div class="librarian-header-actions">
+
+            <form
+                    th:action="@{/logout}"
+                    method="post">
+
+                <button
+                        type="submit"
+                        class="librarian-logout-btn">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</header>
+
+</body>
+
+</html>

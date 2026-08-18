@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/login.css}">
+
+</head>
+
+<body>
+
+<!-- PUBLIC HEADER -->
+
+<div th:replace="~{fragments/public-header :: header}"></div>
+
+<!-- BREADCRUMB -->
+
+<div class="breadcrumb">
+
+    <a th:href="@{/}">
+        Home
+    </a>
+
+    <span class="separator">
+        >
+    </span>
+
+    <span>
+        Login
+    </span>
+
+</div>
+
+<!-- PAGE HEADER -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Login
+        </h1>
+
+        <p>
+            Login to access the Library Management System.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- LOGIN CONTAINER -->
+
+<div class="login-container">
+
+    <form
+            id="loginForm"
+            th:action="@{/login}"
+            method="post">
+
+        <div class="login-card">
+
+            <p class="login-description">
+
+                Enter your credentials below to login.
+
+            </p>
+
+            <!-- LOGIN ERROR -->
+
+            <div
+                    th:if="${param.error}"
+                    class="error-message">
+
+                Invalid email or password.
+
+            </div>
+
+            <!-- LOGOUT MESSAGE -->
+
+            <div
+                    th:if="${param.logout}"
+                    class="success-message">
+
+                You have been logged out successfully.
+
+            </div>
+
+            <!-- EMAIL & PASSWORD -->
+
+            <div class="form-row">
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+
+                        Email Address
+
+                    </label>
+
+                    <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter Email Address"
+                            autocomplete="email"
+                            required>
+
+                    <small
+                            id="emailError"
+                            class="error-message">
+                    </small>
+
+                </div>
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+
+                        Password
+
+                    </label>
+
+                    <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter Password"
+                            autocomplete="current-password"
+                            required>
+
+                    <small
+                            id="passwordError"
+                            class="error-message">
+                    </small>
+
+                    <div class="show-password-container">
+
+                        <label class="checkbox-label">
+
+                            <input
+                                    type="checkbox"
+                                    id="showPassword">
+
+                            Show Password
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- REMEMBER ME -->
+
+            <div class="form-row">
+
+                <div class="form-group remember-group">
+
+                    <label>
+                        Options
+                    </label>
+
+                    <label class="checkbox-label">
+
+                        <input
+                                type="checkbox"
+                                id="rememberMe"
+                                name="remember-me">
+
+                        Remember Me
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <!-- FORGOT PASSWORD -->
+
+            <div class="forgot-password">
+
+                <a th:href="@{/forgot-password}">
+
+                    Forgot Password?
+
+                </a>
+
+            </div>
+
+            <!-- LOGIN BUTTON -->
+
+            <div class="login-button">
+
+                <button
+                        type="submit"
+                        class="btn login-btn">
+
+                    Login
+
+                </button>
+
+            </div>
+
+            <hr class="login-divider">
+
+            <!-- REGISTRATION LINKS -->
+
+            <div class="register-section">
+
+                <p>
+
+                    Don't have an account?
+
+                </p>
+
+                <div class="register-links">
+
+                    <a
+                            th:href="@{/student}"
+                            class="btn register-btn">
+
+                        Student Registration
+
+                    </a>
+
+                    <a
+                            th:href="@{/librarian}"
+                            class="btn register-btn">
+
+                        Librarian Registration
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- FOOTER -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- JAVASCRIPT -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/login.js}"></script>
+
+</body>
+
+</html>

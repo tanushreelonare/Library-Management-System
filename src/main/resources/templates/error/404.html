@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>404 - Page Not Found</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/error.css}">
+
+</head>
+
+<body>
+
+<!-- ================= PUBLIC HEADER ================= -->
+
+<div th:replace="~{fragments/public-header :: header}"></div>
+
+<!-- ================= BREADCRUMB ================= -->
+
+<div class="breadcrumb">
+
+    <a th:href="@{/}">
+
+        Home
+
+    </a>
+
+    <span class="separator">
+
+        >
+
+    </span>
+
+    <span>
+
+        404 Page Not Found
+
+    </span>
+
+</div>
+
+<!-- ================= ERROR CONTAINER ================= -->
+
+<div class="error-container">
+
+    <div class="error-card">
+
+        <div class="error-code">
+
+            404
+
+        </div>
+
+        <div class="error-icon">
+
+            📄
+
+        </div>
+
+        <h1>
+
+            Page Not Found
+
+        </h1>
+
+        <p class="error-message">
+
+            Sorry! The page you're looking for doesn't exist.
+
+        </p>
+
+        <p class="error-description">
+
+            The page may have been moved, deleted, or the URL might be incorrect.
+            Please return to the Home page or Login page to continue using the
+            Library Management System.
+
+        </p>
+
+        <div class="button-group">
+
+            <a
+                    th:href="@{/}"
+                    class="btn">
+
+                Home
+
+            </a>
+
+            <a
+                    th:href="@{/login}"
+                    class="btn">
+
+                Login
+
+            </a>
+
+            <button
+                    type="button"
+                    class="btn"
+                    onclick="history.back()">
+
+                Go Back
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/error.js}"></script>
+
+</body>
+
+</html>

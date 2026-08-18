@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>403 - Access Denied</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/error.css}">
+
+</head>
+
+<body>
+
+<!-- ================= PUBLIC HEADER ================= -->
+
+<div th:replace="~{fragments/public-header :: header}"></div>
+
+<!-- ================= BREADCRUMB ================= -->
+
+<div class="breadcrumb">
+
+    <a th:href="@{/}">
+
+        Home
+
+    </a>
+
+    <span class="separator">
+
+        >
+
+    </span>
+
+    <span>
+
+        403 Access Denied
+
+    </span>
+
+</div>
+
+<!-- ================= ERROR CONTAINER ================= -->
+
+<div class="error-container">
+
+    <div class="error-card">
+
+        <div class="error-code">
+
+            403
+
+        </div>
+
+        <div class="error-icon">
+
+            🔒
+
+        </div>
+
+        <h1>
+
+            Access Denied
+
+        </h1>
+
+        <p class="error-message">
+
+            You don't have permission to access this page.
+
+        </p>
+
+        <p class="error-description">
+
+            This page is restricted based on your account permissions.
+            If you believe this is an error, please contact the librarian
+            or sign in with an account that has the required access.
+
+        </p>
+
+        <div class="button-group">
+
+            <a
+                    th:href="@{/}"
+                    class="btn">
+
+                Home
+
+            </a>
+
+            <a
+                    th:href="@{/login}"
+                    class="btn">
+
+                Login
+
+            </a>
+
+            <button
+                    type="button"
+                    class="btn"
+                    onclick="history.back()">
+
+                Go Back
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/error.js}"></script>
+
+</body>
+
+</html>

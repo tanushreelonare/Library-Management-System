@@ -1,0 +1,97 @@
+/* LIBRARIAN REGISTRATION
+   Overrides registration.css only */
+
+/* Page Title */
+
+.page-header h1{
+
+    color:#0d47a1;
+
+}
+
+/* Professional Information Section */
+
+.section-title{
+
+    letter-spacing:.3px;
+
+}
+
+/* Experience Number Field */
+
+input[type="number"]{
+
+    appearance:textfield;
+
+    -moz-appearance:textfield;
+
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{
+
+    -webkit-appearance:none;
+
+    margin:0;
+
+}
+
+/* Employment Status Dropdown */
+
+#status{
+
+    cursor:pointer;
+
+}
+
+/* Designation Dropdown */
+
+#designation{
+
+    cursor:pointer;
+
+}
+
+/* Qualification Dropdown */
+
+#qualification{
+
+    cursor:pointer;
+
+}
+
+/* Employee ID */
+
+#employeeId{
+
+    text-transform:uppercase;
+
+}
+
+/* Image Preview */
+
+.modal-header h2{
+
+    font-size:20px;
+
+}
+
+/* Future Librarian Badge */
+
+.librarian-badge{
+
+    display:none;
+
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .page-header h1{
+
+        font-size:28px;
+
+    }
+
+}

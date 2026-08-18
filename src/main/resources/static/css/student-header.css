@@ -1,0 +1,135 @@
+/* STUDENT HEADER */
+
+.student-header {
+
+    width: 100%;
+
+    background-color: #244f87;
+
+    box-shadow:
+            0 2px 6px
+            rgba(0, 0, 0, 0.15);
+
+}
+
+/* HEADER CONTAINER */
+
+.student-header-container {
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding:
+            0 40px;
+
+    min-height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+}
+
+/* LOGO */
+
+.student-logo a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+/* NAVIGATION */
+
+.student-navigation {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    flex: 1;
+
+}
+
+/* NAVIGATION LINKS */
+
+.student-navigation a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+
+}
+
+.student-navigation a:hover {
+
+    opacity: 0.8;
+
+}
+
+/* HEADER ACTIONS */
+
+.student-header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+/* LOGOUT BUTTON */
+
+.student-logout-btn {
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding:
+            13px 30px;
+
+    background-color: #dc3545;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+.student-logout-btn:hover {
+
+    opacity: 0.9;
+
+}

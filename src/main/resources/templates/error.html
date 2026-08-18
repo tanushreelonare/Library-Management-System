@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Error</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+
+        Something Went Wrong
+
+    </h1>
+
+    <p
+            th:text="${errorMessage}">
+
+        Unexpected Error
+
+    </p>
+
+    <a
+            th:href="@{/}"
+            class="btn">
+
+        Go Home
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

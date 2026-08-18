@@ -1,0 +1,287 @@
+/* ERROR PAGES 403 & 404 */
+
+/* BREADCRUMB */
+
+.breadcrumb{
+
+    width:90%;
+    max-width:1200px;
+
+    margin:20px auto 10px;
+
+    font-size:14px;
+
+    color:#666;
+
+}
+
+.breadcrumb a{
+
+    color:#1565c0;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.breadcrumb a:hover{
+
+    text-decoration:underline;
+
+}
+
+.separator{
+
+    margin:0 8px;
+
+}
+
+/* ERROR CONTAINER */
+
+.error-container{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px 20px;
+
+}
+
+/* ERROR CARD */
+
+.error-card{
+
+    width:100%;
+    max-width:800px;
+
+    background:#ffffff;
+
+    padding:50px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+    transition:.3s;
+
+}
+
+.error-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
+
+}
+
+/* ERROR CODE */
+
+.error-code{
+
+    font-size:100px;
+
+    font-weight:bold;
+
+    color:#d32f2f;
+
+    line-height:1;
+
+    margin-bottom:15px;
+
+}
+
+/* ICON */
+
+.error-icon{
+
+    font-size:60px;
+
+    margin-bottom:20px;
+
+}
+
+/* TITLE */
+
+.error-card h1{
+
+    color:#0d47a1;
+
+    font-size:36px;
+
+    margin-bottom:20px;
+
+}
+
+/* MESSAGE */
+
+.error-message{
+
+    font-size:20px;
+
+    color:#333;
+
+    margin-bottom:15px;
+
+    font-weight:600;
+
+}
+
+/* DESCRIPTION */
+
+.error-description{
+
+    max-width:650px;
+
+    margin:0 auto 35px auto;
+
+    color:#666;
+
+    font-size:16px;
+
+    line-height:1.7;
+
+}
+
+/* BUTTON GROUP */
+
+.button-group{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+/* BUTTON OVERRIDES */
+
+.button-group .btn{
+
+    min-width:170px;
+
+    text-align:center;
+
+    padding:12px 24px;
+
+    font-size:15px;
+
+}
+
+/* OPTIONAL ANIMATION */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.error-card{
+
+    animation:fadeIn .5s ease-in-out;
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .error-card{
+
+        padding:35px 25px;
+
+    }
+
+    .error-code{
+
+        font-size:72px;
+
+    }
+
+    .error-icon{
+
+        font-size:48px;
+
+    }
+
+    .error-card h1{
+
+        font-size:30px;
+
+    }
+
+    .error-message{
+
+        font-size:18px;
+
+    }
+
+    .button-group{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+    .button-group .btn{
+
+        width:100%;
+
+        max-width:300px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .error-card{
+
+        padding:25px 18px;
+
+    }
+
+    .error-code{
+
+        font-size:60px;
+
+    }
+
+    .error-card h1{
+
+        font-size:26px;
+
+    }
+
+    .error-description{
+
+        font-size:15px;
+
+    }
+
+}

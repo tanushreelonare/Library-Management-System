@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        Librarian Dashboard
+
+    </title>
+
+    <!-- CSS -->
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/common.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/librarian-header.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/librarian-dashboard.css}">
+
+</head>
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div
+        th:replace="~{fragments/librarian-header :: header}">
+</div>
+
+<!-- DASHBOARD -->
+
+<main class="librarian-dashboard">
+
+    <div class="librarian-dashboard-container">
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/librarian-dashboard}">
+
+                Home
+
+            </a>
+
+            <span class="separator">
+
+                >
+
+            </span>
+
+            <span>
+
+                Librarian Dashboard
+
+            </span>
+
+        </div>
+
+        <!-- PAGE HEADER -->
+
+        <div class="dashboard-page-header">
+
+            <h1>
+
+                Librarian Dashboard
+
+            </h1>
+
+            <p>
+
+                Manage library operations, books, students,
+                requests, and reports from one place.
+
+            </p>
+
+        </div>
+
+        <!-- WELCOME SECTION -->
+
+        <section class="welcome-section">
+
+            <h2>
+
+                Welcome,
+
+                <span th:text="${librarianName}">
+
+                    Librarian
+
+                </span>
+
+            </h2>
+
+            <p>
+
+                Manage and monitor all library activities
+                from your dashboard.
+
+            </p>
+
+        </section>
+
+        <!-- DASHBOARD CARDS -->
+
+        <section class="librarian-dashboard-cards">
+
+            <!-- STUDENT REPORT -->
+
+            <a
+                    th:href="@{/student-report}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Student Report
+
+                </h3>
+
+                <p>
+
+                    View and manage reports related
+                    to registered students.
+
+                </p>
+
+            </a>
+
+            <!-- BOOKS REPORT -->
+
+            <a
+                    th:href="@{/book-report}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Books Report
+
+                </h3>
+
+                <p>
+
+                    View reports and information
+                    about books in the library.
+
+                </p>
+
+            </a>
+
+            <!-- ISSUED BOOKS REPORT -->
+
+            <a
+                    th:href="@{/issued-books-report}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Issued Books Report
+
+                </h3>
+
+                <p>
+
+                    View details of books that
+                    are currently issued.
+
+                </p>
+
+            </a>
+
+            <!-- ADD NEW BOOKS -->
+
+            <a
+                    th:href="@{/add-book}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Add New Books
+
+                </h3>
+
+                <p>
+
+                    Add new books and expand
+                    the library collection.
+
+                </p>
+
+            </a>
+
+            <!-- APPROVE REQUESTS -->
+
+            <a
+                    th:href="@{/requests}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Approve Requests
+
+                </h3>
+
+                <p>
+
+                    Review and approve student
+                    book requests.
+
+                </p>
+
+            </a>
+
+            <!-- BOOK CATEGORIES -->
+
+            <a
+                    th:href="@{/book-categories}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Book Categories
+
+                </h3>
+
+                <p>
+
+                    View and manage book
+                    categories in the library.
+
+                </p>
+
+            </a>
+
+            <!-- LIBRARY STATISTICS -->
+
+            <a
+                    th:href="@{/library-statistics}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Library Statistics
+
+                </h3>
+
+                <p>
+
+                    View important statistics
+                    and library activity data.
+
+                </p>
+
+            </a>
+
+            <!-- FINE REPORT -->
+
+            <a
+                    th:href="@{/fine-report}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Fine Report
+
+                </h3>
+
+                <p>
+
+                    View and manage student
+                    fine records and details.
+
+                </p>
+
+            </a>
+
+            <!-- STUDENT HISTORY -->
+
+            <a
+                    th:href="@{/student-history}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    Student History
+
+                </h3>
+
+                <p>
+
+                    View the borrowing and
+                    library activity history of students.
+
+                </p>
+
+            </a>
+
+        </section>
+
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+
+<div
+        th:replace="~{fragments/footer :: footer}">
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script
+        th:src="@{/js/librarian-dashboard.js}">
+</script>
+
+</body>
+
+</html>

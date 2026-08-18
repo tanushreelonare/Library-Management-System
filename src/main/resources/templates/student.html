@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration</title>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <link rel="stylesheet" th:href="@{/css/registration.css}">
+
+    <link rel="stylesheet" th:href="@{/css/student.css}">
+
+</head>
+
+<body>
+
+<!-- ================= PUBLIC HEADER ================= -->
+
+<div th:replace="~{fragments/public-header :: header}"></div>
+
+<!-- ================= BREADCRUMB ================= -->
+
+<div class="breadcrumb">
+
+    <a th:href="@{/}">Home</a>
+
+    <span class="separator">></span>
+
+    <span>Student Registration</span>
+
+</div>
+
+<!-- ================= PAGE HEADER ================= -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Student Registration</h1>
+
+        <p>
+
+            Register yourself to access the Library Management System.
+
+        </p>
+
+    </div>
+
+    <div class="page-actions">
+
+        <button
+                type="submit"
+                form="studentForm"
+                class="btn">
+
+            Register
+
+        </button>
+
+        <button
+                type="reset"
+                form="studentForm"
+                class="btn">
+
+            Reset
+
+        </button>
+
+        <button
+                type="button"
+                onclick="history.back()"
+                class="btn">
+
+            Back
+
+        </button>
+
+        <a
+                th:href="@{/}"
+                class="btn">
+
+            Home
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= FORM CONTAINER ================= -->
+
+<div class="form-container">
+
+<form
+        id="studentForm"
+        th:action="@{/student}"
+        th:object="${student}"
+        method="post"
+        enctype="multipart/form-data"
+        novalidate>
+
+<!-- MAIN REGISTRATION CARD-->
+
+<div class="registration-card">
+
+<!-- PERSONAL INFORMATION-->
+<div class="section">
+
+    <div class="section-title">
+
+         Personal Information
+
+    </div>
+
+    <div class="form-grid">
+
+        <!-- Roll Number -->
+
+        <div class="form-group">
+
+            <label for="rollNumber">
+
+                Roll Number
+
+            </label>
+
+            <input
+
+                    type="text"
+
+                    id="rollNumber"
+
+                    th:field="*{rollNumber}"
+
+                    placeholder="Enter Roll Number"
+
+                    autocomplete="off"
+
+                    required>
+
+            <small
+                    id="rollNumberError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('rollNumber')}"
+                    th:errors="*{rollNumber}">
+
+            </small>
+
+        </div>
+
+        <!-- Student Name -->
+
+        <div class="form-group">
+
+            <label for="studentName">
+
+                Student Name
+
+            </label>
+
+            <input
+
+                    type="text"
+
+                    id="studentName"
+
+                    th:field="*{studentName}"
+
+                    placeholder="Enter Student Name"
+
+                    autocomplete="off"
+
+                    required>
+
+            <small
+                    id="studentNameError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('studentName')}"
+                    th:errors="*{studentName}">
+
+            </small>
+
+        </div>
+
+        <!-- Email -->
+
+        <div class="form-group">
+
+            <label for="email">
+
+                Email Address
+
+            </label>
+
+            <input
+
+                    type="email"
+
+                    id="email"
+
+                    th:field="*{email}"
+
+                    placeholder="Enter Email Address"
+
+                    autocomplete="off"
+
+                    required>
+
+            <small
+                    id="emailError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('email')}"
+                    th:errors="*{email}">
+
+            </small>
+
+        </div>
+
+        <!-- Mobile -->
+
+        <div class="form-group">
+
+            <label for="mobile">
+
+                Mobile Number
+
+            </label>
+
+            <input
+
+                    type="text"
+
+                    id="mobile"
+
+                    th:field="*{mobile}"
+
+                    maxlength="10"
+
+                    placeholder="Enter Mobile Number"
+
+                    autocomplete="off"
+
+                    required>
+
+            <small
+                    id="mobileError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('mobile')}"
+                    th:errors="*{mobile}">
+
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ACADEMIC INFORMATION-->
+
+<div class="section">
+
+    <div class="section-title">
+
+         Academic Information
+
+    </div>
+
+    <div class="form-grid">
+
+            <!-- Branch -->
+
+        <div class="form-group">
+
+            <label for="branch">
+
+                Branch
+
+            </label>
+
+            <select
+                    id="branch"
+                    th:field="*{branch}"
+                    required>
+
+                <option value="">Select Branch</option>
+
+                <option value="Computer Science & Engineering">
+                    Computer Science & Engineering
+                </option>
+
+                <option value="Information Technology">
+                    Information Technology
+                </option>
+
+                <option value="Artificial Intelligence & Data Science">
+                    Artificial Intelligence & Data Science
+                </option>
+
+                <option value="Electronics & Communication Engineering">
+                    Electronics & Communication Engineering
+                </option>
+
+                <option value="Electrical Engineering">
+                    Electrical Engineering
+                </option>
+
+                <option value="Mechanical Engineering">
+                    Mechanical Engineering
+                </option>
+
+                <option value="Civil Engineering">
+                    Civil Engineering
+                </option>
+
+            </select>
+
+            <small
+                    id="branchError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('branch')}"
+                    th:errors="*{branch}">
+
+            </small>
+
+        </div>
+
+        <!-- Semester -->
+
+        <div class="form-group">
+
+            <label for="semester">
+
+                Semester
+
+            </label>
+
+            <select
+                    id="semester"
+                    th:field="*{semester}"
+                    required>
+
+                <option value="">Select Semester</option>
+
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+                <option value="9">Semester 9</option>
+                <option value="10">Semester 10</option>
+
+            </select>
+
+            <small
+                    id="semesterError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('semester')}"
+                    th:errors="*{semester}">
+
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ACCOUNT INFORMATION -->
+
+<div
+        class="alert success"
+        th:if="${successMessage}"
+        th:text="${successMessage}">
+</div>
+
+<div
+        class="alert error"
+        th:if="${errorMessage}"
+        th:text="${errorMessage}">
+</div>
+
+<div class="section">
+
+    <div class="section-title">
+
+         Account Information
+
+    </div>
+
+    <div class="form-grid">
+
+        <!-- Password -->
+
+        <div class="form-group">
+
+            <label for="password">
+
+                Password
+
+            </label>
+
+            <input
+                    type="password"
+                    id="password"
+                    th:field="*{password}"
+                    placeholder="Enter Password"
+                    required>
+
+            <small
+                    id="passwordError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('password')}"
+                    th:errors="*{password}">
+
+            </small>
+
+        </div>
+
+        <!-- Confirm Password -->
+
+        <div class="form-group">
+
+            <label for="confirmPassword">
+
+                Confirm Password
+
+            </label>
+
+            <input
+                    type="password"
+                    id="confirmPassword"
+                    th:field="*{confirmPassword}"
+                    placeholder="Confirm Password"
+                    required>
+
+            <small
+                    id="confirmPasswordError"
+                    class="error-message"
+                    th:if="${#fields.hasErrors('confirmPassword')}"
+                    th:errors="*{confirmPassword}">
+
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="show-password-container">
+
+        <label class="checkbox-label">
+
+            <input
+                    type="checkbox"
+                    id="showPassword">
+
+            Show Password
+
+        </label>
+
+    </div>
+
+</div>
+
+<!-- ADDRESS -->
+
+<div class="section">
+
+    <div class="section-title">
+
+         Address
+
+    </div>
+
+    <div class="form-group full-width">
+
+        <textarea
+
+                id="address"
+
+                th:field="*{address}"
+
+                rows="2"
+
+                placeholder="Enter Complete Address"
+
+                required>
+
+        </textarea>
+
+        <small
+                id="addressError"
+                class="error-message"
+                th:if="${#fields.hasErrors('address')}"
+                th:errors="*{address}">
+
+        </small>
+
+    </div>
+
+</div>
+
+<!-- STUDENT IMAGE -->
+
+<div class="section">
+
+    <div class="section-title">
+
+         Student Image
+
+    </div>
+
+    <div class="image-upload-row">
+
+            <!-- Image Upload -->
+
+        <div class="image-upload">
+
+            <label for="studentImage">
+
+                Upload Image
+
+            </label>
+
+            <input
+
+                    type="file"
+
+                    id="studentImage"
+
+                    th:field="*{studentImage}"
+
+                    accept=".jpg,.jpeg,.png">
+
+            <small
+
+                    id="studentImageError"
+
+                    class="error-message"
+
+                    th:if="${#fields.hasErrors('studentImage')}"
+
+                    th:errors="*{studentImage}">
+
+            </small>
+
+        </div>
+
+        <!-- Preview Button -->
+
+        <div class="preview-button-container">
+
+            <button
+
+                    type="button"
+
+                    id="previewButton"
+
+                    class="btn"
+
+                    disabled>
+
+                Preview Image
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- IMAGE PREVIEW MODAL -->
+
+<div
+
+        id="imageModal"
+
+        class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+
+                Student Image Preview
+
+            </h2>
+
+            <span
+
+                    class="close-modal"
+
+                    id="closeModal">
+
+                &times;
+
+            </span>
+
+        </div>
+
+        <div class="modal-body">
+
+            <img
+
+                    id="previewImage"
+
+                    src="#"
+
+                    alt="Student Image Preview">
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+
+                    type="button"
+
+                    id="closePreview"
+
+                    class="btn">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- END OF REGISTRATION CARD -->
+
+</div>
+
+<!-- END FORM -->
+
+</form>
+
+</div>
+
+<!-- FOOTER -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- JAVASCRIPT -->
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/registration.js}"></script>
+<script th:src="@{/js/student.js}"></script>
+
+</body>
+
+</html>
+

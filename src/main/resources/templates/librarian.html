@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Librarian Registration</title>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <link rel="stylesheet" th:href="@{/css/registration.css}">
+
+    <link rel="stylesheet" th:href="@{/css/librarian.css}">
+
+</head>
+
+<body>
+
+<!-- PUBLIC HEADER -->
+
+<div th:replace="~{fragments/public-header :: header}"></div>
+
+<!-- BREADCRUMB -->
+
+<div class="breadcrumb">
+
+    <a th:href="@{/}">Home</a>
+
+    <span class="separator">></span>
+
+    <span>Librarian Registration</span>
+
+</div>
+
+<!-- PAGE HEADER -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Librarian Registration</h1>
+
+        <p>
+            Register yourself as a Librarian to manage the Library Management System.
+        </p>
+
+    </div>
+
+    <div class="page-actions">
+
+        <button
+                type="submit"
+                form="librarianForm"
+                class="btn">
+
+            Register
+
+        </button>
+
+        <button
+                type="reset"
+                form="librarianForm"
+                class="btn">
+
+            Reset
+
+        </button>
+
+        <button
+                type="button"
+                onclick="history.back()"
+                class="btn">
+
+            Back
+
+        </button>
+
+        <a
+                th:href="@{/}"
+                class="btn">
+
+            Home
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- FORM -->
+
+<div class="form-container">
+
+    <form
+            id="librarianForm"
+            th:action="@{/librarian}"
+            th:object="${librarian}"
+            method="post"
+            enctype="multipart/form-data"
+            novalidate>
+
+        <div class="registration-card">
+
+            <!-- PERSONAL INFORMATION -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    Personal Information
+
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label for="employeeId">
+                            Employee ID
+                        </label>
+
+                        <input
+                                type="text"
+                                id="employeeId"
+                                th:field="*{employeeId}"
+                                placeholder="Enter Employee ID"
+                                autocomplete="off"
+                                required>
+
+                        <small
+                                id="employeeIdError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('employeeId')}"
+                                class="error-message"
+                                th:errors="*{employeeId}">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="librarianName">
+                            Librarian Name
+                        </label>
+
+                        <input
+                                type="text"
+                                id="librarianName"
+                                th:field="*{librarianName}"
+                                placeholder="Enter Librarian Name"
+                                autocomplete="off"
+                                required>
+
+                        <small
+                                id="librarianNameError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('librarianName')}"
+                                class="error-message"
+                                th:errors="*{librarianName}">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                                type="email"
+                                id="email"
+                                th:field="*{email}"
+                                placeholder="Enter Email Address"
+                                autocomplete="email"
+                                required>
+
+                        <small
+                                id="emailError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('email')}"
+                                class="error-message"
+                                th:errors="*{email}">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="mobile">
+                            Mobile Number
+                        </label>
+
+                        <input
+                                type="text"
+                                id="mobile"
+                                th:field="*{mobile}"
+                                maxlength="10"
+                                placeholder="Enter Mobile Number"
+                                autocomplete="tel"
+                                required>
+
+                        <small
+                                id="mobileError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('mobile')}"
+                                class="error-message"
+                                th:errors="*{mobile}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PROFESSIONAL INFORMATION -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    Professional Information
+
+                </div>
+
+                <div class="form-grid">
+
+                    <!-- Designation -->
+
+                    <div class="form-group">
+
+                        <label for="designation">
+                            Designation
+                        </label>
+
+                        <select
+                                id="designation"
+                                th:field="*{designation}"
+                                required>
+
+                            <option value="">
+                                Select Designation
+                            </option>
+
+                            <option value="Chief Librarian">
+                                Chief Librarian
+                            </option>
+
+                            <option value="Assistant Librarian">
+                                Assistant Librarian
+                            </option>
+
+                            <option value="Library Assistant">
+                                Library Assistant
+                            </option>
+
+                            <option value="Library Clerk">
+                                Library Clerk
+                            </option>
+
+                        </select>
+
+                        <small
+                                id="designationError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('designation')}"
+                                class="error-message"
+                                th:errors="*{designation}">
+                        </div>
+
+                    </div>
+
+                    <!-- Qualification -->
+
+                    <div class="form-group">
+
+                        <label for="qualification">
+                            Qualification
+                        </label>
+
+                        <select
+                                id="qualification"
+                                th:field="*{qualification}"
+                                required>
+
+                            <option value="">
+                                Select Qualification
+                            </option>
+
+                            <option value="Bachelor's Degree">
+                                Bachelor's Degree
+                            </option>
+
+                            <option value="Master's Degree">
+                                Master's Degree
+                            </option>
+
+                            <option value="M.Lib.I.Sc">
+                                M.Lib.I.Sc
+                            </option>
+
+                            <option value="Ph.D">
+                                Ph.D
+                            </option>
+
+                        </select>
+
+                        <small
+                                id="qualificationError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('qualification')}"
+                                class="error-message"
+                                th:errors="*{qualification}">
+                        </div>
+
+                    </div>
+
+                    <!-- Experience -->
+
+                    <div class="form-group">
+
+                        <label for="experience">
+                            Years of Experience
+                        </label>
+
+                        <input
+                                type="number"
+                                id="experience"
+                                th:field="*{experience}"
+                                min="0"
+                                max="50"
+                                placeholder="Enter Years of Experience"
+                                required>
+
+                        <small
+                                id="experienceError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('experience')}"
+                                class="error-message"
+                                th:errors="*{experience}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ACCOUNT INFORMATION -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    Account Information
+
+                </div>
+
+                <div class="form-grid">
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                                type="password"
+                                id="password"
+                                th:field="*{password}"
+                                placeholder="Enter Password"
+                                autocomplete="new-password"
+                                required>
+
+                        <small
+                                id="passwordError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('password')}"
+                                class="error-message"
+                                th:errors="*{password}">
+                        </div>
+
+                    </div>
+
+                    <!-- Confirm Password -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                                type="password"
+                                id="confirmPassword"
+                                th:field="*{confirmPassword}"
+                                placeholder="Confirm Password"
+                                autocomplete="new-password"
+                                required>
+
+                        <small
+                                id="confirmPasswordError"
+                                class="error-message">
+                        </small>
+
+                        <div
+                                th:if="${#fields.hasErrors('confirmPassword')}"
+                                class="error-message"
+                                th:errors="*{confirmPassword}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="show-password-container">
+
+                    <label class="checkbox-label">
+
+                        <input
+                                type="checkbox"
+                                id="showPassword">
+
+                        Show Password
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <!-- ADDRESS -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    Address
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label for="address">
+                        Residential Address
+                    </label>
+
+                    <textarea
+                            id="address"
+                            th:field="*{address}"
+                            rows="2"
+                            placeholder="Enter Complete Address"
+                            required>
+                    </textarea>
+
+                    <small
+                            id="addressError"
+                            class="error-message">
+                    </small>
+
+                    <div
+                            th:if="${#fields.hasErrors('address')}"
+                            class="error-message"
+                            th:errors="*{address}">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LIBRARIAN IMAGE -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    Librarian Image
+
+                </div>
+
+                <div class="image-upload-row">
+
+                    <!-- Image Upload -->
+
+                    <div class="image-upload">
+
+                        <label for="librarianImage">
+                            Upload Image
+                        </label>
+
+                        <input
+                                type="file"
+                                id="librarianImage"
+                                th:field="*{librarianImage}"
+                                accept=".jpg,.jpeg,.png">
+
+                        <small
+                                id="librarianImageError"
+                                class="error-message">
+                        </small>
+
+                    </div>
+
+                    <!-- Preview Button -->
+
+                    <div class="preview-button-container">
+
+                        <button
+                                type="button"
+                                id="previewButton"
+                                class="btn"
+                                disabled>
+
+                            Preview Image
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- IMAGE PREVIEW MODAL -->
+
+            <div
+                    id="imageModal"
+                    class="modal">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h2>
+                            Librarian Image Preview
+                        </h2>
+
+                        <span
+                                id="closeModal"
+                                class="close-modal">
+
+                            &times;
+
+                        </span>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <img
+                                id="previewImage"
+                                src="#"
+                                alt="Librarian Image Preview">
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button
+                                type="button"
+                                id="closePreview"
+                                class="btn">
+
+                            Close
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- FOOTER -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- JAVASCRIPT -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/registration.js}"></script>
+
+<script th:src="@{/js/librarian.js}"></script>
+
+</body>
+
+</html>

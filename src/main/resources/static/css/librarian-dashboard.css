@@ -1,0 +1,362 @@
+/* LIBRARIAN DASHBOARD */
+
+.librarian-dashboard {
+
+    min-height: calc(100vh - 82px);
+
+    padding:
+            22px 0 70px;
+
+}
+
+/* DASHBOARD CONTAINER */
+
+.librarian-dashboard-container {
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding:
+            0 40px;
+
+}
+
+/* BREADCRUMB */
+
+.librarian-dashboard .breadcrumb {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 28px;
+
+    font-size: 16px;
+
+}
+
+.librarian-dashboard .breadcrumb a {
+
+    color: #244f87;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+.librarian-dashboard .breadcrumb a:hover {
+
+    text-decoration: underline;
+
+}
+
+.librarian-dashboard .breadcrumb .separator {
+
+    color: #777777;
+
+}
+
+/* PAGE HEADER */
+
+.librarian-dashboard .dashboard-page-header {
+
+    margin-bottom: 55px;
+
+}
+
+.librarian-dashboard .dashboard-page-header h1 {
+
+    margin: 0 0 8px;
+
+    color: #244f87;
+
+    font-size: 38px;
+
+    font-weight: 700;
+
+}
+
+.librarian-dashboard .dashboard-page-header p {
+
+    margin: 0;
+
+    color: #555555;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+}
+
+/* WELCOME SECTION */
+
+.librarian-dashboard .welcome-section {
+
+    text-align: center;
+
+    margin-bottom: 42px;
+
+}
+
+.librarian-dashboard .welcome-section h2 {
+
+    margin: 0 0 10px;
+
+    color: #2d3f54;
+
+    font-size: 34px;
+
+    font-weight: 700;
+
+}
+
+.librarian-dashboard .welcome-section h2 span {
+
+    color: #315fa5;
+
+}
+
+.librarian-dashboard .welcome-section p {
+
+    margin: 0;
+
+    color: #5d6b7a;
+
+    font-size: 18px;
+
+}
+
+/* DASHBOARD CARDS */
+
+.librarian-dashboard-cards {
+
+    display: grid;
+
+    grid-template-columns:
+            repeat(3, 1fr);
+
+    gap: 28px;
+
+}
+
+/* DASHBOARD CARD */
+
+.librarian-dashboard .dashboard-card {
+
+    min-height: 190px;
+
+    padding:
+            32px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    border:
+            1px solid #d4d9e1;
+
+    border-radius: 14px;
+
+    background-color: #ffffff;
+
+    box-shadow:
+            0 8px 22px
+            rgba(0, 0, 0, 0.08);
+
+    text-decoration: none;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+
+}
+
+/* CARD HOVER */
+
+.librarian-dashboard .dashboard-card:hover {
+
+    transform:
+            translateY(-5px);
+
+    border-color: #315fa5;
+
+    box-shadow:
+            0 12px 28px
+            rgba(0, 0, 0, 0.12);
+
+}
+
+/* CARD TITLE */
+
+.librarian-dashboard .dashboard-card h3 {
+
+    margin:
+            0 0 16px;
+
+    color: #2d3f54;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+}
+
+/* CARD DESCRIPTION */
+
+.librarian-dashboard .dashboard-card p {
+
+    margin: 0;
+
+    color: #5d6b7a;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+}
+
+/* LARGE TABLET */
+
+@media
+        (max-width: 1100px) {
+
+    .librarian-dashboard-container {
+
+        padding:
+                0 30px;
+
+    }
+
+    .librarian-dashboard-cards {
+
+        grid-template-columns:
+                repeat(2, 1fr);
+
+    }
+
+}
+
+/* TABLET */
+
+@media
+        (max-width: 768px) {
+
+    .librarian-dashboard {
+
+        padding:
+                20px 0 60px;
+
+    }
+
+    .librarian-dashboard-container {
+
+        padding:
+                0 20px;
+
+    }
+
+    .librarian-dashboard .dashboard-page-header {
+
+        margin-bottom: 40px;
+
+    }
+
+    .librarian-dashboard .dashboard-page-header h1 {
+
+        font-size: 32px;
+
+    }
+
+    .librarian-dashboard .welcome-section h2 {
+
+        font-size: 28px;
+
+    }
+
+}
+
+/* MOBILE */
+
+@media
+        (max-width: 600px) {
+
+    .librarian-dashboard-cards {
+
+        grid-template-columns:
+                1fr;
+
+        gap: 20px;
+
+    }
+
+    .librarian-dashboard .dashboard-card {
+
+        min-height: 170px;
+
+        padding:
+                26px;
+
+    }
+
+}
+
+/* SMALL MOBILE */
+
+@media
+        (max-width: 480px) {
+
+    .librarian-dashboard-container {
+
+        padding:
+                0 15px;
+
+    }
+
+    .librarian-dashboard .breadcrumb {
+
+        font-size: 14px;
+
+    }
+
+    .librarian-dashboard .dashboard-page-header h1 {
+
+        font-size: 28px;
+
+    }
+
+    .librarian-dashboard .dashboard-page-header p {
+
+        font-size: 16px;
+
+    }
+
+    .librarian-dashboard .welcome-section h2 {
+
+        font-size: 25px;
+
+    }
+
+    .librarian-dashboard .welcome-section p {
+
+        font-size: 16px;
+
+    }
+
+    .librarian-dashboard .dashboard-card h3 {
+
+        font-size: 22px;
+
+    }
+
+}

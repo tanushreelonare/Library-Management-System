@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+
+<!-- STUDENT HEADER -->
+
+<header
+        th:fragment="header"
+        class="student-header">
+
+    <div class="student-header-container">
+
+        <!-- LOGO -->
+
+        <div class="student-logo">
+
+            <a th:href="@{/student-dashboard}">
+
+                Library Management System
+
+            </a>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="student-navigation">
+
+            <a th:href="@{/student-dashboard}">
+
+                Home
+
+            </a>
+
+            <a th:href="@{/student-profile}">
+
+                Profile
+
+            </a>
+
+            <a th:href="@{/issue-books}">
+
+                Issue Books
+
+            </a>
+
+            <a th:href="@{/available-books}">
+
+                Available Books
+
+            </a>
+
+            <a th:href="@{/my-requests}">
+
+                My Requests
+
+            </a>
+
+            <a th:href="@{/donations}">
+
+                Donations
+
+            </a>
+
+        </nav>
+
+        <!-- LOGOUT -->
+
+        <div class="student-header-actions">
+
+            <form
+                    th:action="@{/logout}"
+                    method="post">
+
+                <button
+                        type="submit"
+                        class="student-logout-btn">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</header>
+
+</body>
+
+</html>

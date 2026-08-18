@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management System</title>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+
+</head>
+
+<body>
+
+<div th:replace="~{fragments/public-header :: header}"></div>
+
+<main class="home">
+
+    <section class="hero">
+
+        <h1>Library Management System</h1>
+
+    </section>
+
+    <section class="cards">
+
+        <div class="card">
+
+            <div class="icon">🎓</div>
+
+            <h2>Student Registration</h2>
+
+            <p>
+                Register student.
+            </p>
+
+            <a th:href="@{/student}" class="btn">
+                View
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">🏢</div>
+
+            <h2>Librarian Registration</h2>
+
+            <p>
+                Register librarians.
+            </p>
+
+            <a th:href="@{/librarian}" class="btn">
+                View
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">🔐</div>
+
+            <h2>Login</h2>
+
+            <p>
+                User Login.
+            </p>
+
+            <a th:href="@{/login}" class="btn">
+                View
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/common.js}"></script>
+
+</body>
+
+</html>

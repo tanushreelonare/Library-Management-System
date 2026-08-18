@@ -1,0 +1,331 @@
+/* DASHBOARD */
+
+.student-dashboard {
+
+    min-height: calc(100vh - 82px);
+
+    padding:
+            22px 0 70px;
+
+}
+
+/* DASHBOARD CONTAINER */
+
+.student-dashboard-container {
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding:
+            0 40px;
+
+}
+
+/* BREADCRUMB */
+
+.breadcrumb {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 28px;
+
+    font-size: 16px;
+
+}
+
+.breadcrumb a {
+
+    color: #244f87;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+.breadcrumb a:hover {
+
+    text-decoration: underline;
+
+}
+
+.breadcrumb .separator {
+
+    color: #777777;
+
+}
+
+/* PAGE HEADER */
+
+.dashboard-page-header {
+
+    margin-bottom: 55px;
+
+}
+
+.dashboard-page-header h1 {
+
+    margin: 0 0 8px;
+
+    color: #244f87;
+
+    font-size: 38px;
+
+    font-weight: 700;
+
+}
+
+.dashboard-page-header p {
+
+    margin: 0;
+
+    color: #555555;
+
+    font-size: 18px;
+
+}
+
+/* WELCOME SECTION */
+
+.welcome-section {
+
+    text-align: center;
+
+    margin-bottom: 42px;
+
+}
+
+.welcome-section h2 {
+
+    margin: 0 0 10px;
+
+    color: #2d3f54;
+
+    font-size: 34px;
+
+    font-weight: 700;
+
+}
+
+.welcome-section h2 span {
+
+    color: #2d3f54;
+
+}
+
+.welcome-section p {
+
+    margin: 0;
+
+    color: #2d3f54;
+
+    font-size: 18px;
+
+}
+
+/* DASHBOARD CARDS */
+
+.dashboard-cards {
+
+    display: grid;
+
+    grid-template-columns:
+            repeat(3, 1fr);
+
+    gap: 30px;
+
+}
+
+/* DASHBOARD CARD */
+
+.dashboard-card {
+
+    min-height: 200px;
+
+    padding:
+            34px;
+
+    border:
+            1px solid #d4d9e1;
+
+    border-radius: 14px;
+
+    background-color: #ffffff;
+
+    box-shadow:
+            0 8px 22px
+            rgba(0, 0, 0, 0.08);
+
+    text-decoration: none;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+
+}
+
+/* CARD HOVER */
+
+.dashboard-card:hover {
+
+    transform:
+            translateY(-5px);
+
+    border-color: #315fa5;
+
+    box-shadow:
+            0 12px 28px
+            rgba(0, 0, 0, 0.12);
+
+}
+
+/* CARD TITLE */
+
+.dashboard-card h3 {
+
+    margin:
+            0 0 18px;
+
+    color: #2d3f54;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+}
+
+/* CARD DESCRIPTION */
+
+.dashboard-card p {
+
+    margin: 0;
+
+    color: #5d6b7a;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+
+}
+
+/* TABLET */
+
+@media
+        (max-width: 1000px) {
+
+    .student-header-container {
+
+        padding:
+                0 25px;
+
+    }
+
+    .student-navigation {
+
+        gap: 18px;
+
+    }
+
+    .dashboard-cards {
+
+        grid-template-columns:
+                repeat(2, 1fr);
+
+    }
+
+}
+
+/* MOBILE */
+
+@media
+        (max-width: 768px) {
+
+    .student-header-container {
+
+        min-height: auto;
+
+        padding:
+                20px;
+
+        flex-direction: column;
+
+    }
+
+    .student-navigation {
+
+        flex-wrap: wrap;
+
+        gap:
+                15px 20px;
+
+    }
+
+    .student-dashboard-container {
+
+        padding:
+                0 20px;
+
+    }
+
+    .dashboard-page-header {
+
+        margin-bottom: 40px;
+
+    }
+
+    .dashboard-page-header h1 {
+
+        font-size: 32px;
+
+    }
+
+    .welcome-section h2 {
+
+        font-size: 28px;
+
+    }
+
+    .dashboard-cards {
+
+        grid-template-columns:
+                1fr;
+
+    }
+
+}
+
+/* SMALL MOBILE */
+
+@media
+        (max-width: 480px) {
+
+    .student-logo a {
+
+        font-size: 23px;
+
+    }
+
+    .dashboard-page-header h1 {
+
+        font-size: 28px;
+
+    }
+
+    .dashboard-card {
+
+        padding:
+                25px;
+
+    }
+
+}

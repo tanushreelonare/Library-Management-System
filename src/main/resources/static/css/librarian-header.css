@@ -1,0 +1,240 @@
+/* LIBRARIAN HEADER */
+
+.librarian-header {
+
+    width: 100%;
+
+    background-color: #244f87;
+
+    box-shadow:
+            0 2px 6px
+            rgba(0, 0, 0, 0.15);
+
+}
+
+/* HEADER CONTAINER */
+
+.librarian-header-container {
+
+    width: 100%;
+
+    max-width: 1600px;
+
+    margin: 0 auto;
+
+    padding:
+            0 35px;
+
+    min-height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+}
+
+/* LOGO */
+
+.librarian-logo a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 27px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+/* NAVIGATION */
+
+.librarian-navigation {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 22px;
+
+    flex: 1;
+
+}
+
+/* NAVIGATION LINKS */
+
+.librarian-navigation a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+
+}
+
+.librarian-navigation a:hover {
+
+    opacity: 0.8;
+
+}
+
+/* HEADER ACTIONS */
+
+.librarian-header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+/* LOGOUT BUTTON */
+
+.librarian-logout-btn {
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding:
+            13px 28px;
+
+    background-color: #dc3545;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+
+}
+
+.librarian-logout-btn:hover {
+
+    opacity: 0.9;
+
+}
+
+/* LARGE TABLET */
+
+@media
+        (max-width: 1250px) {
+
+    .librarian-header-container {
+
+        padding:
+                0 25px;
+
+    }
+
+    .librarian-navigation {
+
+        gap: 15px;
+
+    }
+
+    .librarian-navigation a {
+
+        font-size: 15px;
+
+    }
+
+    .librarian-logo a {
+
+        font-size: 24px;
+
+    }
+
+}
+
+/* TABLET */
+
+@media
+        (max-width: 1000px) {
+
+    .librarian-header-container {
+
+        min-height: auto;
+
+        padding:
+                20px 25px;
+
+        flex-direction: column;
+
+    }
+
+    .librarian-navigation {
+
+        flex-wrap: wrap;
+
+        gap:
+                15px 22px;
+
+    }
+
+}
+
+/* MOBILE */
+
+@media
+        (max-width: 600px) {
+
+    .librarian-header-container {
+
+        padding:
+                18px 20px;
+
+    }
+
+    .librarian-logo a {
+
+        font-size: 22px;
+
+        text-align: center;
+
+    }
+
+    .librarian-navigation {
+
+        gap:
+                12px 18px;
+
+    }
+
+    .librarian-navigation a {
+
+        font-size: 14px;
+
+    }
+
+    .librarian-logout-btn {
+
+        padding:
+                11px 24px;
+
+        font-size: 15px;
+
+    }
+
+}
