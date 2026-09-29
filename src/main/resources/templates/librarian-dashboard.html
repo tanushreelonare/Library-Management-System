@@ -82,10 +82,8 @@
             </h1>
 
             <p>
-
                 Manage library operations, books, students,
                 requests, and reports from one place.
-
             </p>
 
         </div>
@@ -98,11 +96,7 @@
 
                 Welcome,
 
-                <span th:text="${librarianName}">
-
-                    Librarian
-
-                </span>
+                <span th:text="${librarianName}"> Librarian </span>
 
             </h2>
 
@@ -122,20 +116,16 @@
             <!-- STUDENT REPORT -->
 
             <a
-                    th:href="@{/student-report}"
+                    th:href="@{/librarian/students}"
                     class="dashboard-card">
 
                 <h3>
-
                     Student Report
-
                 </h3>
 
                 <p>
-
                     View and manage reports related
                     to registered students.
-
                 </p>
 
             </a>
@@ -143,20 +133,16 @@
             <!-- BOOKS REPORT -->
 
             <a
-                    th:href="@{/book-report}"
+                    th:href="@{/librarian/books}"
                     class="dashboard-card">
 
                 <h3>
-
-                    Books Report
-
+                    Manage Books
                 </h3>
 
                 <p>
-
-                    View reports and information
+                    View and manage reports and information
                     about books in the library.
-
                 </p>
 
             </a>
@@ -164,7 +150,7 @@
             <!-- ISSUED BOOKS REPORT -->
 
             <a
-                    th:href="@{/issued-books-report}"
+                    th:href="@{/librarian/issued-books}"
                     class="dashboard-card">
 
                 <h3>
@@ -185,20 +171,16 @@
             <!-- ADD NEW BOOKS -->
 
             <a
-                    th:href="@{/add-book}"
+                    th:href="@{/librarian/books/add}"
                     class="dashboard-card">
 
                 <h3>
-
                     Add New Books
-
                 </h3>
 
                 <p>
-
                     Add new books and expand
                     the library collection.
-
                 </p>
 
             </a>
@@ -206,7 +188,7 @@
             <!-- APPROVE REQUESTS -->
 
             <a
-                    th:href="@{/requests}"
+                    th:href="@{/librarian/requests}"
                     class="dashboard-card">
 
                 <h3>
@@ -227,7 +209,7 @@
             <!-- BOOK CATEGORIES -->
 
             <a
-                    th:href="@{/book-categories}"
+                    th:href="@{/librarian/book-categories}"
                     class="dashboard-card">
 
                 <h3>

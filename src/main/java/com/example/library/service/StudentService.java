@@ -1,6 +1,8 @@
 package com.example.library.service;
 
+import com.example.library.dto.StudentProfileDTO;
 import com.example.library.dto.StudentRegistrationDTO;
+import com.example.library.dto.StudentReportDTO;
 import com.example.library.entity.Student;
 
 import java.io.IOException;
@@ -14,83 +16,88 @@ public interface StudentService {
     /**
      * Registers a new student.
      *
-     * @param studentRegistrationDTO Student registration details
-     * @return Registered Student
+     * @param dto Student registration details
+     * @return Registered student
      */
-    Student registerStudent(StudentRegistrationDTO studentRegistrationDTO)
+    Student registerStudent(
+            StudentRegistrationDTO dto)
             throws IOException;
 
     // READ OPERATIONS
 
-    /**
-     * Returns all students.
-     *
-     * @return List of students
-     */
     List<Student> getAllStudents();
 
-    /**
-     * Returns student by database ID.
-     *
-     * @param id Student ID
-     * @return Optional Student
-     */
     Optional<Student> getStudentById(Long id);
 
-    /**
-     * Returns student by roll number.
-     *
-     * @param rollNumber Roll Number
-     * @return Optional Student
-     */
-    Optional<Student> getStudentByRollNumber(String rollNumber);
+    Optional<Student> getStudentByRollNumber(
+            String rollNumber);
 
-    /**
-     * Returns student by associated user ID.
-     *
-     * @param userId User ID
-     * @return Optional Student
-     */
-    Optional<Student> getStudentByUserId(Long userId);
+    Optional<Student> getStudentByUserId(
+            Long userId);
 
-    // UPDATE
+    // STUDENT PROFILE
 
-    /**
-     * Updates student profile.
-     *
-     * @param id Student ID
-     * @param studentRegistrationDTO Updated details
-     * @return Updated Student
-     */
-    Student updateStudent(Long id,
-                          StudentRegistrationDTO studentRegistrationDTO)
+    StudentProfileDTO getStudentProfile(
+            Long userId);
+
+    Student updateStudentProfile(
+            Long userId,
+            StudentProfileDTO dto)
             throws IOException;
 
-    // DELETE
+    // STUDENT REPORT
 
     /**
-     * Deletes a student.
-     *
-     * @param id Student ID
+     * Returns all students for the librarian report.
      */
-    void deleteStudent(Long id);
+    List<StudentReportDTO> getStudentReport();
+
+    /**
+     * Searches students by roll number, name,
+     * mobile number or email.
+     */
+    List<StudentReportDTO> searchStudents(
+            String searchTerm);
+
+    /**
+     * Returns one student for the edit modal.
+     */
+    StudentReportDTO getStudentReportById(
+            Long id);
+
+    /**
+     * Updates student details from the
+     * librarian edit modal.
+     */
+    Student updateStudentFromReport(
+            Long id,
+            StudentReportDTO dto);
+
+    /**
+     * Activates or deactivates a student's
+     * account.
+     */
+    void toggleStudentStatus(
+            Long studentId);
+
+    /**
+     * Permanently deletes a student.
+     */
+    void deleteStudent(
+            Long studentId);
+
+    // EXISTING UPDATE
+
+    Student updateStudent(
+            Long id,
+            StudentRegistrationDTO dto)
+            throws IOException;
 
     // VALIDATION
 
-    /**
-     * Checks if roll number already exists.
-     *
-     * @param rollNumber Roll Number
-     * @return true if exists
-     */
-    boolean existsByRollNumber(String rollNumber);
+    boolean existsByRollNumber(
+            String rollNumber);
 
-    /**
-     * Checks if mobile number already exists.
-     *
-     * @param mobile Mobile Number
-     * @return true if exists
-     */
-    boolean existsByMobile(String mobile);
-
+    boolean existsByMobile(
+            String mobile);
 }

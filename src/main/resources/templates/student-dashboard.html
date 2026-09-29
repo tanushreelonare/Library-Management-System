@@ -120,12 +120,12 @@
             <!-- ISSUE BOOKS -->
 
             <a
-                    th:href="@{/issue-books}"
+                    th:href="@{/student/books}"
                     class="dashboard-card">
 
                 <h3>
 
-                    Issue Books
+                    Available Books
 
                 </h3>
 
@@ -141,7 +141,7 @@
             <!-- MANAGE RECORDS -->
 
             <a
-                    th:href="@{/my-requests}"
+                    th:href="@{/student/manage-records}"
                     class="dashboard-card">
 
                 <h3>
@@ -152,17 +152,37 @@
 
                 <p>
 
-                    View and manage your book issues,
-                    requests, and library records.
+                    View and manage your issued books  and library records.
 
                 </p>
 
             </a>
 
+            <!-- MY REQUESTS -->
+
+            <a
+                    th:href="@{/student/requests}"
+                    class="dashboard-card">
+
+                <h3>
+
+                    My Requests
+
+                </h3>
+
+                <p>
+
+                    View and manage your book requests.
+
+                </p>
+
+            </a>
+
+
             <!-- VIEW PROFILE -->
 
             <a
-                    th:href="@{/student-profile}"
+                    th:href="@{/student/profile}"
                     class="dashboard-card">
 
                 <h3>

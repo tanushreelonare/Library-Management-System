@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Issued Books - Library Management System
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/common.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/librarian-header.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/librarian-issued-books.css}">
+
+</head>
+
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div
+        th:replace="~{fragments/librarian-header :: header}">
+</div>
+
+
+<main class="librarian-issued-books-page">
+
+    <div class="librarian-issued-books-container">
+
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/librarian/dashboard}">
+                Home
+            </a>
+
+            <span>
+                &gt;
+            </span>
+
+            <a th:href="@{/librarian/dashboard}">
+                Librarian Dashboard
+            </a>
+
+            <span>
+                &gt;
+            </span>
+
+            <span>
+                Issued Books
+            </span>
+
+        </div>
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <h1>
+                Issued Books
+            </h1>
+
+            <p>
+                View information about books currently issued to students.
+            </p>
+
+        </div>
+
+
+        <!-- REPORT INFORMATION -->
+
+        <div class="report-info">
+
+            <span>
+                Books Issued:
+            </span>
+
+            <strong
+                    th:text="${issuedBooks != null
+                              ? issuedBooks.size()
+                              : 0}">
+                0
+            </strong>
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+                th:if="${issuedBooks == null
+                        or #lists.isEmpty(issuedBooks)}"
+                class="empty-issued-books">
+
+            <h3>
+                No Issued Books
+            </h3>
+
+            <p>
+                There are currently no books issued to students.
+            </p>
+
+        </div>
+
+
+        <!-- ISSUED BOOKS TABLE -->
+
+        <div
+                th:if="${issuedBooks != null
+                        and !#lists.isEmpty(issuedBooks)}"
+                class="issued-books-table-wrapper">
+
+            <table class="issued-books-table">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Book
+                    </th>
+
+                    <th>
+                        ISBN
+                    </th>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Roll Number
+                    </th>
+
+                    <th>
+                        Issued Date
+                    </th>
+
+                    <th>
+                        Due Date
+                    </th>
+
+                    <th>
+                        Duration
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="issuedBook : ${issuedBooks}">
+
+
+                    <!-- BOOK -->
+
+                    <td>
+
+                        <div class="book-title"
+                             th:text="${issuedBook.bookTitle}">
+                            Book Title
+                        </div>
+
+                        <div class="book-author"
+                             th:text="${issuedBook.author}">
+                            Author
+                        </div>
+
+                    </td>
+
+
+                    <!-- ISBN -->
+
+                    <td
+                            class="isbn"
+                            th:text="${issuedBook.isbn}">
+                        ISBN
+                    </td>
+
+
+                    <!-- STUDENT -->
+
+                    <td
+                            th:text="${issuedBook.studentName}">
+                        Student Name
+                    </td>
+
+
+                    <!-- ROLL NUMBER -->
+
+                    <td
+                            th:text="${issuedBook.rollNumber}">
+                        Roll Number
+                    </td>
+
+
+                    <!-- ISSUED DATE -->
+
+                    <td>
+
+                        <span
+                                th:if="${issuedBook.issuedAt != null}"
+                                th:text="${#temporals.format(
+                                         issuedBook.issuedAt,
+                                         'dd MMM yyyy'
+                                     )}">
+                            10 Sep 2026
+                        </span>
+
+                        <span
+                                th:if="${issuedBook.issuedAt == null}"
+                                class="not-available">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- DUE DATE -->
+
+                    <td>
+
+                        <span
+                                th:if="${issuedBook.dueDate != null}"
+                                th:text="${#temporals.format(
+                                         issuedBook.dueDate,
+                                         'dd MMM yyyy'
+                                     )}">
+                            24 Sep 2026
+                        </span>
+
+                        <span
+                                th:if="${issuedBook.dueDate == null}"
+                                class="not-available">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- DURATION -->
+
+                    <td
+                            class="duration">
+
+                        <span
+                                th:if="${issuedBook.durationDays != null}"
+                                th:text="${issuedBook.durationDays}">
+                            14
+                        </span>
+
+                        <span
+                                th:if="${issuedBook.durationDays != null}">
+                            days
+                        </span>
+
+                        <span
+                                th:if="${issuedBook.durationDays == null}"
+                                class="not-available">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                                class="issued-book-status"
+                                th:text="${issuedBook.status != null
+                                          ? issuedBook.status.replace(
+                                                '_',
+                                                ' '
+                                            )
+                                          : 'UNKNOWN'}">
+                            ISSUED
+                        </span>
+
+                    </td>
+
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<div
+        th:replace="~{fragments/footer :: footer}">
+</div>
+
+
+</body>
+
+</html>

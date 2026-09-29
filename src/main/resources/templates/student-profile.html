@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+<html
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile</title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/common.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/student-header.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/student-profile.css}">
+
+</head>
+
+<body>
+
+<!-- STUDENT HEADER -->
+
+<div
+        th:replace="~{fragments/student-header :: header}">
+
+</div>
+
+<main>
+
+    <!-- PAGE TOP CONTENT -->
+
+    <div class="profile-page-header">
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb-container">
+
+            <div class="breadcrumb">
+
+                <a th:href="@{/student-dashboard}">
+
+                    Home
+
+                </a>
+
+                <span class="breadcrumb-separator">
+
+                    &gt;
+
+                </span>
+
+                <span>
+
+                    Student Dashboard
+
+                </span>
+
+                <span class="breadcrumb-separator">
+
+                    &gt;
+
+                </span>
+
+                <span>
+
+                    Profile
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+
+                    My Profile
+
+                </h1>
+
+                <p>
+
+                    View and update your personal information.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PROFILE CONTAINER -->
+
+    <div class="profile-container">
+
+        <!-- SUCCESS MESSAGE -->
+
+        <div
+                th:if="${successMessage}"
+                class="success-message">
+
+            <span
+                    th:text="${successMessage}">
+
+            </span>
+
+        </div>
+
+        <!-- ERROR MESSAGE -->
+
+        <div
+                th:if="${errorMessage}"
+                class="error-message">
+
+            <span
+                    th:text="${errorMessage}">
+
+            </span>
+
+        </div>
+
+        <!-- PROFILE FORM -->
+
+        <form
+                id="studentProfileForm"
+                class="profile-form"
+                th:action="@{/student/profile}"
+                th:object="${studentProfile}"
+                method="post"
+                enctype="multipart/form-data"
+                novalidate>
+
+            <div class="profile-content">
+
+                <!-- PROFILE SIDEBAR -->
+
+                <aside class="profile-sidebar">
+
+                    <!-- PROFILE IMAGE -->
+
+                    <div class="profile-image-container">
+
+                        <img
+                                id="profileImagePreview"
+                                class="profile-image"
+                                th:if="${studentProfile.imagePath != null
+                                        and !studentProfile.imagePath.isBlank()}"
+                                th:src="@{'/uploads/' + ${studentProfile.imagePath}}"
+                                alt="Student Profile Image">
+
+                        <div
+                                id="defaultProfileImage"
+                                th:if="${studentProfile.imagePath == null
+                                        or studentProfile.imagePath.isBlank()}"
+                                class="default-profile-image">
+
+                            <span
+                                    th:text="${studentProfile.studentName != null
+                                            and !studentProfile.studentName.isBlank()
+                                            ? #strings.substring(
+                                                    studentProfile.studentName,
+                                                    0,
+                                                    1
+                                              )
+                                            : 'S'}">
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- STUDENT DETAILS -->
+
+                    <h2
+                            class="profile-student-name"
+                            th:text="${studentProfile.studentName}">
+
+                        Student Name
+
+                    </h2>
+
+                    <p class="profile-roll-number">
+
+                        Roll Number:
+
+                        <span
+                                th:text="${studentProfile.rollNumber}">
+
+                        </span>
+
+                    </p>
+
+                    <!-- IMAGE UPLOAD -->
+
+                    <div class="image-upload-group">
+
+                        <label for="studentImage">
+
+                            Change Profile Image
+
+                        </label>
+
+                        <input
+                                type="file"
+                                id="studentImage"
+                                th:field="*{studentImage}"
+                                accept="image/jpeg,image/png"
+                                disabled>
+
+                        <small class="image-help-text">
+
+                            JPG or PNG format only.
+
+                        </small>
+
+                        <small
+                                id="studentImageError"
+                                class="field-error">
+
+                        </small>
+
+                    </div>
+
+                </aside>
+
+                <!-- PROFILE MAIN -->
+
+                <div class="profile-main">
+
+                    <!-- PERSONAL INFORMATION -->
+
+                    <section class="profile-card">
+
+                        <h2>
+
+                            Personal Information
+
+                        </h2>
+
+                        <div class="profile-grid">
+
+                            <!-- ROLL NUMBER -->
+
+                            <div class="profile-field">
+
+                                <label
+                                        for="rollNumber"
+                                        class="profile-label">
+
+                                    Roll Number
+
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="rollNumber"
+                                        th:field="*{rollNumber}"
+                                        readonly>
+
+                            </div>
+
+                            <!-- STUDENT NAME -->
+
+                            <div class="profile-field">
+
+                                <label
+                                        for="studentName"
+                                        class="profile-label">
+
+                                    Student Name
+
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="studentName"
+                                        th:field="*{studentName}"
+                                        class="editable-field"
+                                        placeholder="Enter Student Name"
+                                        readonly
+                                        required>
+
+                                <small
+                                        id="studentNameError"
+                                        class="field-error"
+                                        th:errors="*{studentName}">
+
+                                </small>
+
+                            </div>
+
+                            <!-- MOBILE NUMBER -->
+
+                            <div class="profile-field">
+
+                                <label
+                                        for="mobile"
+                                        class="profile-label">
+
+                                    Mobile Number
+
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="mobile"
+                                        th:field="*{mobile}"
+                                        class="editable-field"
+                                        placeholder="Enter Mobile Number"
+                                        maxlength="10"
+                                        readonly
+                                        required>
+
+                                <small
+                                        id="mobileError"
+                                        class="field-error"
+                                        th:errors="*{mobile}">
+
+                                </small>
+
+                            </div>
+
+                            <!-- BRANCH -->
+
+                            <div class="profile-field">
+
+                                <label
+                                        for="branch"
+                                        class="profile-label">
+
+                                    Branch
+
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="branch"
+                                        th:field="*{branch}"
+                                        class="editable-field"
+                                        placeholder="Enter Branch"
+                                        readonly
+                                        required>
+
+                                <small
+                                        id="branchError"
+                                        class="field-error"
+                                        th:errors="*{branch}">
+
+                                </small>
+
+                            </div>
+
+                            <!-- SEMESTER -->
+
+                            <div class="profile-field">
+
+                                <label
+                                        for="semester"
+                                        class="profile-label">
+
+                                    Semester
+
+                                </label>
+
+                                <select
+                                        id="semester"
+                                        th:field="*{semester}"
+                                        class="editable-field"
+                                        disabled
+                                        required>
+
+                                    <option value="">
+
+                                        Select Semester
+
+                                    </option>
+
+                                    <option value="1">
+
+                                        Semester 1
+
+                                    </option>
+
+                                    <option value="2">
+
+                                        Semester 2
+
+                                    </option>
+
+                                    <option value="3">
+
+                                        Semester 3
+
+                                    </option>
+
+                                    <option value="4">
+
+                                        Semester 4
+
+                                    </option>
+
+                                    <option value="5">
+
+                                        Semester 5
+
+                                    </option>
+
+                                    <option value="6">
+
+                                        Semester 6
+
+                                    </option>
+
+                                    <option value="7">
+
+                                        Semester 7
+
+                                    </option>
+
+                                    <option value="8">
+
+                                        Semester 8
+
+                                    </option>
+
+                                    <option value="9">
+
+                                        Semester 9
+
+                                    </option>
+
+                                    <option value="10">
+
+                                        Semester 10
+
+                                    </option>
+
+                                </select>
+
+                                <small
+                                        id="semesterError"
+                                        class="field-error"
+                                        th:errors="*{semester}">
+
+                                </small>
+
+                            </div>
+
+                            <!-- ADDRESS -->
+
+                            <div
+                                    class="profile-field full-width">
+
+                                <label
+                                        for="address"
+                                        class="profile-label">
+
+                                    Address
+
+                                </label>
+
+                                <textarea
+                                        id="address"
+                                        th:field="*{address}"
+                                        class="editable-field"
+                                        placeholder="Enter Address"
+                                        rows="4"
+                                        readonly
+                                        required>
+
+                                </textarea>
+
+                                <small
+                                        id="addressError"
+                                        class="field-error"
+                                        th:errors="*{address}">
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <!-- ACCOUNT INFORMATION -->
+
+                    <section class="profile-card">
+
+                        <h2>
+
+                            Account Information
+
+                        </h2>
+
+                        <div class="profile-grid">
+
+                            <!-- REGISTERED EMAIL -->
+
+                            <div class="profile-field">
+
+                                <span class="profile-label">
+
+                                    Registered Email
+
+                                </span>
+
+                                <div
+                                        class="account-value"
+                                        th:text="${studentProfile.email}">
+
+                                </div>
+
+                            </div>
+
+                            <!-- ACCOUNT STATUS -->
+
+                            <div class="profile-field">
+
+                                <span class="profile-label">
+
+                                    Account Status
+
+                                </span>
+
+                                <div class="account-value">
+
+                                    <span
+                                            th:if="${studentProfile.enabled}"
+                                            class="account-status active">
+
+                                        Active
+
+                                    </span>
+
+                                    <span
+                                            th:unless="${studentProfile.enabled}"
+                                            class="account-status inactive">
+
+                                        Inactive
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <!-- REGISTRATION DATE -->
+
+                            <div class="profile-field">
+
+                                <span class="profile-label">
+
+                                    Registration Date
+
+                                </span>
+
+                                <div
+                                        class="account-value"
+                                        th:text="${studentProfile.createdAt != null
+                                                ? #temporals.format(
+                                                        studentProfile.createdAt,
+                                                        'dd MMMM yyyy, hh:mm a'
+                                                  )
+                                                : 'Not Available'}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <!-- ACTION BUTTONS -->
+
+                    <div class="profile-actions">
+
+                        <!-- EDIT PROFILE -->
+
+                        <button
+                                type="button"
+                                id="editProfileButton"
+                                class="btn primary-btn edit-profile-btn">
+
+                            Edit Profile
+
+                        </button>
+
+                        <!-- SAVE PROFILE -->
+
+                        <button
+                                type="submit"
+                                id="saveProfileButton"
+                                class="btn primary-btn update-profile-btn"
+                                style="display: none;">
+
+                            Save Changes
+
+                        </button>
+
+                        <!-- CANCEL EDIT -->
+
+                        <button
+                                type="button"
+                                id="cancelEditButton"
+                                class="btn secondary-btn"
+                                style="display: none;">
+
+                            Cancel
+
+                        </button>
+
+                        <!-- BACK TO DASHBOARD -->
+
+                        <a
+                                th:href="@{/student-dashboard}"
+                                class="btn secondary-btn dashboard-btn">
+
+                            Back to Dashboard
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+
+<div
+        th:replace="~{fragments/footer :: footer}">
+
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script
+        th:src="@{/js/common.js}">
+
+</script>
+
+<script
+        th:src="@{/js/student-profile.js}">
+
+</script>
+
+</body>
+
+</html>

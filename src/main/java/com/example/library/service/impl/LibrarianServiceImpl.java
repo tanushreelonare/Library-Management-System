@@ -1,5 +1,6 @@
 package com.example.library.service.impl;
 
+import com.example.library.dto.LibrarianProfileDTO;
 import com.example.library.dto.LibrarianRegistrationDTO;
 import com.example.library.entity.Librarian;
 import com.example.library.entity.User;
@@ -198,6 +199,92 @@ public class LibrarianServiceImpl implements LibrarianService {
         return librarianRepository.findByUserId(
                 userId
         );
+    }
+
+        // PROFILE
+
+    @Override
+    public LibrarianProfileDTO getLibrarianProfile(Long userId) {
+
+        Librarian librarian = librarianRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException(
+                                "Librarian profile not found for user ID : " + userId
+                        )
+                );
+
+        LibrarianProfileDTO dto = new LibrarianProfileDTO();
+
+        dto.setId(librarian.getId());
+        dto.setEmployeeId(librarian.getEmployeeId());
+        dto.setLibrarianName(librarian.getLibrarianName());
+        dto.setEmail(librarian.getEmail());
+        dto.setMobile(librarian.getMobile());
+        dto.setDesignation(librarian.getDesignation());
+        dto.setQualification(librarian.getQualification());
+        dto.setExperience(librarian.getExperience());
+        dto.setAddress(librarian.getAddress());
+        dto.setImagePath(librarian.getImagePath());
+        dto.setActive(librarian.isActive());
+        dto.setCreatedAt(librarian.getCreatedAt());
+
+        return dto;
+    }
+
+    @Override
+    public Librarian updateLibrarianProfile(
+            Long userId,
+            LibrarianProfileDTO dto)
+            throws IOException {
+
+        Librarian librarian = librarianRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException(
+                                "Librarian profile not found for user ID : " + userId
+                        )
+                );
+
+        // Validate mobile number
+
+        if (!librarian.getMobile().equals(dto.getMobile())
+                && librarianRepository.existsByMobile(dto.getMobile())) {
+
+            throw new IllegalArgumentException(
+                    "Mobile Number already exists."
+            );
+        }
+
+        // Update editable fields
+
+        librarian.setLibrarianName(dto.getLibrarianName());
+        librarian.setMobile(dto.getMobile());
+        librarian.setDesignation(dto.getDesignation());
+        librarian.setQualification(dto.getQualification());
+        librarian.setExperience(dto.getExperience());
+        librarian.setAddress(dto.getAddress());
+
+        // Replace profile image only when a new image is uploaded
+
+        if (dto.getLibrarianImage() != null
+                && !dto.getLibrarianImage().isEmpty()) {
+
+            if (librarian.getImagePath() != null
+                    && !librarian.getImagePath().isBlank()) {
+
+                fileStorageService.deleteFile(
+                        librarian.getImagePath()
+                );
+            }
+
+            String imagePath =
+                    fileStorageService.storeLibrarianImage(
+                            dto.getLibrarianImage()
+                    );
+
+            librarian.setImagePath(imagePath);
+        }
+
+        return librarianRepository.save(librarian);
     }
 
     // VALIDATION

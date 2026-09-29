@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Manage Records - Library Management System
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/common.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/student-header.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/student-manage-records.css}">
+
+</head>
+
+
+<body
+        th:attr="
+            data-returned=${returned},
+            data-reissue-submitted=${reissueSuccess != null},
+            data-reissue-pending=${reissuePending != null}">
+            
+<!-- STUDENT HEADER -->
+
+<div
+        th:replace="~{fragments/student-header :: header}">
+</div>
+
+
+<main class="student-manage-records-page">
+
+    <div class="student-manage-records-container">
+
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/student/dashboard}">
+                Home
+            </a>
+
+            <span>
+                &gt;
+            </span>
+
+            <a th:href="@{/student/dashboard}">
+                Student Dashboard
+            </a>
+
+            <span>
+                &gt;
+            </span>
+
+            <span>
+                Manage Records
+            </span>
+
+        </div>
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <h1>
+                Manage Records
+            </h1>
+
+            <p>
+                View and manage your currently issued books.
+            </p>
+
+        </div>
+
+
+        <!-- RECORD COUNT -->
+
+        <div class="records-info">
+
+            <span>
+                Books Issued:
+            </span>
+
+            <strong
+                    th:text="${issuedBooks != null
+                              ? issuedBooks.size()
+                              : 0}">
+                0
+            </strong>
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+                th:if="${issuedBooks == null
+                        or #lists.isEmpty(issuedBooks)}"
+                class="empty-records">
+
+            <div class="empty-icon">
+                📚
+            </div>
+
+            <h3>
+                No Issued Books
+            </h3>
+
+            <p>
+                You currently have no books issued to you.
+            </p>
+
+            <a
+                    class="browse-books-button"
+                    th:href="@{/student/available-books}">
+                Browse Available Books
+            </a>
+
+        </div>
+
+
+        <!-- ISSUED BOOKS TABLE -->
+
+        <div
+                th:if="${issuedBooks != null
+                        and !#lists.isEmpty(issuedBooks)}"
+                class="records-table-wrapper">
+
+            <table class="records-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Book
+                    </th>
+
+                    <th>
+                        ISBN
+                    </th>
+
+                    <th>
+                        Issued Date
+                    </th>
+
+                    <th>
+                        Due Date
+                    </th>
+
+                    <th>
+                        Duration
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="record : ${issuedBooks}">
+
+
+                    <!-- BOOK -->
+
+                    <td>
+
+                        <div
+                                class="book-title"
+                                th:text="${record.bookTitle}">
+                            Book Title
+                        </div>
+
+                        <div
+                                class="book-author"
+                                th:text="${record.author}">
+                            Author
+                        </div>
+
+                    </td>
+
+
+                    <!-- ISBN -->
+
+                    <td
+                            class="isbn"
+                            th:text="${record.isbn}">
+                        ISBN
+                    </td>
+
+
+                    <!-- ISSUED DATE -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.issuedAt != null}"
+                                th:text="${#temporals.format(
+                                    record.issuedAt,
+                                    'dd MMM yyyy'
+                                )}">
+                            10 Sep 2026
+                        </span>
+
+                        <span
+                                th:if="${record.issuedAt == null}"
+                                class="not-available">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- DUE DATE -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.dueDate != null}"
+                                th:text="${#temporals.format(
+                                    record.dueDate,
+                                    'dd MMM yyyy'
+                                )}">
+                            24 Sep 2026
+                        </span>
+
+                        <span
+                                th:if="${record.dueDate == null}"
+                                class="not-available">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- DURATION -->
+
+                    <td class="duration">
+
+                        <span
+                                th:if="${record.durationDays != null}"
+                                th:text="${record.durationDays}">
+                            14
+                        </span>
+
+                        <span
+                                th:if="${record.durationDays != null}">
+                            days
+                        </span>
+
+                        <span
+                                th:if="${record.durationDays == null}"
+                                class="not-available">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="record-status">
+                            ISSUED
+                        </span>
+
+                    </td>
+
+
+                    <!-- ACTIONS -->
+
+                    <td>
+
+                        <div class="record-actions">
+
+
+                            <!-- RETURN -->
+
+                            <form
+                                    class="return-form"
+                                    method="post"
+                                    th:action="@{/student/manage-records/return}">
+
+                                <input
+                                        type="hidden"
+                                        name="itemId"
+                                        th:value="${record.itemId}">
+
+                                <button
+                                        type="submit"
+                                        class="return-button">
+                                    Return
+                                </button>
+
+                            </form>
+
+
+                            <!-- RE-ISSUE -->
+
+                            <button
+                                    type="button"
+                                    class="reissue-button"
+                                    th:attr="
+                                        data-item-id=${record.itemId},
+                                        data-book-title=${record.bookTitle},
+                                        data-current-due-date=${record.dueDate != null
+                                            ? #temporals.format(
+                                                record.dueDate,
+                                                'dd MMM yyyy'
+                                            )
+                                            : '-'},
+                                        data-duration=${record.durationDays != null
+                                            ? record.durationDays
+                                            : 14}">
+                                Re-issue
+                            </button>
+
+
+                        </div>
+
+                    </td>
+
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- RE-ISSUE MODAL -->
+
+<div
+        id="reissueModal"
+        class="modal-overlay"
+        aria-hidden="true">
+
+    <div
+            class="reissue-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reissueModalTitle">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2 id="reissueModalTitle">
+                    Re-issue Request Details
+                </h2>
+
+                <p>
+                    Submit a request to extend the borrowing period.
+                </p>
+
+            </div>
+
+            <button
+                    type="button"
+                    id="closeReissueModal"
+                    class="modal-close"
+                    aria-label="Close">
+                &times;
+            </button>
+
+        </div>
+
+
+        <form
+                id="reissueForm"
+                method="post"
+                th:action="@{/student/manage-records/reissue}">
+
+            <input
+                    type="hidden"
+                    id="reissueItemId"
+                    name="itemId">
+
+
+            <div class="form-group">
+
+                <label>
+                    Book
+                </label>
+
+                <div
+                        id="reissueBookTitle"
+                        class="readonly-field">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Current Due Date
+                </label>
+
+                <div
+                        id="currentDueDate"
+                        class="readonly-field">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                        for="reissueDuration">
+                    Requested Extension
+                </label>
+
+                <select
+                        id="reissueDuration"
+                        name="durationDays"
+                        required>
+
+                    <option value="7">
+                        7 Days
+                    </option>
+
+                    <option value="14"
+                            selected>
+                        14 Days
+                    </option>
+
+                    <option value="21">
+                        21 Days
+                    </option>
+
+                    <option value="30">
+                        30 Days
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="reissue-note">
+
+                <strong>
+                    Note:
+                </strong>
+
+                <span>
+                    Your re-issue request will be sent to the librarian
+                    for approval. Your due date will not change until
+                    the request is approved.
+                </span>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        id="cancelReissue"
+                        class="cancel-button">
+                    Cancel
+                </button>
+
+                <button
+                        type="submit"
+                        class="submit-reissue-button">
+                    Submit Request
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div
+        th:replace="~{fragments/footer :: footer}">
+</div>
+
+
+<script
+        src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+</script>
+
+<script
+        th:src="@{/js/student-manage-records.js}">
+</script>
+
+
+</body>
+
+</html>

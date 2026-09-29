@@ -24,7 +24,7 @@
 
 }
 
-/* BREADCRUMB */
+/* Breadcrumb */
 
 .breadcrumb {
 
@@ -34,33 +34,20 @@
 
     justify-content: flex-start;
 
-    gap: 10px;
+    gap: 8px;
 
-    margin-bottom: 28px;
+    width: 100%;
 
-    font-size: 16px;
+    max-width: 1600px;
 
-}
+    margin: 0 auto 25px;
 
-.breadcrumb a {
+    padding:
+            12px 35px 0;
 
-    color: #244f87;
+    box-sizing: border-box;
 
-    text-decoration: none;
-
-    font-weight: 600;
-
-}
-
-.breadcrumb a:hover {
-
-    text-decoration: underline;
-
-}
-
-.breadcrumb .separator {
-
-    color: #777777;
+    font-size: 14px;
 
 }
 
@@ -74,7 +61,8 @@
 
 .dashboard-page-header h1 {
 
-    margin: 0 0 8px;
+    margin:
+            0 0 8px;
 
     color: #244f87;
 
@@ -106,7 +94,8 @@
 
 .welcome-section h2 {
 
-    margin: 0 0 10px;
+    margin:
+            0 0 10px;
 
     color: #2d3f54;
 
@@ -139,9 +128,9 @@
     display: grid;
 
     grid-template-columns:
-            repeat(3, 1fr);
+            repeat(4, 1fr);
 
-    gap: 30px;
+    gap: 22px;
 
 }
 
@@ -152,7 +141,7 @@
     min-height: 200px;
 
     padding:
-            34px;
+            30px;
 
     border:
             1px solid #d4d9e1;
@@ -171,6 +160,8 @@
             transform 0.2s ease,
             box-shadow 0.2s ease,
             border-color 0.2s ease;
+
+    box-sizing: border-box;
 
 }
 
@@ -198,7 +189,7 @@
 
     color: #2d3f54;
 
-    font-size: 25px;
+    font-size: 23px;
 
     font-weight: 700;
 
@@ -212,7 +203,7 @@
 
     color: #5d6b7a;
 
-    font-size: 17px;
+    font-size: 16px;
 
     line-height: 1.7;
 
@@ -221,7 +212,7 @@
 /* TABLET */
 
 @media
-        (max-width: 1000px) {
+        (max-width: 1100px) {
 
     .student-header-container {
 
@@ -232,7 +223,8 @@
 
     .student-navigation {
 
-        gap: 18px;
+        gap:
+                18px;
 
     }
 
@@ -240,6 +232,9 @@
 
         grid-template-columns:
                 repeat(2, 1fr);
+
+        gap:
+                25px;
 
     }
 
@@ -299,6 +294,9 @@
 
         grid-template-columns:
                 1fr;
+
+        gap:
+                20px;
 
     }
 

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+
+    <title>
+        My Requests - Library Management System
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/common.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/student-header.css}">
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/student-my-requests.css}">
+
+</head>
+
+<body>
+
+<!-- STUDENT HEADER -->
+
+<div
+        th:replace="~{fragments/student-header :: header}">
+</div>
+
+
+<main class="student-requests-page">
+
+    <!-- PAGE TOP CONTENT -->
+
+    <div class="requests-page-header">
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb-container">
+
+            <div class="breadcrumb">
+
+                <a th:href="@{/student-dashboard}">
+                    Home
+                </a>
+
+                <span class="breadcrumb-separator">
+                    &gt;
+                </span>
+
+                <span>
+                    Student Dashboard
+                </span>
+
+                <span class="breadcrumb-separator">
+                    &gt;
+                </span>
+
+                <span>
+                    My Requests
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    My Requests
+                </h1>
+
+                <p>
+                    View and manage your book issue requests.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- REQUEST CONTENT -->
+
+    <div class="student-requests-container">
+
+        <!-- SEARCH AND FILTER -->
+
+        <form
+                class="request-search-form"
+                th:action="@{/student/requests}"
+                method="get">
+
+            <input
+                    type="text"
+                    name="search"
+                    th:value="${search}"
+                    placeholder="Search by request ID, title, ISBN or author">
+
+            <select
+                    name="status">
+
+                <option
+                        value="ALL"
+                        th:selected="${status == 'ALL'}">
+
+                    All Statuses
+
+                </option>
+
+                <option
+                        value="PENDING"
+                        th:selected="${status == 'PENDING'}">
+
+                    Pending
+
+                </option>
+
+                <option
+                        value="APPROVED"
+                        th:selected="${status == 'APPROVED'}">
+
+                    Approved
+
+                </option>
+
+                <option
+                        value="PARTIALLY_APPROVED"
+                        th:selected="${status == 'PARTIALLY_APPROVED'}">
+
+                    Partially Approved
+
+                </option>
+
+                <option
+                        value="REJECTED"
+                        th:selected="${status == 'REJECTED'}">
+
+                    Rejected
+
+                </option>
+
+                <option
+                        value="CANCELLED"
+                        th:selected="${status == 'CANCELLED'}">
+
+                    Cancelled
+
+                </option>
+
+                <option
+                        value="ISSUED"
+                        th:selected="${status == 'ISSUED'}">
+
+                    Issued
+
+                </option>
+
+                <option
+                        value="RETURNED"
+                        th:selected="${status == 'RETURNED'}">
+
+                    Returned
+
+                </option>
+
+            </select>
+
+            <button type="submit">
+                Search
+            </button>
+
+            <a
+                    th:href="@{/student/requests}"
+                    class="clear-button">
+
+                Clear
+
+            </a>
+
+        </form>
+
+
+        <!-- SUCCESS MESSAGE -->
+
+        <div
+                th:if="${param.submitted}"
+                class="request-success-message">
+
+            Your issue request has been submitted successfully.
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="requests-summary">
+
+            <span>
+                Requests Found:
+            </span>
+
+            <strong
+                    th:text="${requests != null ? requests.size() : 0}">
+
+                0
+
+            </strong>
+
+        </div>
+
+
+        <!-- REQUEST LIST -->
+
+        <div
+                th:if="${requests != null and !requests.isEmpty()}"
+                class="requests-list">
+
+
+            <article
+                    class="request-card"
+                    th:each="request : ${requests}">
+
+
+                <!-- REQUEST HEADER -->
+
+                <div class="request-header">
+
+                    <div>
+
+                        <h2>
+
+                            Request #
+
+                            <span
+                                    th:text="${request.requestId}">
+
+                            </span>
+
+                        </h2>
+
+                        <p>
+
+                            Requested on:
+
+                            <strong
+                                    th:text="${request.requestDate != null
+                                            ? #temporals.format(
+                                                    request.requestDate,
+                                                    'dd MMMM yyyy, hh:mm a'
+                                              )
+                                            : 'Not Available'}">
+
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+
+                    <span
+                            class="request-status"
+                            th:classappend="${request.status != null
+                                            ? ' ' + request.status.toLowerCase().replace('_', '-')
+                                            : ''}"
+                            th:text="${request.status != null
+                                      ? request.status.replace('_', ' ')
+                                      : 'UNKNOWN'}">
+
+                        PENDING
+
+                    </span>
+
+                </div>
+
+
+                <!-- BOOK COUNT -->
+
+                <div class="request-book-count">
+
+                    <strong
+                            th:text="${request.items != null
+                                      ? request.items.size()
+                                      : 0}">
+
+                        0
+
+                    </strong>
+
+                    <span>
+                        book(s) requested
+                    </span>
+
+                </div>
+
+
+                <!-- REQUEST ITEMS -->
+
+                <div class="request-items">
+
+                    <div
+                            class="request-item"
+                            th:each="item : ${request.items}">
+
+
+                        <div class="request-book-information">
+
+                            <h3
+                                    th:text="${item.bookTitle}">
+
+                                Book Title
+
+                            </h3>
+
+
+                            <p>
+
+                                <strong>
+                                    Author:
+                                </strong>
+
+                                <span
+                                        th:text="${item.author}">
+                                </span>
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    ISBN:
+                                </strong>
+
+                                <span
+                                        th:text="${item.isbn}">
+                                </span>
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="request-item-duration">
+
+                            <span>
+                                Duration
+                            </span>
+
+                            <strong>
+
+                                <span
+                                        th:text="${item.durationDays}">
+                                </span>
+
+                                Days
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="request-item-status">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong
+                                    th:classappend="${item.status != null
+                                                    ? ' ' + item.status.toLowerCase().replace('_', '-')
+                                                    : ''}"
+                                    th:text="${item.status != null
+                                              ? item.status.replace('_', ' ')
+                                              : 'UNKNOWN'}">
+
+                                PENDING
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REQUEST FOOTER -->
+
+                <div class="request-footer">
+
+                    <div>
+
+                        <span>
+                            Total Books:
+                        </span>
+
+                        <strong
+                                th:text="${request.items != null
+                                          ? request.items.size()
+                                          : 0}">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="request-actions">
+
+                        <button
+                                type="button"
+                                class="view-details-button"
+                                th:attr="data-request-id=${request.requestId}">
+
+                            View Details
+
+                        </button>
+
+
+                        <form
+                                th:if="${request.status == 'PENDING'}"
+                                th:action="@{'/student/requests/' + ${request.requestId} + '/cancel'}"
+                                method="post"
+                                class="cancel-request-form">
+
+                            <button
+                                    type="submit"
+                                    class="cancel-request-button">
+
+                                Cancel Request
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+                th:if="${requests == null or requests.isEmpty()}"
+                class="empty-state">
+
+            <h2>
+                No Requests Found
+            </h2>
+
+            <p>
+
+                You have not submitted any book issue requests yet.
+
+            </p>
+
+            <a
+                    th:href="@{/student/books}"
+                    class="browse-books-button">
+
+                Browse Available Books
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- DETAILS MODAL -->
+
+<div
+        id="requestDetailsModal"
+        class="request-modal"
+        style="display: none;">
+
+    <div class="request-modal-overlay"></div>
+
+
+    <div class="request-modal-content">
+
+        <div class="request-modal-header">
+
+            <h2>
+                Request Details
+            </h2>
+
+            <button
+                    type="button"
+                    id="closeRequestModal"
+                    class="close-modal-button">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div
+                id="requestDetailsContent"
+                class="request-details-content">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div
+        th:replace="~{fragments/footer :: footer}">
+</div>
+
+
+<script
+        th:src="@{/js/common.js}">
+</script>
+
+<script
+        th:src="@{/js/student-my-requests.js}">
+</script>
+
+</body>
+
+</html>

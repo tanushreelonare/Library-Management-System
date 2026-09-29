@@ -1,0 +1,363 @@
+/* Librarian Add Book */
+
+/* Page Top Content */
+
+.add-book-page-header {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+/* Breadcrumb */
+
+.add-book-page-header .breadcrumb-container {
+    width: 100%;
+}
+
+.add-book-page-header .breadcrumb {
+    width: 100%;
+    margin: 0;
+    padding: 14px 0 10px;
+    box-sizing: border-box;
+}
+
+/* Page Header */
+
+.add-book-page-header .page-header {
+    width: 100%;
+    margin: 0;
+    padding: 0 0 28px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.add-book-page-header .page-header > div {
+    width: 100%;
+    text-align: left;
+}
+
+.add-book-page-header .page-header h1 {
+    margin: 0;
+    color: #244f87;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.add-book-page-header .page-header p {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Add Book Container */
+
+.add-book-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 50px;
+    box-sizing: border-box;
+}
+
+.add-book-card {
+    background: #ffffff;
+    border: 1px solid #d9e0e8;
+    border-radius: 10px;
+    padding: 32px 36px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+/* Form Description */
+
+.form-description {
+    margin-bottom: 28px;
+}
+
+.form-description h2 {
+    margin: 0 0 8px;
+    color: #244f87;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.form-description p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Form Layout */
+
+#addBookForm {
+    width: 100%;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group label span {
+    color: #dc3545;
+}
+
+/* Inputs */
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #334155;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input {
+    height: 44px;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #244f87;
+    box-shadow: 0 0 0 2px rgba(36, 79, 135, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Validation Errors */
+
+.field-error {
+    min-height: 18px;
+    margin-top: 5px;
+    color: #dc3545;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Status Display */
+
+.status-display {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid #d9e0e8;
+    border-radius: 6px;
+    background: #f8fafc;
+    box-sizing: border-box;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 11px;
+    border-radius: 20px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-display p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* Form Actions */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.form-actions .btn {
+    min-width: 105px;
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Cancel Button */
+
+.cancel-btn {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+}
+
+.cancel-btn:hover {
+    background: #f1f5f9;
+}
+
+/* Reset Button */
+
+.reset-btn {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+}
+
+.reset-btn:hover {
+    background: #e2e8f0;
+}
+
+/* Add Book Button */
+
+.add-book-btn {
+    border: 1px solid #244f87;
+    background: #244f87;
+    color: #ffffff;
+}
+
+.add-book-btn:hover {
+    background: #1d426f;
+    border-color: #1d426f;
+}
+
+/* Validation Input */
+
+.form-group input.input-error,
+.form-group textarea.input-error {
+    border-color: #dc3545;
+}
+
+.form-group input.input-error:focus,
+.form-group textarea.input-error:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+
+    .add-book-page-header {
+        padding: 0 25px;
+    }
+
+    .add-book-container {
+        padding: 0 25px 40px;
+    }
+
+    .add-book-card {
+        padding: 28px 25px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 0;
+    }
+
+    .form-row .form-group {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .add-book-page-header {
+        padding: 0 20px;
+    }
+
+    .add-book-container {
+        padding: 0 15px 30px;
+    }
+
+    .add-book-card {
+        padding: 22px 18px;
+        border-radius: 8px;
+    }
+
+    .add-book-page-header .breadcrumb {
+        padding-top: 12px;
+    }
+
+    .add-book-page-header .page-header {
+        padding-bottom: 22px;
+    }
+
+    .add-book-page-header .page-header h1 {
+        font-size: 26px;
+    }
+
+    .form-description h2 {
+        font-size: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .status-display {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        padding: 8px 13px;
+    }
+}

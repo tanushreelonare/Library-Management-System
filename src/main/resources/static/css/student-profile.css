@@ -1,0 +1,716 @@
+/* STUDENT PROFILE */
+
+.profile-page-header {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+
+}
+
+/* BREADCRUMB */
+
+.profile-page-header .breadcrumb-container {
+
+    width: 100%;
+
+}
+
+.profile-page-header .breadcrumb {
+
+    width: 100%;
+
+    margin: 0;
+
+    padding:
+            14px 20px 10px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+}
+
+/* PAGE HEADER */
+
+.profile-page-header .page-header {
+
+    width: 100%;
+
+    margin: 0;
+
+    padding:
+            0 20px 28px;
+
+    box-sizing: border-box;
+
+    text-align: left;
+
+}
+
+.profile-page-header .page-header > div {
+
+    width: 100%;
+
+    text-align: left;
+
+}
+
+.profile-page-header .page-header h1 {
+
+    margin:
+            0;
+
+    color: #244f87;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    text-align: left;
+
+}
+
+.profile-page-header .page-header p {
+
+    margin:
+            4px 0 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    text-align: left;
+
+}
+
+/* PROFILE CONTAINER */
+
+.profile-container {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding:
+            0 20px 60px;
+
+    box-sizing: border-box;
+
+}
+
+/* PROFILE FORM */
+
+.profile-form {
+
+    width: 100%;
+
+}
+
+/* ALERT MESSAGES */
+
+.success-message,
+.error-message {
+
+    max-width: 100%;
+
+    margin-bottom: 25px;
+
+    padding:
+            14px 18px;
+
+    border-radius: 8px;
+
+}
+
+.success-message {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+
+}
+
+.error-message {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+
+}
+
+/* PROFILE CONTENT */
+
+.profile-content {
+
+    display: grid;
+
+    grid-template-columns: 280px 1fr;
+
+    gap: 25px;
+
+    align-items: start;
+
+}
+
+/* PROFILE SIDEBAR */
+
+.profile-sidebar {
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    padding:
+            30px 20px;
+
+    text-align: center;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+            0 4px 12px
+            rgba(0, 0, 0, 0.08);
+
+}
+
+/* PROFILE IMAGE */
+
+.profile-image-container {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+}
+
+.profile-image {
+
+    width: 160px;
+
+    height: 160px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+            4px solid #e5e7eb;
+
+}
+
+/* DEFAULT PROFILE IMAGE */
+
+.default-profile-image {
+
+    width: 160px;
+
+    height: 160px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 64px;
+
+    font-weight: 600;
+
+    background: #e5e7eb;
+
+    color: #6b7280;
+
+    margin: 0 auto;
+
+}
+
+/* IMAGE UPLOAD */
+
+.image-upload-group {
+
+    margin-top: 20px;
+
+    text-align: left;
+
+}
+
+.image-upload-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+}
+
+.image-upload-group input[type="file"] {
+
+    width: 100%;
+
+    font-size: 13px;
+
+}
+
+.image-help-text {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+}
+
+/* STUDENT NAME */
+
+.profile-student-name {
+
+    margin:
+            15px 0 5px;
+
+    font-size: 22px;
+
+    color: #1f2937;
+
+}
+
+/* ROLL NUMBER */
+
+.profile-roll-number {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #6b7280;
+
+}
+
+/* PROFILE MAIN */
+
+.profile-main {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+}
+
+/* PROFILE CARD */
+
+.profile-card {
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+            0 4px 12px
+            rgba(0, 0, 0, 0.08);
+
+}
+
+/* CARD TITLE */
+
+.profile-card h2 {
+
+    margin:
+            0 0 20px;
+
+    padding-bottom: 12px;
+
+    border-bottom:
+            1px solid #e5e7eb;
+
+    color: #1f2937;
+
+}
+
+/* PROFILE GRID */
+
+.profile-grid {
+
+    display: grid;
+
+    grid-template-columns:
+            repeat(2, 1fr);
+
+    gap:
+            20px 25px;
+
+}
+
+/* PROFILE FIELD */
+
+.profile-field {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+/* FULL WIDTH FIELD */
+
+.profile-field.full-width {
+
+    grid-column:
+            1 / -1;
+
+}
+
+/* LABEL */
+
+.profile-label {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #6b7280;
+
+    text-transform: uppercase;
+
+}
+
+/* INPUTS */
+
+.profile-field input,
+.profile-field select,
+.profile-field textarea {
+
+    width: 100%;
+
+    padding:
+            10px 13px;
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    color: #1f2937;
+
+    background: #ffffff;
+
+    border:
+            1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+
+}
+
+.profile-field input:focus,
+.profile-field select:focus,
+.profile-field textarea:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, 0.12);
+
+}
+
+/* TEXTAREA */
+
+.profile-field textarea {
+
+    min-height: 110px;
+
+    resize: vertical;
+
+}
+
+/* READ ONLY INPUT */
+
+.profile-field input[readonly] {
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    cursor: not-allowed;
+
+}
+
+/* ACCOUNT INFORMATION */
+
+.account-value {
+
+    min-height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+            10px 13px;
+
+    background: #f9fafb;
+
+    border:
+            1px solid #e5e7eb;
+
+    border-radius: 7px;
+
+    color: #374151;
+
+    box-sizing: border-box;
+
+}
+
+/* ACCOUNT STATUS */
+
+.account-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    width: fit-content;
+
+    padding:
+            5px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+/* ACTIVE STATUS */
+
+.account-status.active {
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+}
+
+/* INACTIVE STATUS */
+
+.account-status.inactive {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+}
+
+/* VALIDATION ERROR */
+
+.field-error {
+
+    margin-top: 2px;
+
+    font-size: 13px;
+
+    color: #dc2626;
+
+}
+
+.profile-field input.error,
+.profile-field select.error,
+.profile-field textarea.error {
+
+    border-color: #dc2626;
+
+}
+
+/* PROFILE ACTIONS */
+
+.profile-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 15px;
+
+    margin-top: 5px;
+
+}
+
+/* BUTTONS */
+
+.profile-actions .btn {
+
+    min-width: 150px;
+
+    padding:
+            11px 20px;
+
+    border-radius: 7px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+}
+
+/* PRIMARY BUTTON */
+
+.update-profile-btn {
+
+    border: none;
+
+}
+
+/* SECONDARY BUTTON */
+
+.reset-profile-btn,
+.dashboard-btn {
+
+    text-decoration: none;
+
+}
+
+/* RESPONSIVE */
+
+@media
+        (max-width: 900px) {
+
+    .profile-page-header {
+
+        max-width: 100%;
+
+    }
+
+    .profile-content {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .profile-sidebar {
+
+        max-width: 400px;
+
+        width: 100%;
+
+        margin: 0 auto;
+
+    }
+
+}
+
+/* MOBILE */
+
+@media
+        (max-width: 650px) {
+
+    .profile-page-header .breadcrumb {
+
+        padding:
+                14px 15px 10px;
+
+    }
+
+    .profile-page-header .page-header {
+
+        padding:
+                0 15px 25px;
+
+    }
+
+    .profile-page-header .page-header h1 {
+
+        font-size: 26px;
+
+    }
+
+    .profile-container {
+
+        padding:
+                0 15px 50px;
+
+    }
+
+    .profile-card {
+
+        padding:
+                20px;
+
+    }
+
+    .profile-grid {
+
+        grid-template-columns:
+                1fr;
+
+    }
+
+    .profile-field.full-width {
+
+        grid-column: auto;
+
+    }
+
+    .profile-actions {
+
+        flex-direction: column;
+
+    }
+
+    .profile-actions .btn {
+
+        width: 100%;
+
+    }
+
+}

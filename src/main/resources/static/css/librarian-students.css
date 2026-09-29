@@ -1,0 +1,633 @@
+/* Student Report Page */
+
+.student-report-page {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 30px 35px 50px;
+    box-sizing: border-box;
+}
+
+/* Breadcrumb */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.breadcrumb a {
+    color: #244f87;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Page Header */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #212529;
+}
+
+.page-header p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 15px;
+}
+
+/* Report Card */
+
+.report-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e3e7eb;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+/* Search Section */
+
+.search-section {
+    padding: 20px 22px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 21px;
+    color: #6c757d;
+    pointer-events: none;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    height: 44px;
+    padding: 0 15px 0 42px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #212529;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input-wrapper input:focus {
+    border-color: #244f87;
+    box-shadow: 0 0 0 3px rgba(36, 79, 135, 0.12);
+}
+
+.search-input-wrapper input::placeholder {
+    color: #8a939c;
+}
+
+/* Search Button */
+
+.search-btn {
+    height: 44px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 6px;
+    background-color: #244f87;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+    background-color: #1d416f;
+}
+
+/* Clear Button */
+
+.clear-search-btn {
+    height: 44px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #495057;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.clear-search-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+/* Report Summary */
+
+.report-summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 22px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+    font-size: 14px;
+}
+
+.report-summary strong {
+    color: #244f87;
+    font-size: 15px;
+}
+
+/* Table */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.student-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+}
+
+.student-table thead {
+    background-color: #244f87;
+    color: #ffffff;
+}
+
+.student-table th {
+    padding: 15px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.student-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e9ecef;
+    color: #343a40;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.student-table tbody tr {
+    background-color: #ffffff;
+    transition: background-color 0.15s;
+}
+
+.student-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.student-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-active {
+    background-color: #e7f6ec;
+    color: #198754;
+}
+
+.status-inactive {
+    background-color: #f8e7e7;
+    color: #dc3545;
+}
+
+/* Action Buttons */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.action-btn {
+    min-height: 32px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Edit */
+
+.edit-btn {
+    border: 1px solid #244f87;
+    background-color: #ffffff;
+    color: #244f87;
+}
+
+.edit-btn:hover {
+    background-color: #244f87;
+    color: #ffffff;
+}
+
+/* Activate */
+
+.activate-btn {
+    border: 1px solid #198754;
+    background-color: #ffffff;
+    color: #198754;
+}
+
+.activate-btn:hover {
+    background-color: #198754;
+    color: #ffffff;
+}
+
+/* Deactivate */
+
+.deactivate-btn {
+    border: 1px solid #dc3545;
+    background-color: #ffffff;
+    color: #dc3545;
+}
+
+.deactivate-btn:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+/* Delete */
+
+.delete-btn {
+    border: 1px solid #dc3545;
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.delete-btn:hover {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+}
+
+/* Empty State */
+
+.no-students {
+    padding: 0 !important;
+}
+
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    margin-bottom: 12px;
+    font-size: 42px;
+}
+
+.empty-state h3 {
+    margin: 0 0 8px;
+    color: #343a40;
+    font-size: 19px;
+}
+
+.empty-state p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Modal Overlay */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+/* Student Modal */
+
+.student-modal {
+    width: 100%;
+    max-width: 720px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+    animation: modalOpen 0.2s ease-out;
+}
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal Header */
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 22px 25px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h2 {
+    margin: 0 0 5px;
+    color: #212529;
+    font-size: 22px;
+}
+
+.modal-header p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.modal-close {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #6c757d;
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background-color: #f1f3f5;
+    color: #212529;
+}
+
+/* Modal Body */
+
+.modal-body {
+    padding: 25px;
+}
+
+.form-section {
+    margin-bottom: 25px;
+}
+
+.form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.form-section h3 {
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e9ecef;
+    color: #244f87;
+    font-size: 16px;
+}
+
+/* Form Grid */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 7px;
+    color: #343a40;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #212529;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input,
+.form-group select {
+    height: 42px;
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #244f87;
+    box-shadow: 0 0 0 3px rgba(36, 79, 135, 0.12);
+}
+
+.form-group input[readonly] {
+    background-color: #f1f3f5;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Field Errors */
+
+.field-error {
+    min-height: 16px;
+    margin-top: 4px;
+    color: #dc3545;
+    font-size: 12px;
+}
+
+/* Modal Actions */
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.modal-cancel-btn,
+.modal-save-btn {
+    min-width: 110px;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-cancel-btn {
+    border: 1px solid #ced4da;
+    background-color: #ffffff;
+    color: #495057;
+}
+
+.modal-cancel-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.modal-save-btn {
+    border: 1px solid #244f87;
+    background-color: #244f87;
+    color: #ffffff;
+}
+
+.modal-save-btn:hover {
+    background-color: #1d416f;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+
+    .student-report-page {
+        padding: 25px 20px 40px;
+    }
+
+    .search-form {
+        flex-wrap: wrap;
+    }
+
+    .search-input-wrapper {
+        flex-basis: 100%;
+    }
+
+    .search-btn,
+    .clear-search-btn {
+        flex: 1;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .student-report-page {
+        padding: 20px 15px 35px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .search-section {
+        padding: 15px;
+    }
+
+    .report-summary {
+        padding: 14px 15px;
+    }
+
+    .student-modal {
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 18px;
+    }
+
+    .modal-body {
+        padding: 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .modal-cancel-btn,
+    .modal-save-btn {
+        width: 100%;
+    }
+}

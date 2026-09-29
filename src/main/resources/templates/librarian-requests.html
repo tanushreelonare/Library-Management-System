@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Approve Requests - Library Management System</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-requests.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div th:replace="~{fragments/librarian-header :: header}">
+</div>
+
+
+<main class="librarian-requests-page">
+
+    <div class="librarian-requests-container">
+
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb-container">
+
+                <div class="breadcrumb">
+
+                    <a th:href="@{/librarian-dashboard}">
+                        Home
+                    </a>
+
+                    <span class="breadcrumb-separator">
+                        &gt;
+                    </span>
+
+                    <span>
+                        Librarian Dashboard
+                    </span>
+
+                    <span class="breadcrumb-separator">
+                        &gt;
+                    </span>
+
+                    <span>
+                        Approve Requests
+                    </span>
+
+                </div>
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <h1>
+                Approve Requests
+            </h1>
+
+            <p>
+                Review and manage student book issue and re-issue requests.
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH AND FILTER -->
+
+        <section class="request-search-section">
+
+            <form th:action="@{/librarian/requests}"
+                  method="get"
+                  class="request-search-form">
+
+                <div class="search-field">
+
+                    <label for="search">
+                        Search Requests
+                    </label>
+
+                    <input type="text"
+                           id="search"
+                           name="search"
+                           th:value="${search}"
+                           placeholder="Search by student, roll number or book...">
+
+                </div>
+
+
+                <div class="status-field">
+
+                    <label for="status">
+                        Status
+                    </label>
+
+                    <select id="status"
+                            name="status">
+
+                        <option value="ALL"
+                                th:selected="${status == 'ALL'}">
+                            All
+                        </option>
+
+                        <option value="PENDING"
+                                th:selected="${status == 'PENDING'}">
+                            Pending
+                        </option>
+
+                        <option value="APPROVED"
+                                th:selected="${status == 'APPROVED'}">
+                            Approved
+                        </option>
+
+                        <option value="PARTIALLY_APPROVED"
+                                th:selected="${status == 'PARTIALLY_APPROVED'}">
+                            Partially Approved
+                        </option>
+
+                        <option value="REJECTED"
+                                th:selected="${status == 'REJECTED'}">
+                            Rejected
+                        </option>
+
+                        <option value="CANCELLED"
+                                th:selected="${status == 'CANCELLED'}">
+                            Cancelled
+                        </option>
+
+                        <option value="ISSUED"
+                                th:selected="${status == 'ISSUED'}">
+                            Issued
+                        </option>
+
+                        <option value="RETURNED"
+                                th:selected="${status == 'RETURNED'}">
+                            Returned
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="search-actions">
+
+                    <button type="submit"
+                            class="search-button">
+                        Search
+                    </button>
+
+                    <a th:href="@{/librarian/requests}"
+                       class="clear-button">
+                        Clear
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- REQUEST COUNT -->
+
+        <div class="request-count">
+
+            Total Requests:
+
+            <strong th:text="${requests != null ? requests.size() : 0}">
+                0
+            </strong>
+
+        </div>
+
+
+        <!-- REQUEST LIST -->
+
+        <section class="requests-list">
+
+
+            <!-- EMPTY STATE -->
+
+            <div th:if="${requests == null or #lists.isEmpty(requests)}"
+                 class="empty-request-state">
+
+                <h3>
+                    No Requests Found
+                </h3>
+
+                <p>
+                    There are no requests matching the selected criteria.
+                </p>
+
+            </div>
+
+
+            <!-- REQUEST CARD -->
+
+            <article class="request-card"
+                     th:each="request : ${requests}">
+
+
+                <!-- REQUEST HEADER -->
+
+                <div class="request-card-header">
+
+                    <div class="request-heading">
+
+                        <h2>
+
+                            Request #
+
+                            <span th:text="${request.requestId}">
+                                1
+                            </span>
+
+                        </h2>
+
+                        <p>
+
+                            Submitted:
+
+                            <span th:text="${request.requestDate != null
+                                      ? #temporals.format(
+                                            request.requestDate,
+                                            'dd MMM yyyy, hh:mm a'
+                                        )
+                                      : 'Not Available'}">
+                            </span>
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="request-header-status">
+
+                        <!-- REQUEST TYPE -->
+
+                        <span th:if="${request.requestType == 'REISSUE'}"
+                              class="request-status status-reissue">
+                            RE-ISSUE
+                        </span>
+
+                        <span th:if="${request.requestType != 'REISSUE'}"
+                              class="request-status status-new-issue">
+                            NEW ISSUE
+                        </span>
+
+
+                        <!-- REQUEST STATUS -->
+
+                        <span class="request-status"
+                              th:classappend="${request.status != null
+                                  ? ' status-' +
+                                    #strings.toLowerCase(request.status)
+                                    .replace('_', '-')
+                                  : ''}"
+                              th:text="${request.status != null
+                                  ? request.status.replace('_', ' ')
+                                  : 'UNKNOWN'}">
+                            PENDING
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STUDENT INFORMATION -->
+
+                <div class="student-information">
+
+                    <div class="student-info-item">
+
+                        <span class="info-label">
+                            STUDENT
+                        </span>
+
+                        <strong th:text="${request.studentName}">
+                            Student
+                        </strong>
+
+                    </div>
+
+
+                    <div class="student-info-item">
+
+                        <span class="info-label">
+                            ROLL NUMBER
+                        </span>
+
+                        <strong th:text="${request.rollNumber}">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="student-info-item">
+
+                        <span class="info-label">
+                            BOOKS REQUESTED
+                        </span>
+
+                        <strong th:text="${request.items != null
+                                  ? request.items.size()
+                                  : 0}">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ===================================================== -->
+                <!-- RE-ISSUE REQUEST -->
+                <!-- ===================================================== -->
+
+                <div th:if="${request.requestType == 'REISSUE'}"
+                     class="requested-books-section reissue-request-section">
+
+                    <h3>
+                        Re-Issue Request
+                    </h3>
+
+
+                    <div class="reissue-information">
+
+                        <p>
+                            <strong>Request Type:</strong>
+                            Student has requested an extension for an
+                            already issued book.
+                        </p>
+
+                    </div>
+
+
+                    <div class="books-table-wrapper">
+
+                        <table class="requested-books-table">
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    BOOK
+                                </th>
+
+                                <th>
+                                    ISBN
+                                </th>
+
+                                <th>
+                                    CURRENT DUE DATE
+                                </th>
+
+                                <th>
+                                    REQUESTED DURATION
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            <tr th:each="item : ${request.items}">
+
+                                <!-- BOOK -->
+
+                                <td>
+
+                                    <div class="book-title"
+                                         th:text="${item.bookTitle}">
+                                        Book Title
+                                    </div>
+
+                                    <div class="book-author"
+                                         th:text="${item.author}">
+                                        Author
+                                    </div>
+
+                                </td>
+
+
+                                <!-- ISBN -->
+
+                                <td th:text="${item.isbn}">
+                                    ISBN
+                                </td>
+
+
+                                <!-- CURRENT DUE DATE -->
+
+                                <td>
+
+                                    <span th:if="${item.currentDueDate != null}"
+                                          th:text="${#temporals.format(
+                                              item.currentDueDate,
+                                              'dd MMM yyyy, hh:mm a'
+                                          )}">
+                                        20 Sep 2026, 11:59 PM
+                                    </span>
+
+                                    <span th:if="${item.currentDueDate == null}">
+                                        Not Available
+                                    </span>
+
+                                </td>
+
+
+                                <!-- REQUESTED DURATION -->
+
+                                <td>
+
+                                    <span th:text="${item.durationDays}">
+                                        14
+                                    </span>
+
+                                    days
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    <span class="item-status"
+                                          th:classappend="${item.status != null
+                                              ? ' status-' +
+                                                #strings.toLowerCase(item.status)
+                                                .replace('_', '-')
+                                              : ''}"
+                                          th:text="${item.status != null
+                                              ? item.status.replace('_', ' ')
+                                              : 'UNKNOWN'}">
+                                        PENDING
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- RE-ISSUE ACTIONS -->
+
+                    <div class="request-card-actions"
+                         th:if="${request.status == 'PENDING'
+                                 or request.status == 'PARTIALLY_APPROVED'}">
+
+                        <div class="request-management-actions">
+
+                            <!-- APPROVE RE-ISSUE -->
+
+                            <form th:action="@{'/librarian/requests/'
+                                      + ${request.requestId}
+                                      + '/approve-reissue'}"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="approve-request-button">
+
+                                    Approve Re-Issue
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- REJECT RE-ISSUE -->
+
+                            <button type="button"
+                                    class="reject-reissue-button"
+                                    th:attr="data-request-id=${request.requestId}">
+
+                                Reject Re-Issue
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ===================================================== -->
+                <!-- NORMAL NEW ISSUE REQUEST -->
+                <!-- ===================================================== -->
+
+                <div th:if="${request.requestType != 'REISSUE'}"
+                     class="requested-books-section">
+
+                    <h3>
+                        Requested Books
+                    </h3>
+
+
+                    <!-- ACTIONS AVAILABLE FOR PENDING
+                         AND PARTIALLY APPROVED REQUESTS -->
+
+                    <div class="book-selection-toolbar"
+                         th:if="${request.status == 'PENDING'
+                                 or request.status == 'PARTIALLY_APPROVED'}">
+
+                        <label class="select-all-label">
+
+                            <input type="checkbox"
+                                   class="select-all-checkbox"
+                                   th:attr="data-request-id=${request.requestId}">
+
+                            <span>
+                                Select All Pending
+                            </span>
+
+                        </label>
+
+
+                        <span class="selection-help">
+
+                            Select individual pending books
+                            to approve only those books.
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- SELECTED BOOK APPROVAL FORM -->
+
+                    <form th:if="${request.status == 'PENDING'
+                                 or request.status == 'PARTIALLY_APPROVED'}"
+                          th:action="@{'/librarian/requests/'
+                                      + ${request.requestId}
+                                      + '/approve-selected'}"
+                          method="post"
+                          class="selected-books-form"
+                          th:attr="data-request-id=${request.requestId}">
+
+
+                        <div class="books-table-wrapper">
+
+                            <table class="requested-books-table">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th class="selection-column">
+                                    </th>
+
+                                    <th>
+                                        BOOK
+                                    </th>
+
+                                    <th>
+                                        ISBN
+                                    </th>
+
+                                    <th>
+                                        DURATION
+                                    </th>
+
+                                    <th>
+                                        STATUS
+                                    </th>
+
+                                </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                <tr th:each="item : ${request.items}">
+
+
+                                    <!-- BOOK SELECTION -->
+
+                                    <td class="selection-column">
+
+                                        <input th:if="${item.status == 'PENDING'}"
+                                               type="checkbox"
+                                               name="itemIds"
+                                               class="book-selection-checkbox"
+                                               th:value="${item.itemId}"
+                                               th:attr="data-request-id=${request.requestId}">
+
+
+                                        <span th:if="${item.status != 'PENDING'}"
+                                              class="selection-not-available">
+
+                                            ✓
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- BOOK -->
+
+                                    <td>
+
+                                        <div class="book-title"
+                                             th:text="${item.bookTitle}">
+                                            Book Title
+                                        </div>
+
+                                        <div class="book-author"
+                                             th:text="${item.author}">
+                                            Author
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- ISBN -->
+
+                                    <td th:text="${item.isbn}">
+                                        ISBN
+                                    </td>
+
+
+                                    <!-- DURATION -->
+
+                                    <td>
+
+                                        <span th:text="${item.durationDays}">
+                                            14
+                                        </span>
+
+                                        days
+
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        <span class="item-status"
+                                              th:classappend="${item.status != null
+                                                  ? ' status-' +
+                                                    #strings.toLowerCase(item.status)
+                                                    .replace('_', '-')
+                                                  : ''}"
+                                              th:text="${item.status != null
+                                                  ? item.status.replace('_', ' ')
+                                                  : 'UNKNOWN'}">
+                                            PENDING
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <!-- SELECTED APPROVAL ACTION -->
+
+                        <div class="selected-books-action">
+
+                            <button type="submit"
+                                    class="approve-selected-button"
+                                    disabled>
+
+                                Approve Selected
+
+                            </button>
+
+
+                            <span class="selected-books-count">
+
+                                0 books selected
+
+                            </span>
+
+                        </div>
+
+                    </form>
+
+
+                    <!-- READ-ONLY TABLE FOR COMPLETED REQUESTS -->
+
+                    <div th:if="${request.status != 'PENDING'
+                                 and request.status != 'PARTIALLY_APPROVED'}"
+                         class="books-table-wrapper">
+
+                        <table class="requested-books-table">
+
+                            <thead>
+
+                            <tr>
+
+                                <th>
+                                    BOOK
+                                </th>
+
+                                <th>
+                                    ISBN
+                                </th>
+
+                                <th>
+                                    DURATION
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            <tr th:each="item : ${request.items}">
+
+                                <td>
+
+                                    <div class="book-title"
+                                         th:text="${item.bookTitle}">
+                                        Book Title
+                                    </div>
+
+                                    <div class="book-author"
+                                         th:text="${item.author}">
+                                        Author
+                                    </div>
+
+                                </td>
+
+
+                                <td th:text="${item.isbn}">
+                                    ISBN
+                                </td>
+
+
+                                <td>
+
+                                    <span th:text="${item.durationDays}">
+                                        14
+                                    </span>
+
+                                    days
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="item-status"
+                                          th:classappend="${item.status != null
+                                              ? ' status-' +
+                                                #strings.toLowerCase(item.status)
+                                                .replace('_', '-')
+                                              : ''}"
+                                          th:text="${item.status != null
+                                              ? item.status.replace('_', ' ')
+                                              : 'UNKNOWN'}">
+                                        PENDING
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ===================================================== -->
+                <!-- NORMAL REQUEST ACTIONS -->
+                <!-- ===================================================== -->
+
+                <div class="request-card-actions">
+
+                    <!-- VIEW DETAILS -->
+
+                    <button type="button"
+                            class="view-details-button"
+                            th:attr="data-request-id=${request.requestId}">
+
+                        View Details
+
+                    </button>
+
+
+                    <!-- MANAGEMENT ACTIONS FOR NORMAL REQUESTS -->
+
+                    <div th:if="${request.requestType != 'REISSUE'
+                                 and (request.status == 'PENDING'
+                                 or request.status == 'PARTIALLY_APPROVED')}"
+                         class="request-management-actions">
+
+
+                        <!-- APPROVE ALL REMAINING -->
+
+                        <form th:action="@{'/librarian/requests/'
+                                      + ${request.requestId}
+                                      + '/approve'}"
+                              method="post">
+
+                            <button type="submit"
+                                    class="approve-request-button"
+                                    th:text="${request.status == 'PARTIALLY_APPROVED'
+                                              ? 'Approve Remaining'
+                                              : 'Approve Request'}">
+
+                                Approve Request
+
+                            </button>
+
+                        </form>
+
+
+                        <!-- REJECT REMAINING -->
+
+                        <button type="button"
+                                class="reject-request-button"
+                                th:attr="data-request-id=${request.requestId}"
+                                th:text="${request.status == 'PARTIALLY_APPROVED'
+                                          ? 'Reject Remaining'
+                                          : 'Reject Request'}">
+
+                            Reject Request
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </article>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- ===================================================== -->
+<!-- REQUEST DETAILS MODAL -->
+<!-- ===================================================== -->
+
+<div id="requestDetailsModal"
+     class="librarian-request-modal"
+     aria-hidden="true">
+
+
+    <div class="librarian-request-modal-overlay">
+    </div>
+
+
+    <div class="librarian-request-modal-content">
+
+
+        <div class="librarian-request-modal-header">
+
+            <h2>
+                Request Details
+            </h2>
+
+
+            <button type="button"
+                    class="librarian-request-modal-close"
+                    id="closeRequestDetailsModal">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div class="librarian-request-modal-body">
+
+
+            <div class="details-student-section">
+
+                <div>
+
+                    <span class="details-label">
+                        STUDENT
+                    </span>
+
+                    <strong id="detailsStudentName">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="details-label">
+                        ROLL NUMBER
+                    </span>
+
+                    <strong id="detailsRollNumber">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="details-label">
+                        REQUEST DATE
+                    </span>
+
+                    <strong id="detailsRequestDate">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="details-label">
+                        REQUEST TYPE
+                    </span>
+
+                    <strong id="detailsRequestType">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span class="details-label">
+                        STATUS
+                    </span>
+
+                    <span id="detailsRequestStatus"
+                          class="request-status">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-books-section">
+
+                <h3>
+                    Requested Books
+                </h3>
+
+                <div id="detailsBooksContainer">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- REJECT REQUEST MODAL -->
+<!-- ===================================================== -->
+
+<div id="rejectRequestModal"
+     class="librarian-request-modal"
+     aria-hidden="true">
+
+
+    <div class="librarian-request-modal-overlay">
+    </div>
+
+
+    <div class="librarian-request-modal-content reject-modal-content">
+
+
+        <div class="librarian-request-modal-header">
+
+            <h2 id="rejectModalTitle">
+                Reject Request
+            </h2>
+
+
+            <button type="button"
+                    class="librarian-request-modal-close"
+                    id="closeRejectRequestModal">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div class="librarian-request-modal-body">
+
+
+            <p class="reject-modal-description"
+               id="rejectModalDescription">
+
+                Any remaining pending books in this request
+                will be rejected.
+
+            </p>
+
+
+            <form id="rejectRequestForm"
+                  method="post">
+
+                <div class="form-group">
+
+                    <label for="rejectionReason">
+                        Rejection Reason
+                    </label>
+
+                    <textarea id="rejectionReason"
+                              name="rejectionReason"
+                              maxlength="500"
+                              rows="4"
+                              placeholder="Enter reason for rejecting this request..."></textarea>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            id="cancelRejectButton">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-danger"
+                            id="confirmRejectButton">
+
+                        Reject Request
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- FOOTER -->
+<!-- ===================================================== -->
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+
+<script th:src="@{/js/librarian-requests.js}">
+</script>
+
+
+<!-- NORMAL APPROVAL SUCCESS -->
+
+<script th:if="${param.approved}">
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Request Updated',
+        text: 'The selected books have been approved successfully.',
+        confirmButtonColor: '#244f87'
+    });
+
+</script>
+
+
+<!-- NORMAL REJECTION SUCCESS -->
+
+<script th:if="${param.rejected}">
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Request Updated',
+        text: 'The pending books have been rejected successfully.',
+        confirmButtonColor: '#244f87'
+    });
+
+</script>
+
+
+</body>
+
+</html>

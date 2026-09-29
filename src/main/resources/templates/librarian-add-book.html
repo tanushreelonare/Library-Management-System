@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add New Book</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-add-book.css}">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+<!-- PAGE TOP CONTENT -->
+
+<div class="add-book-page-header">
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb-container">
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/librarian-dashboard}">
+                Home
+            </a>
+
+            <span class="separator">
+                >
+            </span>
+
+            <span>
+                Librarian Dashboard
+            </span>
+
+            <span class="separator">
+                >
+            </span>
+
+            <span>
+                Add New Books
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Add New Book
+            </h1>
+
+            <p>
+                Add a new book to the library collection.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ADD BOOK CONTAINER -->
+
+<div class="add-book-container">
+
+    <div class="add-book-card">
+
+        <div class="form-description">
+
+            <h2>
+                Book Information
+            </h2>
+
+            <p>
+                Enter the details of the book you want to add to the library.
+            </p>
+
+        </div>
+
+        <!-- ADD BOOK FORM -->
+
+        <form
+                id="addBookForm"
+                th:action="@{/librarian/books}"
+                method="post">
+
+            <!-- BOOK DETAILS -->
+
+            <div class="form-row">
+
+                <!-- ISBN -->
+
+                <div class="form-group">
+
+                    <label for="isbn">
+                        ISBN <span>*</span>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="isbn"
+                            name="isbn"
+                            maxlength="20"
+                            placeholder="Enter ISBN"
+                            required>
+
+                    <small
+                            id="isbnError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+                <!-- BOOK TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Book Title <span>*</span>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            maxlength="200"
+                            placeholder="Enter book title"
+                            required>
+
+                    <small
+                            id="titleError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <!-- AUTHOR -->
+
+                <div class="form-group">
+
+                    <label for="author">
+                        Author <span>*</span>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="author"
+                            name="author"
+                            maxlength="150"
+                            placeholder="Enter author name"
+                            required>
+
+                    <small
+                            id="authorError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category <span>*</span>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="category"
+                            name="category"
+                            maxlength="100"
+                            placeholder="Enter book category"
+                            required>
+
+                    <small
+                            id="categoryError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <!-- PUBLISHER -->
+
+                <div class="form-group">
+
+                    <label for="publisher">
+                        Publisher <span>*</span>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="publisher"
+                            name="publisher"
+                            maxlength="150"
+                            placeholder="Enter publisher name"
+                            required>
+
+                    <small
+                            id="publisherError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+                <!-- PUBLICATION YEAR -->
+
+                <div class="form-group">
+
+                    <label for="publicationYear">
+                        Publication Year <span>*</span>
+                    </label>
+
+                    <input
+                            type="number"
+                            id="publicationYear"
+                            name="publicationYear"
+                            min="1000"
+                            max="2100"
+                            placeholder="Enter publication year"
+                            required>
+
+                    <small
+                            id="publicationYearError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <!-- LANGUAGE -->
+
+                <div class="form-group">
+
+                    <label for="language">
+                        Language <span>*</span>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="language"
+                            name="language"
+                            maxlength="50"
+                            placeholder="Enter language"
+                            required>
+
+                    <small
+                            id="languageError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+                <!-- TOTAL COPIES -->
+
+                <div class="form-group">
+
+                    <label for="totalCopies">
+                        Total Copies <span>*</span>
+                    </label>
+
+                    <input
+                            type="number"
+                            id="totalCopies"
+                            name="totalCopies"
+                            min="0"
+                            placeholder="Enter total copies"
+                            required>
+
+                    <small
+                            id="totalCopiesError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- AVAILABLE COPIES -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="availableCopies">
+                        Available Copies <span>*</span>
+                    </label>
+
+                    <input
+                            type="number"
+                            id="availableCopies"
+                            name="availableCopies"
+                            min="0"
+                            placeholder="Enter available copies"
+                            required>
+
+                    <small
+                            id="availableCopiesError"
+                            class="field-error">
+                    </small>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Book Status
+                    </label>
+
+                    <div class="status-display">
+
+                        <span class="status-indicator">
+                            Active
+                        </span>
+
+                        <p>
+                            New books are added as active by default.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group full-width">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                        id="description"
+                        name="description"
+                        maxlength="1000"
+                        rows="5"
+                        placeholder="Enter a description of the book"></textarea>
+
+                <small
+                        id="descriptionError"
+                        class="field-error">
+                </small>
+
+            </div>
+
+            <!-- FORM ACTIONS -->
+
+            <div class="form-actions">
+
+                <a
+                        th:href="@{/librarian/books}"
+                        class="btn cancel-btn">
+
+                    Cancel
+
+                </a>
+
+                <button
+                        type="reset"
+                        class="btn reset-btn">
+
+                    Reset
+
+                </button>
+
+                <button
+                        type="submit"
+                        class="btn add-book-btn">
+
+                    Add Book
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- JAVASCRIPT -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/librarian-add-book.js}"></script>
+
+</body>
+
+</html>

@@ -4,6 +4,8 @@ import com.example.library.entity.Student;
 import com.example.library.entity.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -26,4 +28,21 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Optional<Student> findByUserId(Long userId);
 
+    // SEARCH
+
+    List<Student> findByRollNumberContainingIgnoreCase(
+            String rollNumber
+    );
+
+    List<Student> findByStudentNameContainingIgnoreCase(
+            String studentName
+    );
+
+    List<Student> findByMobileContaining(
+            String mobile
+    );
+
+    List<Student> findByUser_EmailContainingIgnoreCase(
+            String email
+    );
 }

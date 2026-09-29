@@ -33,11 +33,19 @@
 
     justify-content: space-between;
 
-    gap: 30px;
+    gap: 20px;
+
+    box-sizing: border-box;
 
 }
 
 /* LOGO */
+
+.student-logo {
+
+    flex-shrink: 0;
+
+}
 
 .student-logo a {
 
@@ -61,11 +69,13 @@
 
     align-items: center;
 
-    justify-content: center;
+    justify-content: flex-end;
 
-    gap: 30px;
+    gap: 24px;
 
     flex: 1;
+
+    min-width: 0;
 
 }
 
@@ -77,15 +87,18 @@
 
     text-decoration: none;
 
-    font-size: 17px;
+    font-size: 15px;
 
     font-weight: 600;
 
     white-space: nowrap;
 
-    transition: 0.2s ease;
+    transition:
+            opacity 0.2s ease;
 
 }
+
+/* NAVIGATION HOVER */
 
 .student-navigation a:hover {
 
@@ -101,6 +114,8 @@
 
     align-items: center;
 
+    flex-shrink: 0;
+
 }
 
 /* LOGOUT BUTTON */
@@ -112,24 +127,232 @@
     border-radius: 7px;
 
     padding:
-            13px 30px;
+            12px 25px;
 
     background-color: #dc3545;
 
     color: #ffffff;
 
-    font-size: 16px;
+    font-size: 15px;
 
     font-weight: 600;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    white-space: nowrap;
+
+    transition:
+            opacity 0.2s ease;
 
 }
 
 .student-logout-btn:hover {
 
     opacity: 0.9;
+
+}
+
+/* MEDIUM DESKTOP */
+
+@media
+        (max-width: 1250px) {
+
+    .student-header-container {
+
+        padding:
+                0 25px;
+
+        gap: 15px;
+
+    }
+
+    .student-logo a {
+
+        font-size: 25px;
+
+    }
+
+    .student-navigation {
+
+        gap: 18px;
+
+    }
+
+    .student-navigation a {
+
+        font-size: 14px;
+
+    }
+
+    .student-logout-btn {
+
+        padding:
+                11px 21px;
+
+        font-size: 14px;
+
+    }
+
+}
+
+/* SMALL DESKTOP / TABLET */
+
+@media
+        (max-width: 1050px) {
+
+    .student-header-container {
+
+        padding:
+                0 18px;
+
+        gap: 12px;
+
+    }
+
+    .student-logo a {
+
+        font-size: 22px;
+
+    }
+
+    .student-navigation {
+
+        gap: 14px;
+
+    }
+
+    .student-navigation a {
+
+        font-size: 13px;
+
+    }
+
+    .student-logout-btn {
+
+        padding:
+                10px 18px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+/* TABLET */
+
+@media
+        (max-width: 900px) {
+
+    .student-header-container {
+
+        min-height: auto;
+
+        padding:
+                18px 25px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+    }
+
+    .student-logo {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+    .student-navigation {
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap:
+                12px 18px;
+
+        flex: none;
+
+        width: 100%;
+
+    }
+
+    .student-header-actions {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}
+
+/* MOBILE */
+
+@media
+        (max-width: 600px) {
+
+    .student-header-container {
+
+        padding:
+                18px 20px;
+
+    }
+
+    .student-logo a {
+
+        font-size: 23px;
+
+    }
+
+    .student-navigation {
+
+        gap:
+                12px 16px;
+
+    }
+
+    .student-navigation a {
+
+        font-size: 14px;
+
+    }
+
+    .student-logout-btn {
+
+        padding:
+                10px 24px;
+
+        font-size: 14px;
+
+    }
+
+}
+
+/* SMALL MOBILE */
+
+@media
+        (max-width: 400px) {
+
+    .student-logo a {
+
+        font-size: 21px;
+
+    }
+
+    .student-navigation {
+
+        gap:
+                10px 13px;
+
+    }
+
+    .student-navigation a {
+
+        font-size: 13px;
+
+    }
 
 }

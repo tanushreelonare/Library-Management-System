@@ -105,7 +105,11 @@ public class SecurityConfig {
 
                                 "/student-dashboard",
 
-                                "/student-dashboard/**"
+                                "/student-dashboard/**",
+
+                                "/student/profile",
+                                
+                                "/student/profile/**"
 
                         )
                         .hasRole("STUDENT")

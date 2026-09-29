@@ -13,9 +13,9 @@ import jakarta.validation.constraints.*;
 )
 public class Librarian extends BaseEntity {
 
-    // ==========================================
+    
     // USER ACCOUNT
-    // ==========================================
+    
 
     @OneToOne(fetch = FetchType.LAZY,
               cascade = CascadeType.ALL

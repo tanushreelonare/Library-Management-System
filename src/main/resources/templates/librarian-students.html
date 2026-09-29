@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Report | Library Management System</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <!-- Librarian Header CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <!-- Student Report CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-students.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+<main class="student-report-page">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a th:href="@{/librarian/dashboard}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <a th:href="@{/librarian/dashboard}">
+            Librarian Dashboard
+        </a>
+
+        <span>›</span>
+
+        <span>Student Report</span>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+
+        <div>
+            <h1>Student Report</h1>
+
+            <p>
+                View and manage registered students.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Search Section -->
+    <section class="report-card">
+
+        <div class="search-section">
+
+            <form th:action="@{/librarian/students}"
+                  method="get"
+                  class="search-form">
+
+                <div class="search-input-wrapper">
+
+                    <span class="search-icon">⌕</span>
+
+                    <input type="text"
+                           id="studentSearch"
+                           name="search"
+                           th:value="${search}"
+                           placeholder="Search by roll number, name, mobile or email">
+
+                </div>
+
+                <button type="submit"
+                        class="search-btn">
+                    Search
+                </button>
+
+                <a th:href="@{/librarian/students}"
+                   class="clear-search-btn">
+                    Clear
+                </a>
+
+            </form>
+
+        </div>
+
+        <!-- Student Count -->
+        <div class="report-summary">
+
+            <span>
+                Total Students:
+            </span>
+
+            <strong th:text="${#lists.size(students)}">
+                0
+            </strong>
+
+        </div>
+
+        <!-- Student Table -->
+        <div class="table-container">
+
+            <table class="student-table">
+
+                <thead>
+
+                <tr>
+                    <th>Roll No.</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Branch</th>
+                    <th>Semester</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <!-- Students Found -->
+                <tr th:each="student : ${students}"
+                    th:id="'student-row-' + ${student.id}">
+
+                    <td th:text="${student.rollNumber}">
+                        26188
+                    </td>
+
+                    <td th:text="${student.studentName}">
+                        Student Name
+                    </td>
+
+                    <td th:text="${student.email}">
+                        student@example.com
+                    </td>
+
+                    <td th:text="${student.mobile}">
+                        9876543210
+                    </td>
+
+                    <td th:text="${student.branch}">
+                        CSE
+                    </td>
+
+                    <td th:text="${student.semester}">
+                        8
+                    </td>
+
+                    <!-- Status -->
+                    <td>
+
+                        <span class="status-badge"
+                              th:classappend="${student.enabled} ? ' status-active' : ' status-inactive'"
+                              th:text="${student.enabled} ? 'Active' : 'Inactive'">
+                            Active
+                        </span>
+
+                    </td>
+
+                    <!-- Actions -->
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <!-- Edit -->
+                            <button type="button"
+                                    class="action-btn edit-btn"
+                                    th:data-id="${student.id}"
+                                    onclick="openEditModal(this.dataset.id)">
+                                Edit
+                            </button>
+
+                            <!-- Activate / Deactivate -->
+                            <button type="button"
+                                    class="action-btn status-btn"
+                                    th:classappend="${student.enabled} ? ' deactivate-btn' : ' activate-btn'"
+                                    th:data-id="${student.id}"
+                                    th:data-enabled="${student.enabled}"
+                                    onclick="toggleStudentStatus(this)">
+
+                                <span th:text="${student.enabled} ? 'Deactivate' : 'Activate'">
+                                    Deactivate
+                                </span>
+
+                            </button>
+
+                            <!-- Delete -->
+                            <button type="button"
+                                    class="action-btn delete-btn"
+                                    th:data-id="${student.id}"
+                                    th:data-name="${student.studentName}"
+                                    onclick="deleteStudent(this)">
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <!-- No Students -->
+                <tr th:if="${#lists.isEmpty(students)}">
+
+                    <td colspan="8"
+                        class="no-students">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                📚
+                            </div>
+
+                            <h3>No Students Found</h3>
+
+                            <p>
+                                No students match your search.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- Edit Student Modal -->
+<div id="editStudentModal"
+     class="modal-overlay">
+
+    <div class="student-modal">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+
+            <div>
+                <h2>Edit Student</h2>
+
+                <p>
+                    Update student information.
+                </p>
+            </div>
+
+            <button type="button"
+                    class="modal-close"
+                    onclick="closeEditModal()">
+                ×
+            </button>
+
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+
+            <form id="editStudentForm">
+
+                <!-- Read-only Information -->
+                <div class="form-section">
+
+                    <h3>Account Information</h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="editRollNumber">
+                                Roll Number
+                            </label>
+
+                            <input type="text"
+                                   id="editRollNumber"
+                                   readonly>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="editEmail">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                   id="editEmail"
+                                   readonly>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Editable Information -->
+                <div class="form-section">
+
+                    <h3>Student Information</h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="editStudentName">
+                                Student Name
+                            </label>
+
+                            <input type="text"
+                                   id="editStudentName"
+                                   name="studentName"
+                                   maxlength="100"
+                                   required>
+
+                            <small id="editStudentNameError"
+                                   class="field-error">
+                            </small>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="editMobile">
+                                Mobile Number
+                            </label>
+
+                            <input type="text"
+                                   id="editMobile"
+                                   name="mobile"
+                                   maxlength="10"
+                                   inputmode="numeric"
+                                   required>
+
+                            <small id="editMobileError"
+                                   class="field-error">
+                            </small>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="editBranch">
+                                Branch
+                            </label>
+
+                            <input type="text"
+                                   id="editBranch"
+                                   name="branch"
+                                   maxlength="50"
+                                   required>
+
+                            <small id="editBranchError"
+                                   class="field-error">
+                            </small>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="editSemester">
+                                Semester
+                            </label>
+
+                            <select id="editSemester"
+                                    name="semester"
+                                    required>
+
+                                <option value="">
+                                    Select Semester
+                                </option>
+
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+
+                            </select>
+
+                            <small id="editSemesterError"
+                                   class="field-error">
+                            </small>
+
+                        </div>
+
+                        <div class="form-group full-width">
+
+                            <label for="editAddress">
+                                Address
+                            </label>
+
+                            <textarea id="editAddress"
+                                      name="address"
+                                      rows="3"
+                                      required></textarea>
+
+                            <small id="editAddressError"
+                                   class="field-error">
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="modal-actions">
+
+                    <button type="button"
+                            class="modal-cancel-btn"
+                            onclick="closeEditModal()">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="modal-save-btn">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<footer class="library-footer">
+
+    <div class="library-footer-container">
+
+        <div class="library-footer-brand">
+            Library Management System
+        </div>
+
+        <div class="library-footer-text">
+            © 2026 Library Management System. All rights reserved.
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Common JS -->
+<script th:src="@{/js/common.js}"></script>
+
+<!-- Student Report JS -->
+<script th:src="@{/js/librarian-students.js}"></script>
+
+</body>
+</html>

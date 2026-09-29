@@ -17,25 +17,21 @@
 <div class="container">
 
     <h1>
-
         Something Went Wrong
-
     </h1>
 
     <p
-            th:text="${errorMessage}">
-
+         th:text="${errorMessage}">
         Unexpected Error
-
+        
     </p>
 
     <a
-            th:href="@{/}"
-            class="btn">
+        th:href="@{/dashboard}">
 
-        Go Home
+    Go to Dashboard
 
-    </a>
+</a>
 
 </div>
 

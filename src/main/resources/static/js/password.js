@@ -4,26 +4,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // FORGOT PASSWORD
 
-    const forgotForm = document.getElementById("forgotPasswordForm");
+    const forgotForm =
+        document.getElementById("forgotPasswordForm");
 
     if (forgotForm) {
 
-        const usernameOrEmail =
-            document.getElementById("usernameOrEmail");
+        const email =
+            document.getElementById("email");
 
-        const error =
-            document.getElementById("usernameOrEmailError");
+        const emailError =
+            document.getElementById("emailError");
 
-        usernameOrEmail.addEventListener("input", () => {
+        email.addEventListener("input", () => {
 
-            const value = usernameOrEmail.value.trim();
+            const value =
+                email.value.trim();
 
-            if (value.length < 3) {
+            if (value === "") {
 
                 setError(
-                    usernameOrEmail,
-                    error,
-                    "Enter your Username or Registered Email."
+                    email,
+                    emailError,
+                    "Email address is required."
+                );
+
+                return;
+
+            }
+
+            if (!isValidEmail(value)) {
+
+                setError(
+                    email,
+                    emailError,
+                    "Enter a valid email address."
                 );
 
                 return;
@@ -31,27 +45,62 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             clearError(
-                usernameOrEmail,
-                error
+                email,
+                emailError
             );
 
         });
 
-        forgotForm.addEventListener("submit", (event) => {
+        forgotForm.addEventListener(
+            "submit",
+            (event) => {
 
-            if (usernameOrEmail.value.trim().length < 3) {
+                const value =
+                    email.value.trim();
 
-                event.preventDefault();
+                if (value === "") {
 
-                setError(
-                    usernameOrEmail,
-                    error,
-                    "Enter your Username or Registered Email."
-                );
+                    event.preventDefault();
+
+                    setError(
+                        email,
+                        emailError,
+                        "Email address is required."
+                    );
+
+                    return;
+
+                }
+
+                if (!isValidEmail(value)) {
+
+                    event.preventDefault();
+
+                    setError(
+                        email,
+                        emailError,
+                        "Enter a valid email address."
+                    );
+
+                }
 
             }
+        );
 
-        });
+        forgotForm.addEventListener(
+            "reset",
+            () => {
+
+                setTimeout(() => {
+
+                    clearValidation(
+                        forgotForm
+                    );
+
+                }, 0);
+
+            }
+        );
 
     }
 
@@ -62,8 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (updateForm) {
 
-        const newPassword =
-            document.getElementById("newPassword");
+        const password =
+            document.getElementById("password");
 
         const confirmPassword =
             document.getElementById("confirmPassword");
@@ -72,17 +121,31 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("showPassword");
 
         const passwordError =
-            document.getElementById("newPasswordError");
+            document.getElementById("passwordError");
 
-        const confirmError =
+        const confirmPasswordError =
             document.getElementById("confirmPasswordError");
 
-        newPassword.addEventListener("input", () => {
+        // PASSWORD
 
-            if (newPassword.value.length < 8) {
+        password.addEventListener("input", () => {
+
+            if (password.value.length === 0) {
 
                 setError(
-                    newPassword,
+                    password,
+                    passwordError,
+                    "Password is required."
+                );
+
+                return;
+
+            }
+
+            if (password.value.length < 8) {
+
+                setError(
+                    password,
                     passwordError,
                     "Password must contain at least 8 characters."
                 );
@@ -92,90 +155,191 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             clearError(
-                newPassword,
+                password,
                 passwordError
             );
 
-        });
-
-        confirmPassword.addEventListener("input", () => {
-
-            if (confirmPassword.value !== newPassword.value) {
-
-                setError(
-                    confirmPassword,
-                    confirmError,
-                    "Passwords do not match."
-                );
-
-                return;
-
-            }
-
-            clearError(
-                confirmPassword,
-                confirmError
-            );
-
-        });
-
-        showPassword.addEventListener("change", () => {
-
-            const type =
-                showPassword.checked
-                    ? "text"
-                    : "password";
-
-            newPassword.type = type;
-            confirmPassword.type = type;
-
-        });
-
-        updateForm.addEventListener("submit", (event) => {
-
-            let valid = true;
-
-            if (newPassword.value.length < 8) {
-
-                setError(
-                    newPassword,
-                    passwordError,
-                    "Password must contain at least 8 characters."
-                );
-
-                valid = false;
-
-            }
-
-            if (confirmPassword.value !== newPassword.value) {
+            if (
+                confirmPassword.value.length > 0
+                && confirmPassword.value !== password.value
+            ) {
 
                 setError(
                     confirmPassword,
-                    confirmError,
+                    confirmPasswordError,
                     "Passwords do not match."
                 );
 
-                valid = false;
+            } else if (
+                confirmPassword.value.length > 0
+            ) {
 
-            }
-
-            if (!valid) {
-
-                event.preventDefault();
+                clearError(
+                    confirmPassword,
+                    confirmPasswordError
+                );
 
             }
 
         });
 
-        updateForm.addEventListener("reset", () => {
+        // CONFIRM PASSWORD
 
-            setTimeout(() => {
+        confirmPassword.addEventListener(
+            "input",
+            () => {
 
-                clearValidation(updateForm);
+                if (
+                    confirmPassword.value.length === 0
+                ) {
 
-            }, 0);
+                    setError(
+                        confirmPassword,
+                        confirmPasswordError,
+                        "Confirm Password is required."
+                    );
 
-        });
+                    return;
+
+                }
+
+                if (
+                    confirmPassword.value
+                    !== password.value
+                ) {
+
+                    setError(
+                        confirmPassword,
+                        confirmPasswordError,
+                        "Passwords do not match."
+                    );
+
+                    return;
+
+                }
+
+                clearError(
+                    confirmPassword,
+                    confirmPasswordError
+                );
+
+            }
+        );
+
+        // SHOW PASSWORD
+
+        showPassword.addEventListener(
+            "change",
+            () => {
+
+                togglePassword(
+                    password,
+                    confirmPassword,
+                    showPassword
+                );
+
+            }
+        );
+
+        // FORM SUBMISSION
+
+        updateForm.addEventListener(
+            "submit",
+            (event) => {
+
+                let valid = true;
+
+                if (
+                    password.value.length === 0
+                ) {
+
+                    setError(
+                        password,
+                        passwordError,
+                        "Password is required."
+                    );
+
+                    valid = false;
+
+                } else if (
+                    password.value.length < 8
+                ) {
+
+                    setError(
+                        password,
+                        passwordError,
+                        "Password must contain at least 8 characters."
+                    );
+
+                    valid = false;
+
+                }
+
+                if (
+                    confirmPassword.value.length === 0
+                ) {
+
+                    setError(
+                        confirmPassword,
+                        confirmPasswordError,
+                        "Confirm Password is required."
+                    );
+
+                    valid = false;
+
+                } else if (
+                    confirmPassword.value
+                    !== password.value
+                ) {
+
+                    setError(
+                        confirmPassword,
+                        confirmPasswordError,
+                        "Passwords do not match."
+                    );
+
+                    valid = false;
+
+                }
+
+                if (!valid) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+        // RESET FORM
+
+        updateForm.addEventListener(
+            "reset",
+            () => {
+
+                setTimeout(() => {
+
+                    clearValidation(
+                        updateForm
+                    );
+
+                    password.type =
+                        "password";
+
+                    confirmPassword.type =
+                        "password";
+
+                    if (showPassword) {
+
+                        showPassword.checked =
+                            false;
+
+                    }
+
+                }, 0);
+
+            }
+        );
 
     }
 

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Issue Books - Library Management System</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/student-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/student-issue-books.css}">
+
+</head>
+
+<body
+        th:attr="data-maximum-limit-reached=${maximumLimitReached != null && maximumLimitReached}">
+
+<div th:replace="~{fragments/student-header :: header}"></div>
+
+<main class="student-issue-page">
+
+    <!-- PAGE TOP CONTENT -->
+
+    <div class="issue-page-header">
+
+        <div class="breadcrumb-container">
+
+            <div class="breadcrumb">
+
+                <a th:href="@{/student-dashboard}">
+                    Home
+                </a>
+
+                <span class="breadcrumb-separator">
+                    &gt;
+                </span>
+
+                <span>
+                    Student Dashboard
+                </span>
+
+                <span class="breadcrumb-separator">
+                    &gt;
+                </span>
+
+                <span>
+                    Issue Books
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Issue Books
+                </h1>
+
+                <p>
+                    Select books and choose an issue duration for each book.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ISSUE CONTENT -->
+
+    <div class="issue-books-container">
+
+        <div class="issue-books-card">
+
+            <!-- SECTION HEADING -->
+
+            <div class="section-heading">
+
+                <h2>
+                    Selected Books
+                </h2>
+
+                <a th:href="@{/student/books}"
+                   class="browse-books-button">
+
+                    Add More Books
+
+                </a>
+
+            </div>
+
+            <!-- SELECTED BOOKS -->
+
+            <div th:if="${!selectedBooks.isEmpty()}"
+                 class="selected-books-list">
+
+                <div class="selected-book"
+                     th:each="book : ${selectedBooks}">
+
+                    <div class="book-information">
+
+                        <h3 th:text="${book.title}">
+                            Book Title
+                        </h3>
+
+                        <p>
+
+                            <strong>
+                                Author:
+                            </strong>
+
+                            <span th:text="${book.author}">
+                                Author
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>
+                                ISBN:
+                            </strong>
+
+                            <span th:text="${book.isbn}">
+                                ISBN
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>
+                                Category:
+                            </strong>
+
+                            <span th:text="${book.category}">
+                                Category
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                    <div class="book-request-options">
+
+                        <div class="book-availability">
+
+                            <span>
+                                Available Copies
+                            </span>
+
+                            <strong th:text="${book.availableCopies}">
+                                0
+                            </strong>
+
+                        </div>
+
+                        <div class="book-duration">
+
+                            <label
+                                    th:for="${'duration-' + book.id}">
+
+                                Issue Duration
+
+                            </label>
+
+                            <select
+                                    th:id="${'duration-' + book.id}"
+                                    th:name="durations"
+                                    class="book-duration-select"
+                                    form="durationUpdateForm">
+
+                                <option value="7"
+                                        th:selected="${durations.get(book.id) == 7}">
+
+                                    7 Days
+
+                                </option>
+
+                                <option value="14"
+                                        th:selected="${durations.get(book.id) == 14}">
+
+                                    14 Days
+
+                                </option>
+
+                                <option value="21"
+                                        th:selected="${durations.get(book.id) == 21}">
+
+                                    21 Days
+
+                                </option>
+
+                                <option value="30"
+                                        th:selected="${durations.get(book.id) == 30}">
+
+                                    30 Days
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <form
+                                th:action="@{/student/issue-books/remove}"
+                                method="post"
+                                class="remove-book-form">
+
+                            <input
+                                    type="hidden"
+                                    name="bookId"
+                                    th:value="${book.id}">
+
+                            <button
+                                    type="submit"
+                                    class="remove-book-button">
+
+                                Remove
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- Hidden ID used by duration update -->
+
+                    <input
+                            type="hidden"
+                            name="bookIds"
+                            th:value="${book.id}"
+                            form="durationUpdateForm">
+
+                </div>
+
+            </div>
+
+            <!-- EMPTY STATE -->
+
+            <div th:if="${selectedBooks.isEmpty()}"
+                 class="empty-selection">
+
+                <h3>
+                    No Books Selected
+                </h3>
+
+                <p>
+                    Browse the available books and select the books
+                    you want to request.
+                </p>
+
+                <a th:href="@{/student/books}"
+                   class="browse-books-button">
+
+                    Browse Available Books
+
+                </a>
+
+            </div>
+
+            <!-- ISSUE DETAILS -->
+
+            <div th:if="${!selectedBooks.isEmpty()}"
+                 class="issue-details">
+
+                <h2>
+                    Issue Details
+                </h2>
+
+                <p class="duration-note">
+                    Select the issue duration separately for each book.
+                </p>
+
+                <!-- DURATION UPDATE FORM -->
+
+                <form
+                        id="durationUpdateForm"
+                        th:action="@{/student/issue-books/update}"
+                        method="post">
+
+                    <div class="request-summary">
+
+                        <div>
+
+                            <span>
+                                Books Selected
+                            </span>
+
+                            <strong th:text="${selectedBooks.size()}">
+                                0
+                            </strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Duration
+                            </span>
+
+                            <strong>
+                                Per Book
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div class="duration-update-actions">
+
+                        <button
+                                type="submit"
+                                class="update-duration-button">
+
+                            Update Durations
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <!-- REQUEST ACTIONS -->
+
+                <div class="issue-actions">
+
+                    <a th:href="@{/student/books}"
+                       class="cancel-button">
+
+                        Add More Books
+
+                    </a>
+
+                    <form
+                            th:action="@{/student/issue-books/submit}"
+                            method="post"
+                            class="submit-request-form">
+
+                        <button
+                                type="submit"
+                                id="submitRequestButton"
+                                class="submit-request-button">
+
+                            Submit Issue Request
+
+                        </button>
+
+                    </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="library-footer">
+
+    <div class="library-footer-container">
+
+        <div class="library-footer-brand">
+            Library Management System
+        </div>
+
+        <div class="library-footer-text">
+            © 2026 Library Management System. All rights reserved.
+        </div>
+
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/student-issue-books.js}"></script>
+
+</body>
+
+</html>

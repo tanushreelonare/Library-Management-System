@@ -1,0 +1,266 @@
+/* Issued Books Page */
+
+.librarian-issued-books-page {
+    width: 100%;
+    padding: 22px 20px 50px;
+    box-sizing: border-box;
+}
+
+.librarian-issued-books-container {
+    width: 100%;
+    max-width: 1070px;
+    margin: 0 auto;
+}
+
+/* Breadcrumb */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.breadcrumb a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    color: #374151;
+}
+
+/* Page Heading */
+
+.page-heading {
+    margin-bottom: 20px;
+}
+
+.page-heading h1 {
+    margin: 0 0 5px;
+    font-size: 30px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: #111827;
+}
+
+.page-heading p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+/* Report Information */
+
+.report-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.report-info strong {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+/* Issued Books Table */
+
+.issued-books-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 7px;
+}
+
+.issued-books-table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+    table-layout: auto;
+    background: #ffffff;
+}
+
+/* Table Header */
+
+.issued-books-table thead {
+    background: #28588f;
+}
+
+.issued-books-table th {
+    padding: 12px 11px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid #28588f;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Table Body */
+
+.issued-books-table td {
+    padding: 13px 11px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #374151;
+    background: #ffffff;
+}
+
+.issued-books-table tbody tr:hover td {
+    background: #f8fafc;
+}
+
+.issued-books-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Book */
+
+.book-title {
+    max-width: 230px;
+    margin-bottom: 3px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #28588f;
+}
+
+.book-author {
+    max-width: 230px;
+    font-size: 12px;
+    line-height: 1.3;
+    color: #6b7280;
+}
+
+/* ISBN */
+
+.isbn {
+    white-space: nowrap;
+    font-size: 12px !important;
+    font-weight: 600;
+    color: #374151 !important;
+}
+
+/* Student */
+
+.issued-books-table td:nth-child(3) {
+    min-width: 130px;
+}
+
+/* Roll Number */
+
+.issued-books-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+/* Dates */
+
+.issued-books-table td:nth-child(5),
+.issued-books-table td:nth-child(6) {
+    white-space: nowrap;
+}
+
+/* Duration */
+
+.duration {
+    white-space: nowrap;
+}
+
+/* Status */
+
+.issued-book-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: 5px 10px;
+    border-radius: 14px;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: capitalize;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-issued {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* Empty State */
+
+.empty-issued-books {
+    width: 100%;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    background: #ffffff;
+}
+
+.empty-issued-books h3 {
+    margin: 0 0 7px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.empty-issued-books p {
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Not Available */
+
+.not-available {
+    color: #9ca3af;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .librarian-issued-books-page {
+        padding: 20px 16px 40px;
+    }
+
+    .page-heading h1 {
+        font-size: 27px;
+    }
+
+    .issued-books-table {
+        min-width: 950px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .librarian-issued-books-page {
+        padding: 18px 12px 35px;
+    }
+
+    .breadcrumb {
+        flex-wrap: wrap;
+        font-size: 13px;
+    }
+
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
+    .empty-issued-books {
+        padding: 40px 15px;
+    }
+}

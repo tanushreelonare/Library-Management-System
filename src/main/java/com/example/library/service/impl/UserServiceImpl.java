@@ -119,10 +119,7 @@ public class UserServiceImpl implements UserService {
                         )
                 );
 
-        /*
-         * accountNonLocked = true
-         * means the account is NOT locked.
-         */
+        // accountNonLocked = true means the account is not locked.
 
         user.setAccountNonLocked(!locked);
 

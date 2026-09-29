@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Books - Library Management System</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-books.css}">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+
+<!-- PAGE HEADER -->
+
+<div class="books-page-header">
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb-container">
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/librarian-dashboard}">
+                Home
+            </a>
+
+            <span class="breadcrumb-separator">
+                &gt;
+            </span>
+
+            <span>
+                Librarian Dashboard
+            </span>
+
+            <span class="breadcrumb-separator">
+                &gt;
+            </span>
+
+            <span>
+                Manage Books
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAGE HEADING -->
+
+    <div class="page-header">
+
+        <h1>
+            Manage Books
+        </h1>
+
+        <p>
+            View, search, edit, and manage books in the library.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="librarian-books-container">
+
+
+    <!-- FILTER AND ACTION BAR -->
+
+    <div class="books-controls">
+
+        <form
+                th:action="@{/librarian/books}"
+                method="get"
+                class="book-search-form"
+                id="bookSearchForm">
+
+
+            <!-- SEARCH -->
+
+            <input
+                    type="text"
+                    name="search"
+                    id="bookSearchInput"
+                    th:value="${search}"
+                    placeholder="Search by ISBN, title, author or category"
+                    autocomplete="off">
+
+
+            <!-- STATUS FILTER -->
+
+            <select
+                    id="statusFilter"
+                    class="book-filter-select">
+
+                <option value="ALL">
+                    All Status
+                </option>
+
+                <option value="ACTIVE">
+                    Active
+                </option>
+
+                <option value="INACTIVE">
+                    Inactive
+                </option>
+
+            </select>
+
+
+            <!-- AVAILABILITY FILTER -->
+
+            <select
+                    id="availabilityFilter"
+                    class="book-filter-select">
+
+                <option value="ALL">
+                    All Availability
+                </option>
+
+                <option value="AVAILABLE">
+                    Available
+                </option>
+
+                <option value="OUT_OF_STOCK">
+                    Out of Stock
+                </option>
+
+            </select>
+
+
+            <!-- SEARCH BUTTON -->
+
+            <button
+                    type="submit"
+                    class="btn search-btn"
+                    id="searchButton">
+
+                Search
+
+            </button>
+
+
+            <!-- CLEAR BUTTON -->
+
+            <button
+                    type="button"
+                    class="btn clear-search-btn"
+                    id="clearFiltersButton">
+
+                Clear
+
+            </button>
+
+
+            <!-- ADD BOOK BUTTON -->
+
+            <a
+                    th:href="@{/librarian/books/add}"
+                    class="btn add-book-btn">
+
+                + Add Book
+
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- BOOK SUMMARY -->
+
+    <div class="book-summary">
+
+        <span>
+            Books Found:
+        </span>
+
+        <strong id="bookCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <!-- BOOK TABLE -->
+
+    <div class="table-container">
+
+        <table class="books-table">
+
+            <thead>
+
+            <tr>
+
+                <th>
+                    ISBN
+                </th>
+
+                <th>
+                    Book Title
+                </th>
+
+                <th>
+                    Author
+                </th>
+
+                <th>
+                    Category
+                </th>
+
+                <th>
+                    Publisher
+                </th>
+
+                <th>
+                    Publication Year
+                </th>
+
+                <th>
+                    Language
+                </th>
+
+                <th>
+                    Availability
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+                <th class="actions-column">
+                    Actions
+                </th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody id="booksTableBody">
+
+            <!-- BOOK RECORDS -->
+
+            <tr
+                    th:each="book : ${books}"
+                    class="book-row"
+
+                    th:attr="
+                        data-book-id=${book.id},
+                        data-isbn=${book.isbn},
+                        data-title=${book.title},
+                        data-author=${book.author},
+                        data-category=${book.category},
+                        data-publisher=${book.publisher},
+                        data-publication-year=${book.publicationYear},
+                        data-language=${book.language},
+                        data-total-copies=${book.totalCopies},
+                        data-available-copies=${book.availableCopies},
+                        data-active=${book.active}">
+
+
+                <!-- ISBN -->
+
+                <td
+                        th:text="${book.isbn}"
+                        class="isbn-cell">
+
+                    ISBN
+
+                </td>
+
+
+                <!-- TITLE -->
+
+                <td
+                        th:text="${book.title}"
+                        class="title-cell">
+
+                    Book Title
+
+                </td>
+
+
+                <!-- AUTHOR -->
+
+                <td
+                        th:text="${book.author}">
+
+                    Author
+
+                </td>
+
+
+                <!-- CATEGORY -->
+
+                <td
+                        th:text="${book.category}">
+
+                    Category
+
+                </td>
+
+
+                <!-- PUBLISHER -->
+
+                <td
+                        th:text="${book.publisher}">
+
+                    Publisher
+
+                </td>
+
+
+                <!-- PUBLICATION YEAR -->
+
+                <td
+                        th:text="${book.publicationYear}">
+
+                    2025
+
+                </td>
+
+
+                <!-- LANGUAGE -->
+
+                <td
+                        th:text="${book.language}">
+
+                    English
+
+                </td>
+
+
+                <!-- AVAILABILITY -->
+
+                <td>
+
+                    <span
+                            class="availability-badge"
+                            th:classappend="${book.availableCopies > 0 ? ' available' : ' unavailable'}"
+                            th:text="${book.availableCopies + ' / ' + book.totalCopies}">
+
+                        5 / 5
+
+                    </span>
+
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+                    <span
+                            class="status-badge"
+                            th:classappend="${book.active ? ' active' : ' inactive'}"
+                            th:text="${book.active ? 'Active' : 'Inactive'}">
+
+                        Active
+
+                    </span>
+
+                </td>
+
+
+                <!-- ACTIONS -->
+
+                <td class="book-actions">
+
+                    <!-- VIEW / EDIT -->
+
+                    <button
+                            type="button"
+                            class="action-button view-edit-button"
+                            th:attr="data-book-id=${book.id}">
+
+                        View / Edit
+
+                    </button>
+
+
+                    <!-- ACTIVATE / DEACTIVATE -->
+
+                    <button
+                            type="button"
+                            class="action-button toggle-status-button"
+                            th:classappend="${book.active ? ' deactivate-button' : ' activate-button'}"
+                            th:attr="
+                                data-book-id=${book.id},
+                                data-active=${book.active}">
+
+                        <span
+                                th:text="${book.active ? 'Deactivate' : 'Activate'}">
+
+                            Deactivate
+
+                        </span>
+
+                    </button>
+
+
+                    <!-- DELETE -->
+
+                    <button
+                            type="button"
+                            class="action-button delete-book-button"
+                            th:attr="data-book-id=${book.id}">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+
+            <!-- EMPTY STATE -->
+
+            <tr
+                    id="emptyStateRow"
+                    style="display: none;">
+
+                <td
+                        colspan="10"
+                        class="empty-state">
+
+                    <h3>
+                        No Books Found
+                    </h3>
+
+                    <p>
+                        No books match the selected search or filter criteria.
+                    </p>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+
+    <div class="pagination-container">
+
+        <div class="pagination-summary"
+             id="paginationSummary">
+
+            Showing 0–0 of 0 books
+
+        </div>
+
+
+        <div class="pagination-controls">
+
+            <button
+                    type="button"
+                    class="pagination-button"
+                    id="previousPageButton">
+
+                Previous
+
+            </button>
+
+
+            <div
+                    class="pagination-pages"
+                    id="paginationPages">
+            </div>
+
+
+            <button
+                    type="button"
+                    class="pagination-button"
+                    id="nextPageButton">
+
+                Next
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- VIEW / EDIT BOOK MODAL -->
+
+<div
+        id="bookModal"
+        class="book-modal"
+        aria-hidden="true">
+
+    <div class="book-modal-overlay">
+
+        <div
+                class="book-modal-content"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="bookModalTitle">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="book-modal-header">
+
+                <h2 id="bookModalTitle">
+                    Book Details
+                </h2>
+
+                <button
+                        type="button"
+                        class="modal-close-button"
+                        id="closeBookModal">
+
+                    &times;
+
+                </button>
+
+            </div>
+
+
+            <!-- MODAL BODY -->
+
+            <div class="book-modal-body">
+
+
+                <!-- VIEW MODE -->
+
+                <div
+                        id="bookViewMode"
+                        class="book-view-mode">
+
+
+                    <div class="book-detail-grid">
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                ISBN
+                            </span>
+
+                            <strong id="viewIsbn">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Book Title
+                            </span>
+
+                            <strong id="viewTitle">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Author
+                            </span>
+
+                            <strong id="viewAuthor">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Category
+                            </span>
+
+                            <strong id="viewCategory">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Publisher
+                            </span>
+
+                            <strong id="viewPublisher">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Publication Year
+                            </span>
+
+                            <strong id="viewPublicationYear">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Language
+                            </span>
+
+                            <strong id="viewLanguage">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Total Copies
+                            </span>
+
+                            <strong id="viewTotalCopies">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Available Copies
+                            </span>
+
+                            <strong id="viewAvailableCopies">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Issued Copies
+                            </span>
+
+                            <strong id="viewIssuedCopies">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="book-detail-item">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong id="viewStatus">
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="book-description-section">
+
+                        <span>
+                            Description
+                        </span>
+
+                        <p id="viewDescription">
+                            -
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EDIT MODE -->
+
+                <form
+                        id="editBookForm"
+                        class="book-edit-form"
+                        style="display: none;">
+
+
+                    <div class="edit-form-grid">
+
+
+                        <div class="edit-field">
+
+                            <label for="editIsbn">
+                                ISBN
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="editIsbn"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editTitle">
+                                Book Title
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="editTitle"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editAuthor">
+                                Author
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="editAuthor"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editCategory">
+                                Category
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="editCategory"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editPublisher">
+                                Publisher
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="editPublisher"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editPublicationYear">
+                                Publication Year
+                            </label>
+
+                            <input
+                                    type="number"
+                                    id="editPublicationYear"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editLanguage">
+                                Language
+                            </label>
+
+                            <input
+                                    type="text"
+                                    id="editLanguage"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field">
+
+                            <label for="editTotalCopies">
+                                Total Copies
+                            </label>
+
+                            <input
+                                    type="number"
+                                    id="editTotalCopies"
+                                    min="0"
+                                    required>
+
+                        </div>
+
+
+                        <div class="edit-field readonly-field">
+
+                            <label>
+                                Available Copies
+                            </label>
+
+                            <input
+                                    type="number"
+                                    id="editAvailableCopies"
+                                    readonly>
+
+                            <small>
+                                Available copies are managed by the issue and return process.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="edit-description-field">
+
+                        <label for="editDescription">
+                            Description
+                        </label>
+
+                        <textarea
+                                id="editDescription"
+                                rows="5"
+                                maxlength="1000">
+                        </textarea>
+
+                    </div>
+
+
+                    <input
+                            type="hidden"
+                            id="editBookId">
+
+                </form>
+
+            </div>
+
+
+            <!-- MODAL FOOTER -->
+
+            <div class="book-modal-footer">
+
+
+                <div
+                        id="viewModeActions"
+                        class="modal-actions">
+
+                    <button
+                            type="button"
+                            class="modal-secondary-button"
+                            id="closeViewButton">
+
+                        Close
+
+                    </button>
+
+                    <button
+                            type="button"
+                            class="modal-primary-button"
+                            id="editBookButton">
+
+                        Edit Book
+
+                    </button>
+
+                </div>
+
+
+                <div
+                        id="editModeActions"
+                        class="modal-actions"
+                        style="display: none;">
+
+                    <button
+                            type="button"
+                            class="modal-secondary-button"
+                            id="cancelEditButton">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                            type="button"
+                            class="modal-primary-button"
+                            id="saveBookButton">
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<!-- JAVASCRIPT -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/librarian-books.js}"></script>
+
+</body>
+
+</html>

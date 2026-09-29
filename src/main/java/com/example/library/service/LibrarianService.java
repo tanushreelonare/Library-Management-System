@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.dto.LibrarianProfileDTO;
 import com.example.library.dto.LibrarianRegistrationDTO;
 import com.example.library.entity.Librarian;
 
@@ -54,10 +55,32 @@ public interface LibrarianService {
      */
     Optional<Librarian> getLibrarianByUserId(Long userId);
 
-    // UPDATE
+    // PROFILE
+
+    /**
+     * Returns librarian profile by associated user ID.
+     *
+     * @param userId Associated user ID
+     * @return Librarian profile details
+     */
+    LibrarianProfileDTO getLibrarianProfile(Long userId);
 
     /**
      * Updates librarian profile.
+     *
+     * @param userId Associated user ID
+     * @param dto Updated profile details
+     * @return Updated Librarian
+     */
+    Librarian updateLibrarianProfile(
+            Long userId,
+            LibrarianProfileDTO dto)
+            throws IOException;
+
+    // UPDATE
+
+    /**
+     * Updates librarian.
      *
      * @param id Librarian ID
      * @param librarianRegistrationDTO Updated details
@@ -94,5 +117,4 @@ public interface LibrarianService {
      * @return true if exists
      */
     boolean existsByMobile(String mobile);
-
 }

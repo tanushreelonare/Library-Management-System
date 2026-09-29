@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Available Books - Library Management System</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/student-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/student-available-books.css}">
+
+</head>
+
+<body>
+
+<div th:replace="~{fragments/student-header :: header}"></div>
+
+<main class="student-books-page">
+
+    <!-- PAGE TOP CONTENT -->
+
+    <div class="books-page-header">
+
+        <div class="breadcrumb-container">
+
+            <div class="breadcrumb">
+
+                <a th:href="@{/student-dashboard}">
+                    Home
+                </a>
+
+                <span class="breadcrumb-separator">
+                    &gt;
+                </span>
+
+                <span>
+                    Student Dashboard
+                </span>
+
+                <span class="breadcrumb-separator">
+                    &gt;
+                </span>
+
+                <span>
+                    Available Books
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Available Books
+                </h1>
+
+                <p>
+                    Browse books currently available in the library.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOOK CONTENT -->
+
+    <div class="student-books-container">
+
+        <!-- SEARCH -->
+
+        <form class="book-search-form"
+              th:action="@{/student/books}"
+              method="get">
+
+            <input
+                    type="text"
+                    name="search"
+                    th:value="${search}"
+                    placeholder="Search by ISBN, title, author or category">
+
+            <button type="submit">
+                Search
+            </button>
+
+            <a th:href="@{/student/books}"
+               class="clear-button">
+                Clear
+            </a>
+
+        </form>
+
+        <!-- SUMMARY -->
+
+        <div class="books-summary">
+
+            <span>
+                Books Available:
+            </span>
+
+            <strong th:text="${books.size()}">
+                0
+            </strong>
+
+        </div>
+
+        <!-- BOOK TABLE -->
+
+        <div class="books-table-wrapper">
+
+            <table class="books-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ISBN</th>
+
+                    <th>Book Title</th>
+
+                    <th>Author</th>
+
+                    <th>Category</th>
+
+                    <th>Publisher</th>
+
+                    <th>Publication Year</th>
+
+                    <th>Language</th>
+
+                    <th>Available Copies</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="book : ${books}">
+
+                    <td th:text="${book.isbn}">
+                        ISBN
+                    </td>
+
+                    <td class="book-title"
+                        th:text="${book.title}">
+                        Book Title
+                    </td>
+
+                    <td th:text="${book.author}">
+                        Author
+                    </td>
+
+                    <td th:text="${book.category}">
+                        Category
+                    </td>
+
+                    <td th:text="${book.publisher}">
+                        Publisher
+                    </td>
+
+                    <td th:text="${book.publicationYear}">
+                        2026
+                    </td>
+
+                    <td th:text="${book.language}">
+                        English
+                    </td>
+
+                    <td>
+
+                        <span class="availability-badge available"
+                              th:text="${book.availableCopies}">
+                            0
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <a
+                                th:href="@{/student/issue-books(bookId=${book.id})}"
+                                class="issue-button">
+
+                            Issue Book
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                <!-- EMPTY STATE -->
+
+                <tr th:if="${books.isEmpty()}">
+
+                    <td colspan="9">
+
+                        <div class="empty-state">
+
+                            <h3>
+                                No Books Available
+                            </h3>
+
+                            <p>
+                                There are currently no books matching your search.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="library-footer">
+
+    <div class="library-footer-container">
+
+        <div class="library-footer-brand">
+            Library Management System
+        </div>
+
+        <div class="library-footer-text">
+            © 2026 Library Management System. All rights reserved.
+        </div>
+
+    </div>
+
+</footer>
+
+<script th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/student-available-books.js}"></script>
+
+</body>
+
+</html>

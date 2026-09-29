@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Librarian Profile - Library Management System</title>
+
+    <!-- Common CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <!-- Librarian Header CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <!-- Librarian Profile CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-profile.css}">
+
+</head>
+
+<body>
+
+<!-- Librarian Header -->
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+
+<!-- Breadcrumb -->
+
+<!-- PAGE TOP CONTENT -->
+
+<div class="profile-page-header">
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb-container">
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/librarian-dashboard}">
+                Home
+            </a>
+
+            <span class="breadcrumb-separator">
+                &gt;
+            </span>
+
+            <span>
+                Librarian Dashboard
+            </span>
+
+            <span class="breadcrumb-separator">
+                &gt;
+            </span>
+
+            <span>
+                Profile
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Librarian Profile
+            </h1>
+
+            <p>
+                View and manage your librarian profile information.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Profile Container -->
+
+<main class="profile-container">
+
+    <form id="librarianProfileForm"
+          class="profile-form"
+          th:action="@{/librarian/profile}"
+          th:object="${librarianProfile}"
+          method="post"
+          enctype="multipart/form-data">
+
+
+        <!-- Profile Content -->
+
+        <div class="profile-content">
+
+
+            <!-- Profile Sidebar -->
+
+            <aside class="profile-sidebar">
+
+                <div class="profile-image-container">
+
+                    <!-- Existing Profile Image -->
+
+                    <img id="profileImagePreview"
+                         th:if="${librarianProfile.imagePath != null
+                                  and !#strings.isEmpty(librarianProfile.imagePath)}"
+                         th:src="@{'/uploads/' + ${librarianProfile.imagePath}}"
+                         alt="Librarian Profile Image"
+                         class="profile-image">
+
+
+                    <!-- Default Profile Image -->
+
+                    <div id="defaultProfileImage"
+                         th:unless="${librarianProfile.imagePath != null
+                                     and !#strings.isEmpty(librarianProfile.imagePath)}"
+                         class="default-profile-image">
+
+                        <span
+                            th:text="${#strings.substring(
+                                librarianProfile.librarianName,
+                                0,
+                                1
+                            ).toUpperCase()}">
+                            L
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Librarian Name -->
+
+                <h2 id="profile-librarian-name"
+                    class="profile-student-name"
+                    th:text="${librarianProfile.librarianName}">
+                    Librarian Name
+                </h2>
+
+
+                <!-- Employee ID -->
+
+                <p id="profile-employee-id"
+                   class="profile-roll-number"
+                   th:text="${librarianProfile.employeeId}">
+                    Employee ID
+                </p>
+
+
+                <!-- Image Upload -->
+
+                <div class="image-upload-group">
+
+                    <label for="librarianImage">
+                        Profile Image
+                    </label>
+
+                    <input type="file"
+                           id="librarianImage"
+                           th:field="*{librarianImage}"
+                           accept="image/*"
+                           disabled>
+
+                    <small>
+                        JPG, JPEG, PNG or WEBP
+                    </small>
+
+                </div>
+
+            </aside>
+
+
+            <!-- Main Profile -->
+
+            <section class="profile-main">
+
+
+                <!-- Personal Information -->
+
+                <div class="profile-card">
+
+                    <div class="profile-card-header">
+
+                        <h2>Personal Information</h2>
+
+                    </div>
+
+
+                    <div class="profile-grid">
+
+
+                        <!-- Employee ID -->
+
+                        <div class="profile-field">
+
+                            <label class="profile-label">
+                                Employee ID
+                            </label>
+
+                            <input type="text"
+                                   id="employeeId"
+                                   th:field="*{employeeId}"
+                                   class="profile-input"
+                                   readonly>
+
+                        </div>
+
+
+                        <!-- Librarian Name -->
+
+                        <div class="profile-field">
+
+                            <label for="librarianName"
+                                   class="profile-label">
+                                Librarian Name
+                            </label>
+
+                            <input type="text"
+                                   id="librarianName"
+                                   th:field="*{librarianName}"
+                                   class="profile-input editable-field"
+                                   readonly>
+
+                            <small class="field-error"
+                                   th:if="${#fields.hasErrors('librarianName')}"
+                                   th:errors="*{librarianName}">
+                            </small>
+
+                        </div>
+
+
+                        <!-- Mobile -->
+
+                        <div class="profile-field">
+
+                            <label for="mobile"
+                                   class="profile-label">
+                                Mobile Number
+                            </label>
+
+                            <input type="text"
+                                   id="mobile"
+                                   th:field="*{mobile}"
+                                   class="profile-input editable-field"
+                                   maxlength="10"
+                                   readonly>
+
+                            <small class="field-error"
+                                   th:if="${#fields.hasErrors('mobile')}"
+                                   th:errors="*{mobile}">
+                            </small>
+
+                        </div>
+
+
+                        <!-- Designation -->
+
+                        <div class="profile-field">
+
+                            <label for="designation"
+                                   class="profile-label">
+                                Designation
+                            </label>
+
+                            <input type="text"
+                                   id="designation"
+                                   th:field="*{designation}"
+                                   class="profile-input editable-field"
+                                   readonly>
+
+                            <small class="field-error"
+                                   th:if="${#fields.hasErrors('designation')}"
+                                   th:errors="*{designation}">
+                            </small>
+
+                        </div>
+
+
+                        <!-- Qualification -->
+
+                        <div class="profile-field">
+
+                            <label for="qualification"
+                                   class="profile-label">
+                                Qualification
+                            </label>
+
+                            <input type="text"
+                                   id="qualification"
+                                   th:field="*{qualification}"
+                                   class="profile-input editable-field"
+                                   readonly>
+
+                            <small class="field-error"
+                                   th:if="${#fields.hasErrors('qualification')}"
+                                   th:errors="*{qualification}">
+                            </small>
+
+                        </div>
+
+
+                        <!-- Experience -->
+
+                        <div class="profile-field">
+
+                            <label for="experience"
+                                   class="profile-label">
+                                Experience (Years)
+                            </label>
+
+                            <input type="number"
+                                   id="experience"
+                                   th:field="*{experience}"
+                                   class="profile-input editable-field"
+                                   min="0"
+                                   max="50"
+                                   readonly>
+
+                            <small class="field-error"
+                                   th:if="${#fields.hasErrors('experience')}"
+                                   th:errors="*{experience}">
+                            </small>
+
+                        </div>
+
+
+                        <!-- Address -->
+
+                        <div class="profile-field profile-field-full">
+
+                            <label for="address"
+                                   class="profile-label">
+                                Address
+                            </label>
+
+                            <textarea id="address"
+                                      th:field="*{address}"
+                                      class="profile-input editable-field"
+                                      rows="4"
+                                      readonly></textarea>
+
+                            <small class="field-error"
+                                   th:if="${#fields.hasErrors('address')}"
+                                   th:errors="*{address}">
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Account Information -->
+
+                <div class="profile-card">
+
+                    <div class="profile-card-header">
+
+                        <h2>Account Information</h2>
+
+                    </div>
+
+
+                    <div class="profile-grid">
+
+
+                        <!-- Registered Email -->
+
+                        <div class="profile-field">
+
+                            <label class="profile-label">
+                                Registered Email
+                            </label>
+
+                            <div class="account-value"
+                                 th:text="${librarianProfile.email}">
+                                librarian@example.com
+                            </div>
+
+                        </div>
+
+
+                        <!-- Account Status -->
+
+                        <div class="profile-field">
+
+                            <label class="profile-label">
+                                Account Status
+                            </label>
+
+                            <div class="account-value account-status"
+                                 th:classappend="${librarianProfile.active}
+                                     ? ' active'
+                                     : ' inactive'">
+
+                                <span
+                                    th:text="${librarianProfile.active}
+                                        ? 'Active'
+                                        : 'Inactive'">
+                                    Active
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Registration Date -->
+
+                        <div class="profile-field">
+
+                            <label class="profile-label">
+                                Registration Date
+                            </label>
+
+                            <div class="account-value"
+                                 th:text="${librarianProfile.createdAt != null
+                                     ? #temporals.format(
+                                         librarianProfile.createdAt,
+                                         'dd MMM yyyy, hh:mm a'
+                                       )
+                                     : 'Not Available'}">
+                                03 Sep 2026, 12:00 PM
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Action Buttons -->
+
+                <div class="profile-actions">
+
+                    <button type="button"
+                            id="editProfileButton"
+                            class="profile-btn edit-btn">
+                        Edit Profile
+                    </button>
+
+                    <button type="submit"
+                            id="saveProfileButton"
+                            class="profile-btn save-btn"
+                            style="display: none;">
+                        Save Changes
+                    </button>
+
+                    <button type="button"
+                            id="cancelEditButton"
+                            class="profile-btn cancel-btn"
+                            style="display: none;">
+                        Cancel
+                    </button>
+
+                    <a th:href="@{/librarian-dashboard}"
+                       id="dashboardBtn"
+                       class="profile-btn dashboard-btn">
+                        Back to Dashboard
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </form>
+
+</main>
+
+
+<!-- Footer -->
+
+<footer class="library-footer">
+
+    <div class="library-footer-container">
+
+        <div class="library-footer-brand">
+            Library Management System
+        </div>
+
+        <div class="library-footer-text">
+
+            <p>
+                © 2026 Library Management System
+            </p>
+
+            <p>
+                Librarian Portal
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Common JavaScript -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<!-- Librarian Profile JavaScript -->
+
+<script th:src="@{/js/librarian-profile.js}"></script>
+
+</body>
+
+</html>
