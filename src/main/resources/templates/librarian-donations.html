@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Donation Management</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-donations.css}">
+
+</head>
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+
+<main class="librarian-donations-page">
+
+    <!-- PAGE HEADER -->
+
+    <section class="donations-page-header">
+
+        <div class="breadcrumb-container">
+
+            <div class="breadcrumb">
+
+                <a th:href="@{/librarian-dashboard}">
+                    Dashboard
+                </a>
+
+                <span class="separator">
+                    >
+                </span>
+
+                <span>
+                    Donations
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="page-header-content">
+
+            <div>
+
+                <h1>
+                    Donation Management
+                </h1>
+
+                <p>
+                    Review, approve, or reject book donation requests submitted by students.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SUMMARY CARDS -->
+
+    <section class="donation-summary-container">
+
+        <div class="donation-summary-card">
+
+            <div class="summary-icon">
+                📚
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Total Requests
+                </span>
+
+                <strong
+                        id="totalRequests"
+                        th:text="${#lists.size(donationRequests)}">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="donation-summary-card pending-card">
+
+            <div class="summary-icon">
+                ⏳
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Pending
+                </span>
+
+                <strong
+                        id="pendingRequests">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="donation-summary-card approved-card">
+
+            <div class="summary-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Approved
+                </span>
+
+                <strong
+                        id="approvedRequests">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="donation-summary-card rejected-card">
+
+            <div class="summary-icon">
+                ✕
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Rejected
+                </span>
+
+                <strong
+                        id="rejectedRequests">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SEARCH AND FILTER -->
+
+    <section class="donation-controls-container">
+
+        <form
+                class="donation-search-form"
+                method="get"
+                th:action="@{/librarian/donations}">
+
+            <div class="search-group">
+
+                <label for="search">
+                    Search Donations
+                </label>
+
+                <div class="search-input-row">
+
+                    <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            th:value="${search}"
+                            placeholder="Student, roll number, email, book, author or category">
+
+                    <button
+                            type="submit"
+                            class="donation-search-button">
+
+                        Search
+
+                    </button>
+
+                    <a
+                            th:if="${search != null and !search.isBlank()}"
+                            th:href="@{/librarian/donations}"
+                            class="donation-clear-button">
+
+                        Clear
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+
+        <div class="status-filter-group">
+
+            <label for="statusFilter">
+                Filter by Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="ALL">
+                    All
+                </option>
+
+                <option value="PENDING">
+                    Pending
+                </option>
+
+                <option value="APPROVED">
+                    Approved
+                </option>
+
+                <option value="REJECTED">
+                    Rejected
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- DONATION TABLE -->
+
+    <section class="donation-table-container">
+
+        <div class="table-header">
+
+            <div>
+
+                <h2>
+                    Donation Requests
+                </h2>
+
+                <p>
+                    Review submitted donation requests and take appropriate action.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="donation-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Book
+                    </th>
+
+                    <th>
+                        Author
+                    </th>
+
+                    <th>
+                        Category
+                    </th>
+
+                    <th>
+                        Copies
+                    </th>
+
+                    <th>
+                        Request Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="donationTableBody">
+
+                <tr
+                        th:each="request, stat : ${donationRequests}"
+                        class="donation-row"
+                        th:attr="
+                            data-status=${request.status},
+                            data-request-id=${request.requestId}">
+
+                    <td
+                            class="request-number"
+                            th:text="${stat.count}">
+                        1
+                    </td>
+
+
+                    <td>
+
+                        <div class="student-info">
+
+                            <strong
+                                    th:text="${request.studentName}">
+                                Student Name
+                            </strong>
+
+                            <span
+                                    th:text="${request.rollNumber}">
+                                Roll Number
+                            </span>
+
+                            <span
+                                    th:text="${request.email}">
+                                student@email.com
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="book-info">
+
+                            <strong
+                                    th:text="${request.bookName}">
+                                Book Name
+                            </strong>
+
+                        </div>
+
+                    </td>
+
+
+                    <td
+                            th:text="${request.author}">
+                        Author
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                class="category-badge"
+                                th:text="${request.category}">
+                            Category
+                        </span>
+
+                    </td>
+
+
+                    <td
+                            class="copies-cell"
+                            th:text="${request.totalCopies}">
+                        1
+                    </td>
+
+
+                    <td
+                            class="date-cell"
+                            th:text="${request.requestDate != null
+                                ? #temporals.format(request.requestDate, 'dd MMM yyyy, hh:mm a')
+                                : '-'}">
+                        01 Jan 2026
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                class="status-badge"
+                                th:classappend="${'status-' + #strings.toLowerCase(request.status)}"
+                                th:text="${request.status}">
+                            PENDING
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <button
+                                    type="button"
+                                    class="action-button preview-button"
+                                    th:attr="data-request-id=${request.requestId}">
+
+                                Preview
+
+                            </button>
+
+
+                            <form
+                                    th:if="${request.status == 'PENDING'}"
+                                    method="post"
+                                    th:action="@{'/librarian/donations/' + ${request.requestId} + '/approve'}"
+                                    class="approve-form">
+
+                                <button
+                                        type="submit"
+                                        class="action-button approve-button">
+
+                                    Approve
+
+                                </button>
+
+                            </form>
+
+
+                            <button
+                                    th:if="${request.status == 'PENDING'}"
+                                    type="button"
+                                    class="action-button reject-button"
+                                    th:attr="data-request-id=${request.requestId}">
+
+                                Reject
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- EMPTY STATE -->
+
+                <tr
+                        th:if="${#lists.isEmpty(donationRequests)}"
+                        id="emptyDonationRow">
+
+                    <td
+                            colspan="9"
+                            class="empty-donations">
+
+                        <div class="empty-donations-content">
+
+                            <div class="empty-icon">
+                                📚
+                            </div>
+
+                            <h3>
+                                No Donation Requests
+                            </h3>
+
+                            <p>
+                                There are currently no donation requests to display.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- PREVIEW MODAL -->
+
+<div
+        id="donationPreviewModal"
+        class="donation-modal"
+        aria-hidden="true">
+
+    <div class="donation-modal-overlay"></div>
+
+
+    <div class="donation-modal-content">
+
+        <div class="donation-modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    DONATION REQUEST
+                </span>
+
+                <h2>
+                    Request Preview
+                </h2>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    id="closePreviewModal"
+                    class="modal-close-button">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div class="donation-modal-body">
+
+            <!-- STUDENT INFORMATION -->
+
+            <section class="modal-section">
+
+                <h3>
+                    Student Information
+                </h3>
+
+                <div class="modal-details-grid">
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Student Name
+                        </span>
+
+                        <strong id="previewStudentName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Roll Number
+                        </span>
+
+                        <strong id="previewRollNumber">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong id="previewEmail">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- BOOK INFORMATION -->
+
+            <section class="modal-section">
+
+                <h3>
+                    Donated Book
+                </h3>
+
+                <div class="modal-details-grid">
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Book Name
+                        </span>
+
+                        <strong id="previewBookName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Author
+                        </span>
+
+                        <strong id="previewAuthor">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Category
+                        </span>
+
+                        <strong id="previewCategory">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Total Copies
+                        </span>
+
+                        <strong id="previewCopies">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REQUEST INFORMATION -->
+
+            <section class="modal-section">
+
+                <h3>
+                    Request Information
+                </h3>
+
+                <div class="modal-details-grid">
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Request ID
+                        </span>
+
+                        <strong id="previewRequestId">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Request Date
+                        </span>
+
+                        <strong id="previewRequestDate">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong id="previewStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                            class="modal-detail"
+                            id="previewReviewedAtContainer">
+
+                        <span>
+                            Reviewed At
+                        </span>
+
+                        <strong id="previewReviewedAt">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REJECTION REASON -->
+
+            <section
+                    class="modal-section rejection-section"
+                    id="previewRejectionSection"
+                    style="display: none;">
+
+                <h3>
+                    Rejection Reason
+                </h3>
+
+                <p id="previewRejectionReason">
+                    -
+                </p>
+
+            </section>
+
+        </div>
+
+
+        <div class="donation-modal-footer">
+
+            <button
+                    type="button"
+                    id="closePreviewModalBottom"
+                    class="modal-secondary-button">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- REJECTION MODAL -->
+
+<div
+        id="rejectionModal"
+        class="donation-modal"
+        aria-hidden="true">
+
+    <div class="donation-modal-overlay"></div>
+
+
+    <div class="donation-modal-content rejection-modal-content">
+
+        <div class="donation-modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    DONATION REQUEST
+                </span>
+
+                <h2>
+                    Reject Donation
+                </h2>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    id="closeRejectionModal"
+                    class="modal-close-button">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <form
+                id="rejectionForm"
+                method="post">
+
+            <div class="donation-modal-body">
+
+                <p class="rejection-description">
+                    Please provide a reason for rejecting this donation request.
+                </p>
+
+
+                <div class="rejection-form-group">
+
+                    <label for="rejectionReason">
+                        Rejection Reason
+                    </label>
+
+                    <textarea
+                            id="rejectionReason"
+                            name="rejectionReason"
+                            rows="5"
+                            maxlength="500"
+                            placeholder="Enter the reason for rejection..."></textarea>
+
+                    <small>
+                        Maximum 500 characters.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="donation-modal-footer">
+
+                <button
+                        type="button"
+                        id="cancelRejectionButton"
+                        class="modal-secondary-button">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                        type="submit"
+                        class="modal-danger-button">
+
+                    Reject Donation
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- SWEETALERT -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script th:inline="javascript">
+
+    /* Donation page data */
+
+    const donationRequests =
+        /*[[${donationRequests}]]*/ [];
+
+
+    /* Summary counts */
+
+    function updateSummaryCounts() {
+
+        const requests =
+            donationRequests || [];
+
+        const pending =
+            requests.filter(
+                request =>
+                    request.status === "PENDING"
+            ).length;
+
+        const approved =
+            requests.filter(
+                request =>
+                    request.status === "APPROVED"
+            ).length;
+
+        const rejected =
+            requests.filter(
+                request =>
+                    request.status === "REJECTED"
+            ).length;
+
+
+        document.getElementById(
+            "pendingRequests"
+        ).textContent = pending;
+
+
+        document.getElementById(
+            "approvedRequests"
+        ).textContent = approved;
+
+
+        document.getElementById(
+            "rejectedRequests"
+        ).textContent = rejected;
+
+    }
+
+
+    /* Status filter */
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+
+
+    if (statusFilter) {
+
+        statusFilter.addEventListener(
+            "change",
+            function () {
+
+                const selectedStatus =
+                    this.value;
+
+                const rows =
+                    document.querySelectorAll(
+                        ".donation-row"
+                    );
+
+
+                rows.forEach(
+                    function (row) {
+
+                        const rowStatus =
+                            row.dataset.status;
+
+
+                        if (
+                            selectedStatus === "ALL"
+                            ||
+                            rowStatus === selectedStatus
+                        ) {
+
+                            row.style.display = "";
+
+                        } else {
+
+                            row.style.display = "none";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* Preview modal */
+
+    const previewModal =
+        document.getElementById(
+            "donationPreviewModal"
+        );
+
+
+    const closePreviewModal =
+        function () {
+
+            previewModal.classList.remove(
+                "active"
+            );
+
+            previewModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+        };
+
+
+    const openPreviewModal =
+        function () {
+
+            previewModal.classList.add(
+                "active"
+            );
+
+            previewModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+        };
+
+
+    document
+        .querySelectorAll(".preview-button")
+        .forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    async function () {
+
+                        const requestId =
+                            this.dataset.requestId;
+
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    `/librarian/donations/${requestId}`
+                                );
+
+
+                            if (!response.ok) {
+
+                                throw new Error(
+                                    "Unable to load donation details."
+                                );
+
+                            }
+
+
+                            const request =
+                                await response.json();
+
+
+                            document.getElementById(
+                                "previewRequestId"
+                            ).textContent =
+                                request.requestId ?? "-";
+
+
+                            document.getElementById(
+                                "previewStudentName"
+                            ).textContent =
+                                request.studentName ?? "-";
+
+
+                            document.getElementById(
+                                "previewRollNumber"
+                            ).textContent =
+                                request.rollNumber ?? "-";
+
+
+                            document.getElementById(
+                                "previewEmail"
+                            ).textContent =
+                                request.email ?? "-";
+
+
+                            document.getElementById(
+                                "previewBookName"
+                            ).textContent =
+                                request.bookName ?? "-";
+
+
+                            document.getElementById(
+                                "previewAuthor"
+                            ).textContent =
+                                request.author ?? "-";
+
+
+                            document.getElementById(
+                                "previewCategory"
+                            ).textContent =
+                                request.category ?? "-";
+
+
+                            document.getElementById(
+                                "previewCopies"
+                            ).textContent =
+                                request.totalCopies ?? "-";
+
+
+                            document.getElementById(
+                                "previewStatus"
+                            ).textContent =
+                                request.status ?? "-";
+
+
+                            document.getElementById(
+                                "previewRequestDate"
+                            ).textContent =
+                                formatDate(
+                                    request.requestDate
+                                );
+
+
+                            document.getElementById(
+                                "previewReviewedAt"
+                            ).textContent =
+                                formatDate(
+                                    request.reviewedAt
+                                );
+
+
+                            const rejectionSection =
+                                document.getElementById(
+                                    "previewRejectionSection"
+                                );
+
+
+                            if (
+                                request.rejectionReason
+                                &&
+                                request.rejectionReason.trim()
+                            ) {
+
+                                document.getElementById(
+                                    "previewRejectionReason"
+                                ).textContent =
+                                    request.rejectionReason;
+
+                                rejectionSection.style.display =
+                                    "";
+
+                            } else {
+
+                                rejectionSection.style.display =
+                                    "none";
+
+                            }
+
+
+                            openPreviewModal();
+
+                        } catch (error) {
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Unable to Load",
+                                text: error.message,
+                                confirmButtonColor: "#1565c0"
+                            });
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* Format date */
+
+    function formatDate(value) {
+
+        if (!value) {
+
+            return "-";
+
+        }
+
+
+        const date =
+            new Date(value);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return value;
+
+        }
+
+
+        return date.toLocaleString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+
+    /* Close preview modal */
+
+    document.getElementById(
+        "closePreviewModal"
+    ).addEventListener(
+        "click",
+        closePreviewModal
+    );
+
+
+    document.getElementById(
+        "closePreviewModalBottom"
+    ).addEventListener(
+        "click",
+        closePreviewModal
+    );
+
+
+    document.querySelector(
+        "#donationPreviewModal .donation-modal-overlay"
+    ).addEventListener(
+        "click",
+        closePreviewModal
+    );
+
+
+    /* Rejection modal */
+
+    const rejectionModal =
+        document.getElementById(
+            "rejectionModal"
+        );
+
+
+    const rejectionForm =
+        document.getElementById(
+            "rejectionForm"
+        );
+
+
+    const rejectionReason =
+        document.getElementById(
+            "rejectionReason"
+        );
+
+
+    function closeRejectionModal() {
+
+        rejectionModal.classList.remove(
+            "active"
+        );
+
+        rejectionModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        rejectionReason.value = "";
+
+    }
+
+
+    document
+        .querySelectorAll(".reject-button")
+        .forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        const requestId =
+                            this.dataset.requestId;
+
+
+                        rejectionForm.action =
+                            `/librarian/donations/${requestId}/reject`;
+
+
+                        rejectionModal.classList.add(
+                            "active"
+                        );
+
+                        rejectionModal.setAttribute(
+                            "aria-hidden",
+                            "false"
+                        );
+
+
+                        rejectionReason.focus();
+
+                    }
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "closeRejectionModal"
+    ).addEventListener(
+        "click",
+        closeRejectionModal
+    );
+
+
+    document.getElementById(
+        "cancelRejectionButton"
+    ).addEventListener(
+        "click",
+        closeRejectionModal
+    );
+
+
+    document.querySelector(
+        "#rejectionModal .donation-modal-overlay"
+    ).addEventListener(
+        "click",
+        closeRejectionModal
+    );
+
+
+    /* Approve confirmation */
+
+    document
+        .querySelectorAll(".approve-form")
+        .forEach(
+            function (form) {
+
+                form.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        event.preventDefault();
+
+
+                        Swal.fire({
+                            icon: "question",
+                            title: "Approve Donation?",
+                            text: "This will add the donated book to the library inventory.",
+                            showCancelButton: true,
+                            confirmButtonText: "Yes, Approve",
+                            cancelButtonText: "Cancel",
+                            confirmButtonColor: "#2e7d32",
+                            cancelButtonColor: "#757575"
+                        }).then(
+                            function (result) {
+
+                                if (
+                                    result.isConfirmed
+                                ) {
+
+                                    form.submit();
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* SweetAlert success */
+
+    /*[# th:if="${successMessage}"]*/
+
+    Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: /*[[${successMessage}]]*/ "",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#1565c0"
+    });
+
+    /*[/]*/
+
+
+    /* SweetAlert error */
+
+    /*[# th:if="${errorMessage}"]*/
+
+    Swal.fire({
+        icon: "error",
+        title: "Action Failed",
+        text: /*[[${errorMessage}]]*/ "",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#d32f2f"
+    });
+
+    /*[/]*/
+
+
+    /* Initial summary */
+
+    updateSummaryCounts();
+
+
+    /* Escape key */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closePreviewModal();
+
+                closeRejectionModal();
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

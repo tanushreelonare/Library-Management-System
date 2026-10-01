@@ -165,6 +165,12 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> getCategories() {
+        return bookRepository.findDistinctCategories();
+   }
+
     private void validateBook(BookDTO dto) {
 
         if (dto == null) {

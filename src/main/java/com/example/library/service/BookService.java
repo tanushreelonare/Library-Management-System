@@ -33,4 +33,7 @@ public interface BookService {
 
     // Get available books
     List<BookDTO> getAvailableBooks();
+
+    // Get distinct categories
+    List<String> getCategories();
 }

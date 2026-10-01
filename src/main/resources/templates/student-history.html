@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Student History - Library Management System
+    </title>
+
+
+    <!-- Common CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+
+    <!-- Librarian Header CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+
+    <!-- Student History CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/student-history.css}">
+
+</head>
+
+
+<body>
+
+
+<!-- Librarian Header -->
+
+<div th:replace="~{fragments/librarian-header :: header}">
+</div>
+
+
+<!-- Breadcrumb -->
+
+<div class="breadcrumb-container">
+
+    <div class="breadcrumb">
+
+        <a th:href="@{/librarian-dashboard}">
+            Home
+        </a>
+
+        <span class="breadcrumb-separator">
+            &gt;
+        </span>
+
+        <a th:href="@{/librarian-dashboard}">
+            Librarian Dashboard
+        </a>
+
+        <span class="breadcrumb-separator">
+            &gt;
+        </span>
+
+        <span>
+            Student History
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- Main Content -->
+
+<main class="student-history-container">
+
+
+    <!-- Page Header -->
+
+    <section class="page-header">
+
+        <h1>
+            Student History
+        </h1>
+
+        <p>
+            View and search student book issue and return history.
+        </p>
+
+    </section>
+
+
+    <!-- Search Section -->
+
+    <section class="history-search-section">
+
+        <form th:action="@{/librarian/student-history}"
+              method="get"
+              class="history-search-form">
+
+
+            <!-- Search Field -->
+
+            <div class="history-search-field">
+
+                <label for="search">
+                    Search Student
+                </label>
+
+                <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        th:value="${search}"
+                        placeholder="Student name, roll number or email">
+
+            </div>
+
+
+            <!-- Search Button -->
+
+            <button
+                    type="submit"
+                    class="history-search-button">
+
+                Search
+
+            </button>
+
+
+            <!-- Clear Button -->
+
+            <a
+                    th:href="@{/librarian/student-history}"
+                    class="history-clear-button">
+
+                Clear
+
+            </a>
+
+        </form>
+
+    </section>
+
+
+    <!-- Result Summary -->
+
+    <section class="history-summary">
+
+        <span>
+            Total Records:
+        </span>
+
+        <strong
+                th:text="${#lists.size(history)}">
+
+            0
+
+        </strong>
+
+    </section>
+
+
+    <!-- History Table -->
+
+    <section class="history-table-section">
+
+
+        <!-- Table -->
+
+        <div
+                th:if="${history != null and !#lists.isEmpty(history)}"
+                class="history-table-wrapper">
+
+            <table class="history-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Roll Number
+                    </th>
+
+                    <th>
+                        Book
+                    </th>
+
+                    <th>
+                        ISBN
+                    </th>
+
+                    <th>
+                        Request Date
+                    </th>
+
+                    <th>
+                        Issue Date
+                    </th>
+
+                    <th>
+                        Due Date
+                    </th>
+
+                    <th>
+                        Returned Date
+                    </th>
+
+                    <th>
+                        Duration
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="record : ${history}">
+
+
+                    <!-- Student -->
+
+                    <td>
+
+                        <div class="student-name"
+                             th:text="${record.studentName}">
+                            Student Name
+                        </div>
+
+                        <div class="student-email"
+                             th:text="${record.email}">
+                            student@email.com
+                        </div>
+
+                    </td>
+
+
+                    <!-- Roll Number -->
+
+                    <td>
+
+                        <span
+                                th:text="${record.rollNumber}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Book -->
+
+                    <td>
+
+                        <div class="book-title"
+                             th:text="${record.bookTitle}">
+                            Book Title
+                        </div>
+
+                        <div class="book-author"
+                             th:text="${record.author}">
+                            Author
+                        </div>
+
+                    </td>
+
+
+                    <!-- ISBN -->
+
+                    <td>
+
+                        <span
+                                th:text="${record.isbn}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Request Date -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.requestDate != null}"
+                                th:text="${#temporals.format(
+                                    record.requestDate,
+                                    'dd MMM yyyy'
+                                )}">
+                            -
+                        </span>
+
+                        <span
+                                th:unless="${record.requestDate != null}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Issue Date -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.issuedAt != null}"
+                                th:text="${#temporals.format(
+                                    record.issuedAt,
+                                    'dd MMM yyyy'
+                                )}">
+                            -
+                        </span>
+
+                        <span
+                                th:unless="${record.issuedAt != null}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Due Date -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.dueDate != null}"
+                                th:text="${#temporals.format(
+                                    record.dueDate,
+                                    'dd MMM yyyy'
+                                )}">
+                            -
+                        </span>
+
+                        <span
+                                th:unless="${record.dueDate != null}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Returned Date -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.returnedAt != null}"
+                                th:text="${#temporals.format(
+                                    record.returnedAt,
+                                    'dd MMM yyyy'
+                                )}">
+                            -
+                        </span>
+
+                        <span
+                                th:unless="${record.returnedAt != null}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Duration -->
+
+                    <td>
+
+                        <span
+                                th:if="${record.durationDays != null}"
+                                th:text="${record.durationDays + ' days'}">
+                            -
+                        </span>
+
+                        <span
+                                th:unless="${record.durationDays != null}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span
+                                class="history-status-badge"
+                                th:classappend="${record.status != null
+                                    ? ' ' + record.status.toLowerCase()
+                                    : ''}"
+                                th:text="${record.status}">
+                            Status
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Empty State -->
+
+        <div
+                th:if="${history == null or #lists.isEmpty(history)}"
+                class="history-empty-state">
+
+            <h3>
+                No Student History Found
+            </h3>
+
+            <p
+                    th:if="${search != null and !#strings.isEmpty(search)}">
+
+                No student history records match
+                "<span th:text="${search}">search</span>".
+
+            </p>
+
+            <p
+                    th:unless="${search != null and !#strings.isEmpty(search)}">
+
+                There are no student history records available.
+
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+</body>
+
+</html>

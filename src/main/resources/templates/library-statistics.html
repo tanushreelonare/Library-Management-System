@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Library Statistics</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/library-statistics.css}">
+
+</head>
+
+<body>
+
+<!-- LIBRARIAN HEADER -->
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+
+<!-- PAGE TOP CONTENT -->
+
+<div class="statistics-page-header">
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb-container">
+
+        <div class="breadcrumb">
+
+            <a th:href="@{/librarian-dashboard}">
+                Home
+            </a>
+
+            <span class="separator">
+                >
+            </span>
+
+            <span>
+                Librarian Dashboard
+            </span>
+
+            <span class="separator">
+                >
+            </span>
+
+            <span>
+                Library Statistics
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Library Statistics
+            </h1>
+
+            <p>
+                Overview of library circulation, inventory,
+                requests, students, and fines.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- STATISTICS DASHBOARD -->
+
+<main class="statistics-container">
+
+
+    <!-- KPI CARDS -->
+
+    <section class="statistics-summary-grid">
+
+
+        <!-- TOTAL BOOKS -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                📚
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Total Books
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.totalBooks}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL COPIES -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                📦
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Total Copies
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.totalCopies}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVAILABLE COPIES -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                ✓
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Available Copies
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.availableCopies}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CURRENTLY ISSUED -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                📖
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Currently Issued
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.currentlyIssued}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OVERDUE BOOKS -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                !
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Overdue Books
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.overdueBooks}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL STUDENTS -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                👥
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Total Students
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.totalStudents}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL FINE -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                ₹
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Total Fine Amount
+                </div>
+
+                <div class="statistics-card-value">
+
+                    ₹<span
+                        th:text="${#numbers.formatDecimal(statistics.totalFineAmount, 1, 2)}">
+                        0.00
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OVERDUE DAYS -->
+
+        <div class="statistics-card">
+
+            <div class="statistics-card-icon">
+                ⏱
+            </div>
+
+            <div class="statistics-card-content">
+
+                <div class="statistics-card-label">
+                    Total Overdue Days
+                </div>
+
+                <div class="statistics-card-value"
+                     th:text="${statistics.totalOverdueDays}">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FIRST ROW OF CHARTS -->
+
+    <section class="statistics-chart-grid">
+
+
+        <!-- MONTHLY CIRCULATION -->
+
+        <div class="statistics-chart-card">
+
+            <div class="statistics-section-heading">
+
+                <div>
+
+                    <h2>
+                        Monthly Circulation
+                    </h2>
+
+                    <p>
+                        Books issued and returned over time.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="monthlyCirculationChart"></canvas>
+
+            </div>
+
+            <div class="chart-empty"
+                 id="monthlyCirculationEmpty">
+
+                No circulation data available.
+
+            </div>
+
+        </div>
+
+
+        <!-- REQUEST STATUS -->
+
+        <div class="statistics-chart-card">
+
+            <div class="statistics-section-heading">
+
+                <div>
+
+                    <h2>
+                        Request Status
+                    </h2>
+
+                    <p>
+                        Distribution of library request statuses.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="chart-container request-chart-container">
+
+                <canvas id="requestStatisticsChart"></canvas>
+
+            </div>
+
+            <div class="chart-empty"
+                 id="requestStatisticsEmpty">
+
+                No request data available.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATEGORY DISTRIBUTION -->
+
+    <section class="statistics-chart-card category-statistics-card">
+
+        <div class="statistics-section-heading">
+
+            <div>
+
+                <h2>
+                    Category Distribution
+                </h2>
+
+                <p>
+                    Book copies distributed across library categories.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="chart-container category-chart-container">
+
+            <canvas id="categoryStatisticsChart"></canvas>
+
+        </div>
+
+        <div class="chart-empty"
+             id="categoryStatisticsEmpty">
+
+            No category data available.
+
+        </div>
+
+    </section>
+
+
+    <!-- MONTHLY FINE STATISTICS -->
+
+    <section class="statistics-chart-card">
+
+        <div class="statistics-section-heading">
+
+            <div>
+
+                <h2>
+                    Monthly Fine Statistics
+                </h2>
+
+                <p>
+                    Fine amount generated from overdue books.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="chart-container fine-chart-container">
+
+            <canvas id="monthlyFineChart"></canvas>
+
+        </div>
+
+        <div class="chart-empty"
+             id="monthlyFineEmpty">
+
+            No fine data available.
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIVE STUDENTS -->
+
+    <section class="statistics-section">
+
+        <div class="statistics-section-heading">
+
+            <div>
+
+                <h2>
+                    Active Students
+                </h2>
+
+                <p>
+                    Students who currently have issued books.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="statistics-table-wrapper">
+
+            <table class="statistics-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Roll Number
+                    </th>
+
+                    <th>
+                        Total Issued
+                    </th>
+
+                    <th>
+                        Total Returned
+                    </th>
+
+                    <th>
+                        Currently Issued
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="item : ${statistics.activeStudents}">
+
+                    <td th:text="${item.studentName}">
+                        Student
+                    </td>
+
+                    <td th:text="${item.rollNumber}">
+                        Roll Number
+                    </td>
+
+                    <td th:text="${item.issuedCount}">
+                        0
+                    </td>
+
+                    <td th:text="${item.returnedCount}">
+                        0
+                    </td>
+
+                    <td>
+
+                        <span class="active-book-count"
+                              th:text="${item.currentlyIssued}">
+                            0
+                        </span>
+
+                    </td>
+
+                </tr>
+
+
+                <tr th:if="${#lists.isEmpty(statistics.activeStudents)}">
+
+                    <td colspan="5"
+                        class="empty-cell">
+
+                        No active students found.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- CHART DATA -->
+
+<script th:inline="javascript">
+
+    window.libraryStatistics = {
+
+        monthlyCirculation:
+            /*[[${statistics.monthlyCirculation}]]*/ [],
+
+        categoryStatistics:
+            /*[[${statistics.categoryStatistics}]]*/ [],
+
+        requestStatistics:
+            /*[[${statistics.requestStatistics}]]*/ [],
+
+        monthlyFineStatistics:
+            /*[[${statistics.monthlyFineStatistics}]]*/ [],
+
+        activeStudents:
+            /*[[${statistics.activeStudents}]]*/ []
+
+    };
+
+</script>
+
+
+<!-- CHART.JS -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/chart.js">
+</script>
+
+
+<!-- COMMON JAVASCRIPT -->
+
+<script th:src="@{/js/common.js}"></script>
+
+
+<!-- STATISTICS JAVASCRIPT -->
+
+<script th:src="@{/js/library-statistics.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donations - Library Management System</title>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/student-header.css}">
+    <link rel="stylesheet" th:href="@{/css/student-donations.css}">
+</head>
+
+<body>
+
+<!-- Student Header -->
+<div th:replace="~{fragments/student-header :: header}"></div>
+
+
+<main class="donations-page">
+
+    <!-- Page Header -->
+    <section class="donations-page-header">
+
+        <div class="breadcrumb-container">
+            <div class="breadcrumb">
+                <a th:href="@{/student/dashboard(studentId=${studentId})}">
+                    Dashboard
+                </a>
+
+                <span>></span>
+
+                <span>Donations</span>
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h1>Book Donations</h1>
+            <p>Donate books to the library and help expand our collection.</p>
+        </div>
+
+    </section>
+
+
+    <div class="donations-container">
+
+        <!-- Donation Form -->
+        <section class="donation-form-card">
+
+            <div class="section-heading">
+                <h2>Donate a Book</h2>
+                <p>Enter the details of the book you would like to donate.</p>
+            </div>
+
+
+            <form th:action="@{/student/donations}"
+                  th:object="${donationRequest}"
+                  method="post"
+                  class="donation-form">
+
+                <input type="hidden"
+                       name="studentId"
+                       th:value="${studentId}">
+
+
+                <div class="form-grid">
+
+                    <!-- Book Name -->
+                    <div class="form-group">
+
+                        <label for="bookName">
+                            Book Name
+                            <span>*</span>
+                        </label>
+
+                        <input type="text"
+                               id="bookName"
+                               th:field="*{bookName}"
+                               placeholder="Enter book name"
+                               maxlength="200"
+                               required>
+
+                    </div>
+
+
+                    <!-- Author -->
+                    <div class="form-group">
+
+                        <label for="author">
+                            Author
+                            <span>*</span>
+                        </label>
+
+                        <input type="text"
+                               id="author"
+                               th:field="*{author}"
+                               placeholder="Enter author name"
+                               maxlength="150"
+                               required>
+
+                    </div>
+
+
+                    <!-- Category -->
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                            <span>*</span>
+                        </label>
+
+                        <input type="text"
+                               id="category"
+                               th:field="*{category}"
+                               placeholder="e.g. Fiction, Programming, Science"
+                               maxlength="100"
+                               required>
+
+                    </div>
+
+
+                    <!-- Total Copies -->
+                    <div class="form-group">
+
+                        <label for="totalCopies">
+                            Total Copies
+                            <span>*</span>
+                        </label>
+
+                        <input type="number"
+                               id="totalCopies"
+                               th:field="*{totalCopies}"
+                               placeholder="Enter number of copies"
+                               min="1"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button type="reset"
+                            class="secondary-btn">
+                        Clear
+                    </button>
+
+                    <button type="submit"
+                            class="primary-btn">
+                        Submit Donation
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- Submitted Requests -->
+        <section class="requests-card">
+
+            <div class="section-heading requests-heading">
+
+                <div>
+                    <h2>My Donation Requests</h2>
+                    <p>
+                        Track the status of books you have submitted for donation.
+                    </p>
+                </div>
+
+                <div class="request-count"
+                     th:text="${donationRequests.size()} + ' Request(s)'">
+                    0 Requests
+                </div>
+
+            </div>
+
+
+            <!-- No Requests -->
+            <div class="empty-state"
+                 th:if="${#lists.isEmpty(donationRequests)}">
+
+                <div class="empty-icon">📚</div>
+
+                <h3>No Donation Requests</h3>
+
+                <p>
+                    You have not submitted any book donation requests yet.
+                </p>
+
+            </div>
+
+
+            <!-- Requests Table -->
+            <div class="table-wrapper"
+                 th:if="${not #lists.isEmpty(donationRequests)}">
+
+                <table class="donations-table">
+
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Book</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>Copies</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="request, stat : ${donationRequests}">
+
+                        <!-- Number -->
+                        <td th:text="${stat.count}">
+                            1
+                        </td>
+
+
+                        <!-- Book -->
+                        <td class="book-name"
+                            th:text="${request.bookName}">
+                            Book Name
+                        </td>
+
+
+                        <!-- Author -->
+                        <td th:text="${request.author}">
+                            Author
+                        </td>
+
+
+                        <!-- Category -->
+                        <td>
+                            <span class="category-badge"
+                                  th:text="${request.category}">
+                                Category
+                            </span>
+                        </td>
+
+
+                        <!-- Copies -->
+                        <td th:text="${request.totalCopies}">
+                            1
+                        </td>
+
+
+                        <!-- Request Date -->
+                        <td class="date-cell">
+
+                            <span th:text="${#temporals.format(request.requestDate, 'dd MMM yyyy')}">
+                                30 Sep 2026
+                            </span>
+
+                            <small th:text="${#temporals.format(request.requestDate, 'hh:mm a')}">
+                                03:00 PM
+                            </small>
+
+                        </td>
+
+
+                        <!-- Status -->
+                        <td>
+
+                            <span class="status-badge pending"
+                                  th:if="${request.status == 'PENDING'}">
+                                Pending
+                            </span>
+
+                            <span class="status-badge approved"
+                                  th:if="${request.status == 'APPROVED'}">
+                                Approved
+                            </span>
+
+                            <span class="status-badge rejected"
+                                  th:if="${request.status == 'REJECTED'}">
+                                Rejected
+                            </span>
+
+                        </td>
+
+
+                        <!-- Remarks -->
+                        <td class="remarks-cell">
+
+                            <span th:if="${request.status == 'PENDING'}">
+                                Under review
+                            </span>
+
+                            <span th:if="${request.status == 'APPROVED'}">
+                                Donation approved
+                            </span>
+
+                            <span th:if="${request.status == 'REJECTED'}"
+                                  th:text="${request.rejectionReason}">
+                                Rejection reason
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer>
+    <p>&copy; 2026 Library Management System. All rights reserved.</p>
+</footer>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script th:if="${successMessage}">
+    Swal.fire({
+        icon: 'success',
+        title: 'Donation Submitted!',
+        text: 'Your donation request has been submitted successfully.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#1565c0'
+    });
+</script>
+
+<script th:if="${errorMessage}">
+    Swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: '[[${errorMessage}]]',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#d32f2f'
+    });
+</script>
+
+</body>
+</html>

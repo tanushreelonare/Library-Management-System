@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Fine Report - Library Management System</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}">
+
+    <!-- Librarian Header CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-header.css}">
+
+    <!-- Librarian Fine Report CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/librarian-fine-report.css}">
+
+</head>
+
+<body>
+
+<!-- Librarian Header -->
+
+<div th:replace="~{fragments/librarian-header :: header}"></div>
+
+
+<!-- Breadcrumb -->
+
+<div class="breadcrumb">
+
+    <a th:href="@{/librarian-dashboard}">
+        Home
+    </a>
+
+    <span class="separator">
+        >
+    </span>
+
+    <span>
+        Librarian Dashboard
+    </span>
+
+    <span class="separator">
+        >
+    </span>
+
+    <span>
+        Fine Report
+    </span>
+
+</div>
+
+
+<!-- Page Header -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+            Fine Report
+        </h1>
+
+        <p>
+            Monitor overdue books and view calculated fines
+            based on the library's overdue policy.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Main Content -->
+
+<main class="fine-report-container">
+
+
+    <!-- SUMMARY CARDS -->
+
+    <section class="fine-summary-grid">
+
+
+        <!-- Total Fine -->
+
+        <article class="fine-summary-card">
+
+            <div class="summary-card-label">
+                Total Fine
+            </div>
+
+            <div class="summary-card-value">
+
+                ₹<span th:text="${totalFine}">
+                    0
+                </span>
+
+            </div>
+
+            <div class="summary-card-description">
+                Total calculated fine
+            </div>
+
+        </article>
+
+
+        <!-- Currently Overdue -->
+
+        <article class="fine-summary-card">
+
+            <div class="summary-card-label">
+                Currently Overdue
+            </div>
+
+            <div class="summary-card-value"
+                 th:text="${currentlyOverdue}">
+                0
+            </div>
+
+            <div class="summary-card-description">
+                Books past their due date
+            </div>
+
+        </article>
+
+
+        <!-- Returned Late -->
+
+        <article class="fine-summary-card">
+
+            <div class="summary-card-label">
+                Returned Late
+            </div>
+
+            <div class="summary-card-value"
+                 th:text="${returnedLate}">
+                0
+            </div>
+
+            <div class="summary-card-description">
+                Books returned after due date
+            </div>
+
+        </article>
+
+
+        <!-- Total Overdue Days -->
+
+        <article class="fine-summary-card">
+
+            <div class="summary-card-label">
+                Total Overdue Days
+            </div>
+
+            <div class="summary-card-value"
+                 th:text="${totalOverdueDays}">
+                0
+            </div>
+
+            <div class="summary-card-description">
+                Across all fine records
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- FINE POLICY -->
+
+    <section class="fine-policy">
+
+        <div class="fine-policy-label">
+            Fine Policy
+        </div>
+
+        <div class="fine-policy-text">
+
+            ₹<span th:text="${fineRate}">
+                5
+            </span>
+            per overdue day
+
+        </div>
+
+    </section>
+
+
+    <!-- SEARCH AND FILTER -->
+
+    <section class="fine-search-section">
+
+        <form th:action="@{/librarian/fine-report}"
+              method="get"
+              class="fine-search-form">
+
+
+            <!-- Search -->
+
+            <div class="search-field">
+
+                <label for="search">
+                    Search
+                </label>
+
+                <input type="text"
+                       id="search"
+                       name="search"
+                       th:value="${search}"
+                       placeholder="Student, roll number, book or ISBN">
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div class="search-field">
+
+                <label for="status">
+                    Status
+                </label>
+
+                <select id="status"
+                        name="status">
+
+                    <option value="ALL"
+                            th:selected="${status == 'ALL'}">
+                        All
+                    </option>
+
+                    <option value="OVERDUE"
+                            th:selected="${status == 'OVERDUE'}">
+                        Currently Overdue
+                    </option>
+
+                    <option value="RETURNED LATE"
+                            th:selected="${status == 'RETURNED LATE'}">
+                        Returned Late
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="search-actions">
+
+                <button type="submit"
+                        class="search-button">
+                    Search
+                </button>
+
+                <a th:href="@{/librarian/fine-report}"
+                   class="clear-button">
+                    Clear
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- REPORT HEADER -->
+
+    <section class="fine-records-section">
+
+        <div class="fine-records-header">
+
+            <div>
+
+                <h2>
+                    Fine Records
+                </h2>
+
+                <p>
+                    Overdue and late-return borrowing records
+                </p>
+
+            </div>
+
+            <div class="record-count">
+
+                Records:
+
+                <strong th:text="${fineReports.size()}">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div th:if="${#lists.isEmpty(fineReports)}"
+             class="empty-fine-state">
+
+            <div class="empty-fine-icon">
+                ✓
+            </div>
+
+            <h3>
+                No Fine Records Found
+            </h3>
+
+            <p>
+                There are no overdue or late-return books
+                matching the selected criteria.
+            </p>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div th:unless="${#lists.isEmpty(fineReports)}"
+             class="fine-table-wrapper">
+
+            <table class="fine-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Roll No.
+                    </th>
+
+                    <th>
+                        Book
+                    </th>
+
+                    <th>
+                        Due Date
+                    </th>
+
+                    <th>
+                        Returned Date
+                    </th>
+
+                    <th>
+                        Overdue Days
+                    </th>
+
+                    <th>
+                        Fine
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="fine : ${fineReports}">
+
+
+                    <!-- Student -->
+
+                    <td>
+
+                        <div class="student-cell">
+
+                            <strong th:text="${fine.studentName}">
+                                Student Name
+                            </strong>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Roll Number -->
+
+                    <td th:text="${fine.rollNumber}">
+                        00000
+                    </td>
+
+
+                    <!-- Book -->
+
+                    <td>
+
+                        <div class="book-cell">
+
+                            <strong th:text="${fine.bookTitle}">
+                                Book Title
+                            </strong>
+
+                            <span th:if="${fine.isbn != null}"
+                                  th:text="${'ISBN: ' + fine.isbn}">
+                                ISBN
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Due Date -->
+
+                    <td>
+
+                        <span th:if="${fine.dueDate != null}"
+                              th:text="${#temporals.format(
+                                  fine.dueDate,
+                                  'dd MMM yyyy'
+                              )}">
+                            17 Sep 2026
+                        </span>
+
+                    </td>
+
+
+                    <!-- Returned Date -->
+
+                    <td>
+
+                        <span th:if="${fine.returnedAt != null}"
+                              th:text="${#temporals.format(
+                                  fine.returnedAt,
+                                  'dd MMM yyyy'
+                              )}">
+                            20 Sep 2026
+                        </span>
+
+                        <span th:unless="${fine.returnedAt != null}"
+                              class="not-returned">
+                            Not Returned
+                        </span>
+
+                    </td>
+
+
+                    <!-- Overdue Days -->
+
+                    <td>
+
+                        <span class="overdue-days"
+                              th:text="${fine.overdueDays + ' day' +
+                                  (fine.overdueDays != 1 ? 's' : '')}">
+                            4 days
+                        </span>
+
+                    </td>
+
+
+                    <!-- Fine -->
+
+                    <td>
+
+                        <strong class="fine-amount"
+                                th:text="${'₹' + fine.fineAmount}">
+                            ₹20
+                        </strong>
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span class="fine-status"
+                              th:classappend="${fine.status == 'OVERDUE'}
+                                  ? ' status-overdue'
+                                  : ' status-returned-late'"
+                              th:text="${fine.status}">
+                            OVERDUE
+                        </span>
+
+                    </td>
+
+
+                    <!-- Action -->
+
+                    <td>
+
+                        <button type="button"
+                                class="view-fine-button"
+                                th:attr="
+                                    data-student=${fine.studentName},
+                                    data-roll-number=${fine.rollNumber},
+                                    data-book=${fine.bookTitle},
+                                    data-isbn=${fine.isbn},
+                                    data-issued-date=${fine.issuedAt != null
+                                        ? #temporals.format(
+                                            fine.issuedAt,
+                                            'dd MMM yyyy'
+                                        )
+                                        : 'Not Available'},
+                                    data-due-date=${fine.dueDate != null
+                                        ? #temporals.format(
+                                            fine.dueDate,
+                                            'dd MMM yyyy'
+                                        )
+                                        : 'Not Available'},
+                                    data-returned-date=${fine.returnedAt != null
+                                        ? #temporals.format(
+                                            fine.returnedAt,
+                                            'dd MMM yyyy'
+                                        )
+                                        : 'Not Returned'},
+                                    data-overdue-days=${fine.overdueDays},
+                                    data-fine=${fine.fineAmount},
+                                    data-status=${fine.status}
+                                ">
+
+                            View Details
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FINE DETAILS MODAL -->
+
+<div id="fineDetailsModal"
+     class="fine-modal"
+     aria-hidden="true">
+
+    <div class="fine-modal-overlay"></div>
+
+    <div class="fine-modal-content">
+
+        <div class="fine-modal-header">
+
+            <div>
+
+                <h2>
+                    Fine Details
+                </h2>
+
+                <p>
+                    Borrowing and fine information
+                </p>
+
+            </div>
+
+            <button type="button"
+                    id="closeFineModal"
+                    class="close-fine-modal"
+                    aria-label="Close">
+                &times;
+            </button>
+
+        </div>
+
+
+        <div class="fine-modal-body">
+
+
+            <!-- Student Information -->
+
+            <div class="details-section">
+
+                <h3>
+                    Student Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Student
+                        </span>
+
+                        <strong id="detailsStudent">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Roll Number
+                        </span>
+
+                        <strong id="detailsRollNumber">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Book Information -->
+
+            <div class="details-section">
+
+                <h3>
+                    Book Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Book
+                        </span>
+
+                        <strong id="detailsBook">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            ISBN
+                        </span>
+
+                        <strong id="detailsIsbn">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Borrowing Information -->
+
+            <div class="details-section">
+
+                <h3>
+                    Borrowing Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Issued Date
+                        </span>
+
+                        <strong id="detailsIssuedDate">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Due Date
+                        </span>
+
+                        <strong id="detailsDueDate">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Returned Date
+                        </span>
+
+                        <strong id="detailsReturnedDate">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Fine Information -->
+
+            <div class="details-section fine-details-section">
+
+                <h3>
+                    Fine Information
+                </h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Overdue Days
+                        </span>
+
+                        <strong id="detailsOverdueDays">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Fine Rate
+                        </span>
+
+                        <strong>
+                            ₹5 per day
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Fine Amount
+                        </span>
+
+                        <strong id="detailsFineAmount"
+                                class="modal-fine-amount">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Status
+                        </span>
+
+                        <strong id="detailsStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="fine-modal-footer">
+
+            <button type="button"
+                    id="closeFineModalButton"
+                    class="close-modal-button">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Common JavaScript -->
+
+<script th:src="@{/js/common.js}"></script>
+
+<!-- Fine Report JavaScript -->
+
+<script th:src="@{/js/librarian-fine-report.js}"></script>
+
+</body>
+
+</html>

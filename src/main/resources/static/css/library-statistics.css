@@ -1,0 +1,640 @@
+/* Library Statistics */
+
+/* Page Top Content */
+
+.statistics-page-header {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+/* Breadcrumb */
+
+.statistics-page-header .breadcrumb-container {
+    width: 100%;
+}
+
+.statistics-page-header .breadcrumb {
+    width: 100%;
+    margin: 0;
+    padding: 14px 0 10px;
+    box-sizing: border-box;
+
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.statistics-page-header .breadcrumb a {
+    color: #244f87;
+    text-decoration: none;
+}
+
+.statistics-page-header .breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.statistics-page-header .breadcrumb .separator {
+    margin: 0 6px;
+    color: #94a3b8;
+}
+
+/* Page Header */
+
+.statistics-page-header .page-header {
+    width: 100%;
+    margin: 0;
+    padding: 0 0 28px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.statistics-page-header .page-header > div {
+    width: 100%;
+    text-align: left;
+}
+
+.statistics-page-header .page-header h1 {
+    margin: 0;
+
+    color: #244f87;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    line-height: 1.25;
+}
+
+.statistics-page-header .page-header p {
+    margin: 4px 0 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Main Dashboard Container */
+
+.statistics-container {
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 0 40px 50px;
+
+    box-sizing: border-box;
+}
+
+/* KPI Cards */
+
+.statistics-summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    width: 100%;
+
+    margin-bottom: 24px;
+}
+
+.statistics-card {
+    min-width: 0;
+    min-height: 112px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 20px 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9e0e8;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15, 23, 42, 0.06);
+
+    box-sizing: border-box;
+}
+
+.statistics-card-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #eaf1fb;
+
+    color: #244f87;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.statistics-card-content {
+    min-width: 0;
+}
+
+.statistics-card-label {
+    margin: 0 0 7px;
+
+    color: #64748b;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+.statistics-card-value {
+    margin: 0;
+
+    color: #244f87;
+
+    font-size: 26px;
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+/* Chart Grid */
+
+.statistics-chart-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.6fr)
+        minmax(0, 1fr);
+
+    gap: 24px;
+
+    width: 100%;
+
+    margin-bottom: 24px;
+}
+
+/* Chart Cards */
+
+.statistics-chart-card {
+    width: 100%;
+
+    min-width: 0;
+
+    background: #ffffff;
+
+    border: 1px solid #d9e0e8;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15, 23, 42, 0.06);
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    margin-bottom: 24px;
+}
+
+.statistics-chart-grid .statistics-chart-card {
+    margin-bottom: 0;
+}
+
+/* Section Heading */
+
+.statistics-section-heading {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 24px 17px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    box-sizing: border-box;
+}
+
+.statistics-section-heading h2 {
+    margin: 0 0 6px;
+
+    color: #244f87;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+.statistics-section-heading p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Chart Area */
+
+.chart-container {
+    position: relative;
+
+    width: 100%;
+    height: 330px;
+
+    padding: 20px 24px 24px;
+
+    box-sizing: border-box;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Request Doughnut Chart */
+
+.request-chart-container {
+    height: 330px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-chart-container canvas {
+    max-width: 100%;
+}
+
+/* Category Chart */
+
+.category-statistics-card {
+    margin-bottom: 24px;
+}
+
+.category-chart-container {
+    height: 390px;
+}
+
+/* Fine Chart */
+
+.fine-chart-container {
+    height: 330px;
+}
+
+/* Empty Chart State */
+
+.chart-empty {
+    display: none;
+
+    min-height: 260px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+/* Active Students Section */
+
+.statistics-section {
+    width: 100%;
+
+    margin: 0 0 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9e0e8;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15, 23, 42, 0.06);
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
+
+.statistics-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Statistics Table */
+
+.statistics-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    box-sizing: border-box;
+}
+
+.statistics-table {
+    width: 100%;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    table-layout: fixed;
+
+    background: #ffffff;
+}
+
+.statistics-table thead {
+    background: #f8fafc;
+}
+
+.statistics-table th {
+    padding: 13px 18px;
+
+    background: #f8fafc;
+
+    color: #334155;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    text-align: left;
+    vertical-align: middle;
+
+    border-bottom: 1px solid #d9e0e8;
+
+    white-space: nowrap;
+
+    box-sizing: border-box;
+}
+
+.statistics-table td {
+    padding: 14px 18px;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+    text-align: left;
+    vertical-align: middle;
+
+    border-bottom: 1px solid #edf0f3;
+
+    word-break: break-word;
+
+    box-sizing: border-box;
+}
+
+.statistics-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.statistics-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Active Book Count */
+
+.active-book-count {
+    display: inline-flex;
+
+    min-width: 28px;
+    height: 28px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 8px;
+
+    border-radius: 14px;
+
+    background: #eaf1fb;
+
+    color: #244f87;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    box-sizing: border-box;
+}
+
+/* Empty Table State */
+
+.statistics-table .empty-cell {
+    padding: 30px 18px !important;
+
+    color: #94a3b8 !important;
+
+    font-size: 13px !important;
+
+    text-align: center !important;
+
+    border-bottom: none !important;
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+
+    .statistics-summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .statistics-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .statistics-chart-grid
+    .statistics-chart-card {
+        margin-bottom: 0;
+    }
+
+    .category-chart-container {
+        height: 380px;
+    }
+}
+
+/* Smaller Tablet */
+
+@media (max-width: 800px) {
+
+    .statistics-page-header {
+        padding: 0 25px;
+    }
+
+    .statistics-container {
+        padding: 0 25px 40px;
+    }
+
+    .statistics-summary-grid {
+        gap: 14px;
+    }
+
+    .statistics-card {
+        padding: 18px;
+    }
+
+    .statistics-card-icon {
+        width: 42px;
+        height: 42px;
+
+        font-size: 19px;
+    }
+
+    .statistics-card-value {
+        font-size: 23px;
+    }
+
+    .statistics-section-heading {
+        padding: 18px 20px 16px;
+    }
+
+    .chart-container {
+        padding: 18px 20px 20px;
+    }
+
+    .statistics-table {
+        min-width: 700px;
+
+        table-layout: auto;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .statistics-page-header {
+        padding: 0 20px;
+    }
+
+    .statistics-container {
+        padding: 0 15px 30px;
+    }
+
+    .statistics-page-header .breadcrumb {
+        padding-top: 12px;
+    }
+
+    .statistics-page-header .page-header {
+        padding-bottom: 22px;
+    }
+
+    .statistics-page-header .page-header h1 {
+        font-size: 26px;
+    }
+
+    .statistics-page-header .page-header p {
+        font-size: 13px;
+    }
+
+    .statistics-summary-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-bottom: 18px;
+    }
+
+    .statistics-card {
+        min-height: auto;
+
+        padding: 17px 18px;
+    }
+
+    .statistics-card-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .statistics-card-value {
+        font-size: 23px;
+    }
+
+    .statistics-chart-grid {
+        gap: 18px;
+
+        margin-bottom: 18px;
+    }
+
+    .statistics-chart-card,
+    .statistics-section {
+        margin-bottom: 18px;
+
+        border-radius: 8px;
+    }
+
+    .statistics-section-heading {
+        padding: 17px 18px 15px;
+    }
+
+    .statistics-section-heading h2 {
+        font-size: 18px;
+    }
+
+    .statistics-section-heading p {
+        font-size: 12px;
+    }
+
+    .chart-container {
+        height: 290px;
+
+        padding: 15px 15px 18px;
+    }
+
+    .request-chart-container {
+        height: 300px;
+    }
+
+    .category-chart-container {
+        height: 360px;
+    }
+
+    .fine-chart-container {
+        height: 290px;
+    }
+
+    .statistics-table {
+        min-width: 700px;
+    }
+
+    .statistics-table th,
+    .statistics-table td {
+        padding: 11px 14px;
+    }
+}
